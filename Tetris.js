@@ -6,7 +6,7 @@ var Tetris = (function(){
 	Tetris.prototype ={
 		"init":function(w,h){
 			if(w==null) w = 10;
-			if(h==null) h = 20;
+			if(h==null) h = 24; //4는 여유부분
 			this.block=null;
 			this.board.create(w,h);
 			this.ttmn.data = new Tetrimino();
@@ -19,12 +19,12 @@ var Tetris = (function(){
 			"randomCreate":function(){
 				this.data.randomCreate(1,0);
 				this.x = 0;
-				this.y = this.data.h * -1;
+				this.y = 0;
 			},
 			"create":function(){
 				this.data.create(1,0);
 				this.x = 0;
-				this.y = this.data.h * -1;
+				this.y = 0;
 			},
 			"rotate":function(r){
 				this.data.rotate(this.data.r+r)
@@ -134,10 +134,32 @@ var Tetris = (function(){
 				this.ttmn.randomCreate(); //새로운 블록 만들기
 			}
 		},
+		"toBottom":function(){
+			var y = this.ttmn.y;
+			while(this.board.checkTetrimino(this.ttmn,this.ttmn.x,++y)){
+				
+			}
+			this.ttmn.y= y-1;
+			this.board.insertTetrimino(this.ttmn,this.ttmn.x,this.ttmn.y)
+			console.log("insertTetrimino",this.ttmn.x,this.ttmn.y)
+			this.ttmn.randomCreate(); //새로운 블록 만들기
+		},
 		"rotate":function(r){
+			if(r==0) return;
 			this.ttmn.rotate(r);
 			if(!this.board.checkTetrimino(this.ttmn,this.ttmn.x,this.ttmn.y)){
-				this.ttmn.rotate(r*-1);
+				if(this.board.checkTetrimino(this.ttmn,this.ttmn.x-1,this.ttmn.y)){
+					this.ttmn.x = this.ttmn.x-1
+				}else if(this.board.checkTetrimino(this.ttmn,this.ttmn.x+1,this.ttmn.y)){
+					this.ttmn.x = this.ttmn.x+1
+				}else if(this.board.checkTetrimino(this.ttmn,this.ttmn.x-2,this.ttmn.y)){
+					this.ttmn.x = this.ttmn.x-2
+				}else if(this.board.checkTetrimino(this.ttmn,this.ttmn.x+2,this.ttmn.y)){
+					this.ttmn.x = this.ttmn.x+2
+				}else{
+					this.ttmn.rotate(r*-1);	
+				}
+				
 			}
 			return false;
 		},

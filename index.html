@@ -67,12 +67,16 @@
 <body>
 	<div class="container">
 		<h1>tetris</h1>
-		<textarea id="output" cols="20" rows="20"></textarea>
+		<textarea id="output" cols="20" rows="24"></textarea>
+		<br />
 		<button type="button" class="btn btn-info m-1" onclick="ttr.moveX(-1);ttr.print()">left</button>
 		<button type="button" class="btn btn-info m-1" onclick="ttr.moveX(1);ttr.print()">right</button>
 		<button type="button" class="btn btn-info m-1" onclick="ttr.moveY(1);ttr.print()">down</button>
-		<button type="button" class="btn btn-info m-1" onclick="ttr.rotate(1);ttr.print()">rotate right</button>
+		<button type="button" class="btn btn-info m-1" onclick="ttr.toBottom();ttr.print()">toBottom</button>
+		<br />
 		<button type="button" class="btn btn-info m-1" onclick="ttr.rotate(-1);ttr.print()">rotate left</button>
+		<button type="button" class="btn btn-info m-1" onclick="ttr.rotate(1);ttr.print()">rotate right</button>
+		
 		
 	</div>
 </body>
