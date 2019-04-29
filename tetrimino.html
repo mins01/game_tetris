@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko" >
+<head>
+	<title>tetrimino</title>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- jquery 관련 -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>  
+
+
+	<!-- 부트스트랩 4 : IE8지원안됨! -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous"> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script> 
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<!-- vue.js -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+
+	<link rel="stylesheet" href="tetrimino.css"> 
+
+	<!-- meta og -->
+	
+	<meta property="og:title" content="tetrimino">
+	<meta property="og:description" content="tetrimino">
+	<meta name="og:image" content="slidingPuzzle.png">
+	<meta property="og:image:width" content="310">
+	<meta property="og:image:height" content="310" />
+	<meta property="og:site_name" content="tetrimino" />
+	<meta property="og:type" content="game">
+	
+	<!-- //meta og -->
+	
+	
+</head>
+<body>
+	<div class="container">
+		<h1>tetrimino</h1>
+		1: ─
+		<div class="tm-box tm-type-1 debug" data-dir="0"  onclick="$(this).attr('data-dir',(parseInt($(this).attr('data-dir'))+1)%4)">
+			<div class="tm-block tm-block-0"></div>
+			<div class="tm-block tm-block-1"></div>
+			<div class="tm-block tm-block-2"></div>
+			<div class="tm-block tm-block-3"></div>
+		</div>
+		<hr />
+		2 : ┘
+		<div class="tm-box tm-type-2 debug" data-dir="0" onclick="$(this).attr('data-dir',(parseInt($(this).attr('data-dir'))+1)%4)">
+			<div class="tm-block tm-block-0"></div>
+			<div class="tm-block tm-block-1"></div>
+			<div class="tm-block tm-block-2"></div>
+			<div class="tm-block tm-block-3"></div>
+		</div>
+		<hr />
+		3 : └
+		<div class="tm-box tm-type-3 debug" data-dir="0" onclick="$(this).attr('data-dir',(parseInt($(this).attr('data-dir'))+1)%4)">
+			<div class="tm-block tm-block-0"></div>
+			<div class="tm-block tm-block-1"></div>
+			<div class="tm-block tm-block-2"></div>
+			<div class="tm-block tm-block-3"></div>
+		</div>
+		<hr />
+		4 : ■
+		<div class="tm-box tm-type-4 debug" data-dir="0" onclick="$(this).attr('data-dir',(parseInt($(this).attr('data-dir'))+1)%4)">
+			<div class="tm-block tm-block-0"></div>
+			<div class="tm-block tm-block-1"></div>
+			<div class="tm-block tm-block-2"></div>
+			<div class="tm-block tm-block-3"></div>
+		</div>
+		<hr />
+		5: S
+		<div class="tm-box tm-type-5 debug" data-dir="0" onclick="$(this).attr('data-dir',(parseInt($(this).attr('data-dir'))+1)%4)">
+			<div class="tm-block tm-block-0"></div>
+			<div class="tm-block tm-block-1"></div>
+			<div class="tm-block tm-block-2"></div>
+			<div class="tm-block tm-block-3"></div>
+		</div>
+		<hr />
+		6: ┴
+		<div class="tm-box tm-type-6 debug" data-dir="0" onclick="$(this).attr('data-dir',(parseInt($(this).attr('data-dir'))+1)%4)">
+			<div class="tm-block tm-block-0"></div>
+			<div class="tm-block tm-block-1"></div>
+			<div class="tm-block tm-block-2"></div>
+			<div class="tm-block tm-block-3"></div>
+		</div>
+		<hr />
+		7: 2
+		<div class="tm-box tm-type-7 debug" data-dir="0" onclick="$(this).attr('data-dir',(parseInt($(this).attr('data-dir'))+1)%4)">
+			<div class="tm-block tm-block-0"></div>
+			<div class="tm-block tm-block-1"></div>
+			<div class="tm-block tm-block-2"></div>
+			<div class="tm-block tm-block-3"></div>
+		</div>
+		<hr />
+	</div>
+</body>
+</html>
