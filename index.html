@@ -50,12 +50,29 @@
 	<meta property="og:type" content="game">
 	
 	<!-- //meta og -->
-
+	
+	<script src="Tetris.js"></script>
+	<script src="Tetrimino.js"></script>
+	<script src="tetriminoMaps.js"></script>
+	<script>
+	var ttr = new Tetris(10,20);
+	$(function(){
+		ttr.init();
+		ttr.print();	
+	})
+	
+	</script>
 	
 </head>
 <body>
 	<div class="container">
 		<h1>tetris</h1>
+		<textarea id="output" cols="20" rows="20"></textarea>
+		<button type="button" class="btn btn-info m-1" onclick="ttr.moveX(-1);ttr.print()">left</button>
+		<button type="button" class="btn btn-info m-1" onclick="ttr.moveX(1);ttr.print()">right</button>
+		<button type="button" class="btn btn-info m-1" onclick="ttr.moveY(1);ttr.print()">down</button>
+		<button type="button" class="btn btn-info m-1" onclick="ttr.rotate(1);ttr.print()">rotate right</button>
+		<button type="button" class="btn btn-info m-1" onclick="ttr.rotate(-1);ttr.print()">rotate left</button>
 		
 	</div>
 </body>

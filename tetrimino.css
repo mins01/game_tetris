@@ -33,6 +33,31 @@ S  : 5
 	position: absolute;
 }
 
+
+.tm-type-1 .tm-block{
+	background-color:  #A80000;
+}
+.tm-type-2 .tm-block{
+	background-color:  #A800A8;
+}
+.tm-type-3 .tm-block{
+	background-color:  #A85400;
+}
+.tm-type-4 .tm-block{
+	background-color:  #00A800;
+}
+.tm-type-5 .tm-block{
+	background-color:  #00A8A8;
+}
+.tm-type-6 .tm-block{
+	background-color:  #0000A8;
+}
+.tm-type-7 .tm-block{
+	background-color:  #A6A800;
+}
+
+
+
 .tm-box[data-dir="0"]{
 	transform: rotate(0deg);
 }
