@@ -7,6 +7,7 @@ var Tetris = (function(){
 		"init":function(){
 			this.block=null;	
 			this.ttmn.data = new Tetrimino();
+			this.ttmn.board = this.board;
 			this.score = 0;
 		},
 		"create":function(w,h){
@@ -14,24 +15,29 @@ var Tetris = (function(){
 			if(h==null) h = 20;
 			if(h<4){h = 4;}
 			h+=4;//4는 테트리미노 여유 부분
+			console.log("create",w,h);
 			this.board.create(w,h);
-			// this.ttmn.randomCreate();
-			this.ttmn.create();
+			// this.ttmn.randomCreate();			
+			this.reset();
+			this.draw();
 		},
 		"reset":function(){
+			this.createTetrimino();
 			this.score = 0;
+			this.onScore(0,0);
+			this.board.clear();
 		},
 		"ttmn":{
 			"x":0,"y":0,
-			"data":null,
+			"data":null,"board":null,
 			"randomCreate":function(){
 				this.data.randomCreate(1,0);
-				this.x = 0;
+				this.x = Math.floor((this.board.w-this.data.w)/2);
 				this.y = 0;
 			},
 			"create":function(){
 				this.data.create(1,0);
-				this.x = 0;
+				this.x = Math.floor((this.board.w-this.data.w)/2);
 				this.y = 0;
 			},
 			"rotate":function(r){
@@ -46,12 +52,19 @@ var Tetris = (function(){
 				this.map = new Array(w*h);
 				this.map.fill(0);
 			},
+			"clear":function(){
+				this.map.fill(0);
+			},
 			"format":function(map){
 				if(map == null ) map= this.map;
 				var msg = [];
 				//-- k-p 배열에서 p-k 배열로 만들어서 출력
 				for(var i=0,m=map.length;i<m;i+=this.w){
-					msg.push('|'+map.slice(i,i+this.w).join(',')+'|');
+					if(i/this.w < 4){
+						msg.push(' '+map.slice(i,i+this.w).join(',')+' ');
+					}else{
+						msg.push('|'+map.slice(i,i+this.w).join(',')+'|');	
+					}
 				}
 				// console.log(msg.join("\n"));	
 				return msg.join("\n");
@@ -93,7 +106,7 @@ var Tetris = (function(){
 						return false;
 					}
 					var arr = ttmn.data.map.slice(iy*ttmn.data.w,iy*ttmn.data.w+ttmn.data.w);	
-					console.log(arr);
+					// console.log(arr);
 					for(var ix=0,mx=arr.length;ix<mx;ix++){
 						var mapX = x+ix;
 						if(arr[ix]==0){
@@ -104,7 +117,7 @@ var Tetris = (function(){
 							return false;
 						}
 						
-						console.log(mapX,mapY);
+						// console.log(mapX,mapY);
 						if(mapY*this.w + mapX >= map.length){
 							console.warn('checkOverTetrimino range-out Y 2',mapY);
 							return false;
@@ -140,6 +153,18 @@ var Tetris = (function(){
 				map = rRow.concat(map);
 				return map;
 			},
+			"isGameOver":function(){
+				var arr = null;
+				for(var i=0,m=this.w*4;i<m;i+=this.w){
+					arr = this.map.slice(i,i+this.w);
+					for(var i2=0,m2=arr.length;i2<m2;i2++){
+						if(arr[i2]!=0){
+							return true
+						}
+					}
+				}
+				return false;
+			}
 		},
 		"cbOnDraw":function(board,ttmn){
 			var map = board.mapWithTetrimino(ttmn);
@@ -150,7 +175,7 @@ var Tetris = (function(){
 		},
 		"draw":function(){
 			this.onDraw(this.board,this.ttmn);
-		},		
+		},
 		"cbOnMoveX":function(n){
 			
 		},
@@ -174,6 +199,10 @@ var Tetris = (function(){
 		"cbOnBottom":function(){
 			
 		},
+		"createTetrimino":function(){
+			this.ttmn.randomCreate(); //새로운 블록 만들기
+			// this.ttmn.create(); //새로운 블록 만들기
+		},
 		"onBottom":function(){
 			this.board.insertTetrimino(this.ttmn,this.ttmn.x,this.ttmn.y)
 			console.log("insertTetrimino",this.ttmn.x,this.ttmn.y)
@@ -184,9 +213,12 @@ var Tetris = (function(){
 				// console.log("삭제될 ROW",ys);
 				this.board.map = this.board.removeRows(ys,this.board.w,this.board.map);
 			}
-			// this.ttmn.randomCreate(); //새로운 블록 만들기
-			this.ttmn.create(); //새로운 블록 만들기
-			this.cbOnBottom();
+			if(this.checkGameOver()){
+				
+			}else{
+				this.createTetrimino();
+				this.cbOnBottom();	
+			}
 			this.draw();
 		},
 		"cbOnMoveY":function(){
@@ -248,6 +280,19 @@ var Tetris = (function(){
 		},
 		"getBoardMap":function(){
 			return this.board.mapWithTetrimino(this.ttmn);
+		},
+		"cbOnGameOver":function(){
+			console.log("GAMEOVER");
+		},
+		"onGameOver":function(){
+			this.cbOnGameOver();
+		},
+		"checkGameOver":function(){
+			if(this.board.isGameOver()){
+				this.onGameOver();
+				return true;
+			}
+			return false;
 		},
 		"test":function(){
 			for(var i=0,m=this.board.w;i<m-1;i++){

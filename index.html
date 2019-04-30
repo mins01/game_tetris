@@ -62,6 +62,9 @@
 		// ttr.create(8,10);
 		// ttr.print();
 		ttrtg.create(8,10);
+		$(document).on('keydown',function(event){
+			ttrtg.onkeyDown(event)
+		})
 	})
 	
 	</script>
@@ -70,16 +73,24 @@
 <body>
 	<div class="container">
 		<h1>tetris</h1>
-		<textarea id="output" cols="20" rows="24" style="font-family:monospace"></textarea>
-		<br />
-		<button type="button" class="btn btn-info m-1" onclick="ttrtg.moveX(-1);">left</button>
-		<button type="button" class="btn btn-info m-1" onclick="ttrtg.moveX(1);">right</button>
-		<button type="button" class="btn btn-info m-1" onclick="ttrtg.moveY(1);">down</button>
-		<button type="button" class="btn btn-info m-1" onclick="ttrtg.moveBottom();">moveBottom</button>
-		<br />
-		<button type="button" class="btn btn-info m-1" onclick="ttrtg.rotate(-1);">rotate left</button>
-		<button type="button" class="btn btn-info m-1" onclick="ttrtg.rotate(1);">rotate right</button>
-		
+		<textarea id="output" cols="20" rows="26" style="font-family:monospace;line-height:1em; text-align:center;width:100%;" readonly wrap="hard"></textarea>
+		<hr />
+		<select class="form-control" onchange="var x = this.value.split(',');ttrtg.create(parseInt(x[0]),parseInt(x[1]));">
+			<option value="8,10">8x10</option>
+			<option value="6,10">4x6</option>
+			<option value="10,20">10x20</option>
+			<option value="20,20">20x20</option>
+			<option value="30,20">30x20</option>
+			<option value="40,20">40x20</option>	
+		</select>
+		<hr />
+		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrtg.start();blur()">start</button>
+		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrtg.moveX(-1);">left</button>
+		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrtg.moveX(1);">right</button>
+		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrtg.moveY(1);">down</button>
+		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrtg.moveBottom();">moveBottom</button>
+		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrtg.rotate(-1);">rotate left</button>
+		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrtg.rotate(1);">rotate right</button>
 		
 	</div>
 </body>
