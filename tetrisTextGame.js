@@ -29,7 +29,7 @@ var tetrisTextGame = (function(){
 		"create":function(x,y){
 			this.stop();
 			ttr.create(x,y);
-			$("#output").attr("rows",y+12)
+			$("#output").attr("rows",y+13)
 		},
 		"start":function(){
 			ttr.reset();
