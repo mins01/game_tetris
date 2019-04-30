@@ -1,17 +1,24 @@
 var Tetris = (function(){
 	var Tetris = function(){
-
+		this.init();
 	}
 	
 	Tetris.prototype ={
-		"init":function(w,h){
-			if(w==null) w = 10;
-			if(h==null) h = 24; //4는 여유부분
-			this.block=null;
-			this.board.create(w,h);
+		"init":function(){
+			this.block=null;	
 			this.ttmn.data = new Tetrimino();
+			this.score = 0;
+		},
+		"create":function(w,h){
+			if(w==null) w = 10;
+			if(h==null) h = 20;
+			if(h<4){h = 4;}
+			h+=4;//4는 테트리미노 여유 부분
+			this.board.create(w,h);
 			// this.ttmn.randomCreate();
 			this.ttmn.create();
+		},
+		"reset":function(){
 			this.score = 0;
 		},
 		"ttmn":{
@@ -155,6 +162,7 @@ var Tetris = (function(){
 			console.log("insertTetrimino",this.ttmn.x,this.ttmn.y)
 			var ys = this.board.searchFilledRow();
 			if(ys.length>0){
+				this.score += ys.length;
 				console.log("삭제될 ROW",ys);
 				this.board.map = this.board.removeRows(ys,this.board.w,this.board.map);
 			}
