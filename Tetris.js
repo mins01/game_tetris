@@ -7,6 +7,7 @@ var Tetris = (function(){
 		"init":function(){
 			this.block=null;	
 			this.ttmn.data = new Tetrimino();
+			this.ttmn.nextData = new Tetrimino();
 			this.ttmn.board = this.board;
 			this.score = 0;
 		},
@@ -19,24 +20,40 @@ var Tetris = (function(){
 			this.board.create(w,h);
 			// this.ttmn.randomCreate();			
 			this.reset();
-			this.draw();
+			
 		},
 		"reset":function(){
 			this.createTetrimino();
 			this.score = 0;
 			this.onScore(0,0);
 			this.board.clear();
+			this.draw();
 		},
 		"ttmn":{
 			"x":0,"y":0,
 			"data":null,"board":null,
-			"randomCreate":function(){
-				this.data.randomCreate(1,0);
-				this.x = Math.floor((this.board.w-this.data.w)/2);
-				this.y = 0;
-			},
+			"nextType":-1,
+			// "randomCreate":function(){
+			// 	if(this.nextType==-1){
+			// 		this.nextType = Math.floor(Math.random()*tetriminoMaps.count+1);
+			// 	}
+			// 
+			// 	this.data.create(this.nextType,0);
+			// 	this.nextType = Math.floor(Math.random()*tetriminoMaps.count+1);
+			// 	this.nextData.create(this.nextType,0);
+			// 
+			// 	// this.data.randomCreate(1,0);
+			// 	this.x = Math.floor((this.board.w-this.data.w)/2);
+			// 	this.y = 0;
+			// },
 			"create":function(){
-				this.data.create(1,0);
+				if(this.nextType==-1){
+					this.nextType = Math.floor(Math.random()*tetriminoMaps.count+1);
+				}
+				this.data.create(this.nextType,0);
+				this.nextType = Math.floor(Math.random()*tetriminoMaps.count+1);
+				this.nextData.create(this.nextType,0);
+				
 				this.x = Math.floor((this.board.w-this.data.w)/2);
 				this.y = 0;
 			},
@@ -60,11 +77,12 @@ var Tetris = (function(){
 				var msg = [];
 				//-- k-p 배열에서 p-k 배열로 만들어서 출력
 				for(var i=0,m=map.length;i<m;i+=this.w){
-					if(i/this.w < 4){
-						msg.push(' '+map.slice(i,i+this.w).join(',')+' ');
-					}else{
-						msg.push('|'+map.slice(i,i+this.w).join(',')+'|');	
-					}
+					// if(i/this.w < 4){
+					// 	msg.push('X'+map.slice(i,i+this.w).join(',')+'X');
+					// }else{
+					// 	msg.push('|'+map.slice(i,i+this.w).join(',')+'|');	
+					// }
+					msg.push('|'+map.slice(i,i+this.w).join(',')+'|');	
 				}
 				// console.log(msg.join("\n"));	
 				return msg.join("\n");
@@ -200,8 +218,8 @@ var Tetris = (function(){
 			
 		},
 		"createTetrimino":function(){
-			this.ttmn.randomCreate(); //새로운 블록 만들기
-			// this.ttmn.create(); //새로운 블록 만들기
+			// this.ttmn.randomCreate(); //새로운 블록 만들기
+			this.ttmn.create(); //새로운 블록 만들기
 		},
 		"onBottom":function(){
 			this.board.insertTetrimino(this.ttmn,this.ttmn.x,this.ttmn.y)
@@ -280,6 +298,9 @@ var Tetris = (function(){
 		},
 		"getBoardMap":function(){
 			return this.board.mapWithTetrimino(this.ttmn);
+		},
+		"getTtmnNextMap":function(){
+			return this.ttmn.nextData.map
 		},
 		"cbOnGameOver":function(){
 			console.log("GAMEOVER");

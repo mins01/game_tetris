@@ -72,8 +72,8 @@
 </head>
 <body>
 	<div class="container">
-		<h1>tetris</h1>
-		<textarea id="output" cols="20" rows="26" style="font-family:monospace;line-height:1em; text-align:center;width:100%;" readonly wrap="hard"></textarea>
+		<h1>tetris 		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrtg.start();blur()">start</button></h1>
+		<textarea id="output" cols="20" rows="30" style="font-family:monospace;line-height:1em; text-align:center;width:100%; font-size:16px;" readonly wrap="hard"></textarea>
 		<hr />
 		<select class="form-control" onchange="var x = this.value.split(',');ttrtg.create(parseInt(x[0]),parseInt(x[1]));">
 			<option value="8,10">8x10</option>
@@ -84,7 +84,6 @@
 			<option value="40,20">40x20</option>	
 		</select>
 		<hr />
-		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrtg.start();blur()">start</button>
 		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrtg.moveX(-1);">left</button>
 		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrtg.moveX(1);">right</button>
 		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrtg.moveY(1);">down</button>

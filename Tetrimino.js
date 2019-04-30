@@ -27,6 +27,14 @@ var Tetrimino = (function(){
 			this.r = (4+r)%4;
 			this.map = tetriminoMaps[this.type].map[this.r];
 		},
+		"format":function(map){
+			var msg = [];
+			//-- k-p 배열에서 p-k 배열로 만들어서 출력
+			for(var i=0,m=map.length;i<m;i+=this.w){
+				msg.push(map.slice(i,i+this.w).join(','));
+			}
+			return msg.join("\n");	
+		},
 		"print":function(){
 			var msg = [];
 			//-- k-p 배열에서 p-k 배열로 만들어서 출력
