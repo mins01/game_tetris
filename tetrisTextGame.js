@@ -75,26 +75,29 @@ var tetrisTextGame = (function(){
 		},
 		"onkeyDown":function(evt){
 			// console.log(evt.key)
+			var r = false;
 			switch (evt.key) {
 				case 'ArrowUp':	
-					this.rotate(1);
+					this.rotate(1);	r=true;
 				break;
 				case 'ArrowLeft':	
-					this.moveX(-1);
+					this.moveX(-1);	r=true;
 				break;
 				case 'ArrowRight':	
-					this.moveX(1);
+					this.moveX(1);	r=true;
 				break;
 				case 'ArrowDown':	
-					this.moveY(1);
+					this.moveY(1);	r=true;
 				break;
 				case ' ':	
-					this.moveBottom();
+					this.moveBottom();	r=true;
 				break;
 				default:
 			}
-			evt.stopPropagation()
-			evt.preventDefault ()
+			if(r){
+				evt.stopPropagation()
+				evt.preventDefault ()	
+			}			
 			return false;
 		}
 	};
