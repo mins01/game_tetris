@@ -24,7 +24,8 @@ var tetrisTextGame = (function(){
 			var ttmnNextMap = ttr.getTtmnNextMap();
 			var str = "";
 
-			str+="ＳＣＯＲＥ　：　"+ttr.score+"\n";
+			str+="LEVEL : "+ttr.level.level+"\n";
+			str+="SCORE : "+ttr.score+"\n";
 			str += "┗━ＮＥＸＴ"+(new Array(ttr.board.w-5)).fill("━").join("")+"┛"+"\n";
 			var nextTtmn = ttr.ttmn.nextData.format(ttmnNextMap).replace(/0/g,'　').replace(/,/g,'').replace(/\d/g,'■')
 			if(ttr.ttmn.nextData.h==2){
@@ -39,11 +40,11 @@ var tetrisTextGame = (function(){
 			}
 			str +="\n";
 			str += "┏"+(new Array(ttr.board.w)).fill("━").join("")+"┓"+"\n";
-			str += ttr.board.format(mapU).replace(/0/g,'▤').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│")+"\n";
+			str += ttr.board.format(mapU).replace(/0/g,'◇').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│")+"\n";
 			// str += "┠"+(new Array(ttr.board.w)).fill("▽").join("")+"┨"+"\n";
 			str += ttr.board.format(mapD).replace(/0/g,'□').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│");;
 			str +="\n";
-			str += "┗"+(new Array(ttr.board.w)).fill("━").join("")+"┛"+"\n";
+			str += "┗"+(new Array(ttr.board.w)).fill("━").join("")+"┛";
 
 			$("#output").val(str);
 		},

@@ -5,12 +5,16 @@ var Tetris = (function(){
 
 	Tetris.prototype ={
 		"init":function(){
+			var thisC = this
 			this.block=null;
 			this.ttmn.data = new Tetrimino();
 			this.ttmn.nextData = new Tetrimino();
 			this.ttmn.board = this.board;
 			this.score = 0;
 			this.gaming = false;
+			this.level.cbOnLevelUp = function(){
+				thisC.resume();
+			}
 		},
 		"create":function(w,h){
 			if(w==null) w = 10;
@@ -30,21 +34,47 @@ var Tetris = (function(){
 			this.board.clear();
 			this.draw();
 			this.timer.stop();
+			this.level.level = 1;
+			this.level.timer = this.timer;
 		},
 		"timer":{
 			"tm":null,
 			"fn":null,
 			"start":function(fn,interval){
-				console.log("timer.start")
+				// console.log("timer.start")
 				this.stop();
 				this.tm = setInterval(function(){fn()}, interval);
 			},
 			"stop":function(){
-				console.log("timer.stop")
+				// console.log("timer.stop")
 				if(this.tm != null) {
 					clearInterval(this.tm);
 					this.tm = null;
 				}
+			}
+		},
+		"level":{
+			"level":0,
+			"timer":null,
+			"intervalMoveY":2000,
+			"intervalSleep":2000,
+			"cbOnLevelUp":function(l){
+			},
+			"onLevelUp":function(l){
+				this.cbOnLevelUp(l)
+				console.log("levelUP : ",l);
+			},
+			"levelUp":function(l){
+				this.level = l;
+				this.onLevelUp(this.level);
+			},
+			"checkLevelUp":function(score){
+				var l = Math.floor(score/10)+1;
+				if(this.level != l){
+					this.levelUp(l);
+					return true;
+				}
+				return false;
 			}
 		},
 		"ttmn":{
@@ -217,6 +247,7 @@ var Tetris = (function(){
 		},
 		"onScore":function(score,gap){
 			this.cbOnScore(score,gap);
+			this.level.checkLevelUp(score);
 			this.draw();
 		},
 		"cbOnBottom":function(){
@@ -228,7 +259,7 @@ var Tetris = (function(){
 		},
 		"onBottom":function(){
 			this.board.insertTetrimino(this.ttmn,this.ttmn.x,this.ttmn.y)
-			console.log("insertTetrimino",this.ttmn.x,this.ttmn.y)
+			// console.log("insertTetrimino",this.ttmn.x,this.ttmn.y)
 			var ys = this.board.searchFilledRow();
 			if(ys.length>0){
 				this.score += ys.length;
@@ -341,13 +372,16 @@ var Tetris = (function(){
 			this.resume()
 
 		},
+		"fnMoveY":function(){
+			var thisC = this;
+			return function(){
+				// console.log("moveY(1)");
+				thisC.moveY(1);
+			}
+		},
 		"resume":function(){
 			this.gaming = true;
-			var thisC = this;
-			this.timer.start(function(){
-				console.log("moveY(1)");
-				thisC.moveY(1);
-			},1000);
+			this.timer.start(this.fnMoveY(),this.level.intervalMoveY/this.level.level);
 		},
 		"sleep":function(){
 			var thisC = this;
