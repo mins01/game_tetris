@@ -7,16 +7,16 @@
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	
+
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
+
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-28167507-1"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
-		
+
 		gtag('config', 'UA-28167507-1');
 	</script>
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -28,19 +28,19 @@
 	</script>
 	 -->
 	<!-- jquery 관련 -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>  
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
 
 
 	<!-- 부트스트랩 4 : IE8지원안됨! -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous"> 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script> 
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
 	<!-- vue.js -->
 	<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
 
-	
+
 	<!-- meta og -->
-	
+
 	<meta property="og:title" content="tetris">
 	<meta property="og:description" content="tetris">
 	<meta name="og:image" content="tetris.png">
@@ -48,9 +48,9 @@
 	<meta property="og:image:height" content="349" />
 	<meta property="og:site_name" content="tetris" />
 	<meta property="og:type" content="game">
-	
+
 	<!-- //meta og -->
-	
+
 	<script src="Tetris.js"></script>
 	<script src="Tetrimino.js"></script>
 	<script src="tetriminoMaps.js"></script>
@@ -66,14 +66,14 @@
 			ttrtg.onkeyDown(event)
 		})
 	})
-	
+
 	</script>
-	
+
 </head>
 <body>
 	<div class="container">
 		<h1>tetris 		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrtg.start();blur()">start</button></h1>
-		<textarea id="output" cols="20" rows="30" style="font-family:monospace;line-height:1em; text-align:center;width:100%; font-size:16px;" readonly wrap="hard"></textarea>
+		<textarea id="output" cols="20" rows="30" style="font-family:'Droid Sans Mono',monospace,Monaco,'Lucida Console',Courier ;line-height:1em; text-align:center;width:100%; font-size:16px;" readonly wrap="hard"></textarea>
 		<hr />
 		<select class="form-control" onchange="var x = this.value.split(',');ttrtg.create(parseInt(x[0]),parseInt(x[1]));">
 			<option value="8,10">8x10</option>
@@ -81,7 +81,7 @@
 			<option value="10,20">10x20</option>
 			<option value="20,20">20x20</option>
 			<option value="30,20">30x20</option>
-			<option value="40,20">40x20</option>	
+			<option value="40,20">40x20</option>
 		</select>
 		<hr />
 		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrtg.moveX(-1);">left</button>
@@ -90,7 +90,7 @@
 		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrtg.moveBottom();">moveBottom</button>
 		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrtg.rotate(-1);">rotate left</button>
 		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrtg.rotate(1);">rotate right</button>
-		
+
 	</div>
 </body>
 </html>

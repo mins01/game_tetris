@@ -1,6 +1,6 @@
 var tetrisTextGame = (function(){
 	var ttr = new Tetris();
-	
+
 	var timer = {
 		"tm":null,
 		"fn":null,
@@ -19,7 +19,7 @@ var tetrisTextGame = (function(){
 			if(this.tm) clearInterval(this.tm);
 		}
 	};
-	
+
 	var tetrisTextGame = {
 		"ttr":ttr,
 		"timer":timer,
@@ -56,28 +56,28 @@ var tetrisTextGame = (function(){
 			var mapD = map.slice(ttr.board.w*4);
 			var ttmnNextMap = ttr.getTtmnNextMap();
 			var str = "";
-			
+
 			str+="ＳＣＯＲＥ　：　"+ttr.score+"\n";
 			str += "┗━ＮＥＸＴ"+(new Array(ttr.board.w-5)).fill("━").join("")+"┛"+"\n";
 			var nextTtmn = ttr.ttmn.nextData.format(ttmnNextMap).replace(/0/g,'　').replace(/,/g,'').replace(/\d/g,'■')
 			if(ttr.ttmn.nextData.h==2){
-				str +="\n";	
+				str +="\n";
 				str += nextTtmn
-				str +="\n";	
+				str +="\n";
 			}else if(ttr.ttmn.nextData.h==3){
-				str +="\n";	
+				str +="\n";
 				str += nextTtmn;
 			}else{
 				str += nextTtmn;
 			}
 			str +="\n";
 			str += "┏"+(new Array(ttr.board.w)).fill("━").join("")+"┓"+"\n";
-			str += ttr.board.format(mapU).replace(/0/g,'　').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│")+"\n";
+			str += ttr.board.format(mapU).replace(/0/g,'□').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│")+"\n";
 			// str += "┠"+(new Array(ttr.board.w)).fill("▽").join("")+"┨"+"\n";
 			str += ttr.board.format(mapD).replace(/0/g,'□').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│");;
 			str +="\n";
 			str += "┗"+(new Array(ttr.board.w)).fill("━").join("")+"┛"+"\n";
-			
+
 			$("#output").val(str);
 		},
 		"moveX":function(x){
@@ -100,27 +100,27 @@ var tetrisTextGame = (function(){
 			// console.log(evt.key)
 			var r = false;
 			switch (evt.key) {
-				case 'ArrowUp':	
+				case 'ArrowUp':
 					this.rotate(1);	r=true;
 				break;
-				case 'ArrowLeft':	
+				case 'ArrowLeft':
 					this.moveX(-1);	r=true;
 				break;
-				case 'ArrowRight':	
+				case 'ArrowRight':
 					this.moveX(1);	r=true;
 				break;
-				case 'ArrowDown':	
+				case 'ArrowDown':
 					this.moveY(1);	r=true;
 				break;
-				case ' ':	
+				case ' ':
 					this.moveBottom();	r=true;
 				break;
 				default:
 			}
 			if(r){
 				evt.stopPropagation()
-				evt.preventDefault ()	
-			}			
+				evt.preventDefault ()
+			}
 			return false;
 		}
 	};
@@ -149,6 +149,6 @@ var tetrisTextGame = (function(){
 		tetrisTextGame.gameOver()
 	}
 
-	
+
 	return tetrisTextGame;
-})() 
+})()
