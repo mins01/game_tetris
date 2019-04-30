@@ -54,11 +54,14 @@
 	<script src="Tetris.js"></script>
 	<script src="Tetrimino.js"></script>
 	<script src="tetriminoMaps.js"></script>
+	<script src="tetrisTextGame.js"></script>
 	<script>
-	var ttr = new Tetris();
+	var ttrtg = tetrisTextGame;
+	// var ttr = new Tetris();
 	$(function(){
-		ttr.create(8,10);
-		ttr.print();
+		// ttr.create(8,10);
+		// ttr.print();
+		ttrtg.create(8,10);
 	})
 	
 	</script>
@@ -67,15 +70,15 @@
 <body>
 	<div class="container">
 		<h1>tetris</h1>
-		<textarea id="output" cols="20" rows="24"></textarea>
+		<textarea id="output" cols="20" rows="24" style="font-family:monospace"></textarea>
 		<br />
-		<button type="button" class="btn btn-info m-1" onclick="ttr.moveX(-1);ttr.print()">left</button>
-		<button type="button" class="btn btn-info m-1" onclick="ttr.moveX(1);ttr.print()">right</button>
-		<button type="button" class="btn btn-info m-1" onclick="ttr.moveY(1);ttr.print()">down</button>
-		<button type="button" class="btn btn-info m-1" onclick="ttr.toBottom();ttr.print()">toBottom</button>
+		<button type="button" class="btn btn-info m-1" onclick="ttrtg.moveX(-1);">left</button>
+		<button type="button" class="btn btn-info m-1" onclick="ttrtg.moveX(1);">right</button>
+		<button type="button" class="btn btn-info m-1" onclick="ttrtg.moveY(1);">down</button>
+		<button type="button" class="btn btn-info m-1" onclick="ttrtg.moveBottom();">moveBottom</button>
 		<br />
-		<button type="button" class="btn btn-info m-1" onclick="ttr.rotate(-1);ttr.print()">rotate left</button>
-		<button type="button" class="btn btn-info m-1" onclick="ttr.rotate(1);ttr.print()">rotate right</button>
+		<button type="button" class="btn btn-info m-1" onclick="ttrtg.rotate(-1);">rotate left</button>
+		<button type="button" class="btn btn-info m-1" onclick="ttrtg.rotate(1);">rotate right</button>
 		
 		
 	</div>

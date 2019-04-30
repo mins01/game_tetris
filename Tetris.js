@@ -46,7 +46,7 @@ var Tetris = (function(){
 				this.map = new Array(w*h);
 				this.map.fill(0);
 			},
-			"print":function(map){
+			"format":function(map){
 				if(map == null ) map= this.map;
 				var msg = [];
 				//-- k-p 배열에서 p-k 배열로 만들어서 출력
@@ -56,16 +56,13 @@ var Tetris = (function(){
 				// console.log(msg.join("\n"));	
 				return msg.join("\n");
 			},
-			"mapWithTetrimino":function(ttmn,x,y){
-				if(!this.checkTetrimino(ttmn,x,y)){
-					// return false;
-				}
-				var map = this.map.slice(0);
+			"mergeWithTetrimino":function(map,ttmn,x,y){
+				// var map = this.map.slice(0);
 				for(var iy=0,my=ttmn.data.h;iy<my;iy++){
 					var mapY = y+iy;
 					if(mapY<0){ continue;}
 					var arr = ttmn.data.map.slice(iy*ttmn.data.w,iy*ttmn.data.w+ttmn.data.w);	
-					console.log(arr);
+					// console.log(arr);
 					for(var ix=0,mx=arr.length;ix<mx;ix++){
 						var mapX = x+ix;
 						if(arr[ix]==0){continue;}
@@ -74,33 +71,25 @@ var Tetris = (function(){
 				}
 				return map
 			},
+			"mapWithTetrimino":function(ttmn){
+				var map = this.map.slice(0);
+				return this.mergeWithTetrimino(map,ttmn,ttmn.x,ttmn.y);
+			},
 			"insertTetrimino":function(ttmn,x,y){
 				if(!this.checkTetrimino(ttmn,x,y)){
 					return false;
 				}
 				var map = this.map;
-				for(var iy=0,my=ttmn.data.h;iy<my;iy++){
-					var mapY = y+iy;
-					if(mapY<0){ continue;}
-					var arr = ttmn.data.map.slice(iy*ttmn.data.w,iy*ttmn.data.w+ttmn.data.w);	
-					console.log(arr);
-					for(var ix=0,mx=arr.length;ix<mx;ix++){
-						var mapX = x+ix;
-						if(arr[ix]==0){continue;}
-						map[mapY*this.w + mapX] = arr[ix];
-					}
-				}
-				this.print(map);
+				return this.mergeWithTetrimino(map,ttmn,x,y);
+
 			},
 			"checkTetrimino":function(ttmn,x,y){
-				// var x = ttmn.x;
-				// var y = ttmn.y;
 				var map = this.map.slice(0);
 				for(var iy=0,my=ttmn.data.h;iy<my;iy++){
 					var mapY = y+iy;
 					if(mapY<0){ continue;}
 					if(mapY>this.h){
-						console.error('checkOverTetrimino range-out Y',mapY);
+						console.warn('checkOverTetrimino range-out Y',mapY);
 						return false;
 					}
 					var arr = ttmn.data.map.slice(iy*ttmn.data.w,iy*ttmn.data.w+ttmn.data.w);	
@@ -111,16 +100,16 @@ var Tetris = (function(){
 							continue;
 						}
 						if(mapX < 0 || mapX >= this.w){
-							console.error('checkOverTetrimino range-out X',mapX,mapY);
+							console.warn('checkOverTetrimino range-out X',mapX,mapY);
 							return false;
 						}
 						
 						console.log(mapX,mapY);
 						if(mapY*this.w + mapX >= map.length){
-							console.error('checkOverTetrimino range-out Y 2',mapY);
+							console.warn('checkOverTetrimino range-out Y 2',mapY);
 							return false;
 						}else if(map[mapY*this.w + mapX]!= 0){
-							console.error('checkOverTetrimino',mapX,mapY);
+							console.warn('checkOverTetrimino',mapX,mapY);
 							return false;
 						}
 					}
@@ -152,10 +141,38 @@ var Tetris = (function(){
 				return map;
 			},
 		},
+		"cbOnDraw":function(board,ttmn){
+			var map = board.mapWithTetrimino(ttmn);
+			console.log(board.format(map));
+		},
+		"onDraw":function(board,ttmn){
+			this.cbOnDraw(board,ttmn);
+		},
+		"draw":function(){
+			this.onDraw(this.board,this.ttmn);
+		},		
+		"cbOnMoveX":function(n){
+			
+		},
+		"onMoveX":function(n){
+			this.cbOnMoveX(n);
+			this.draw();
+		},
 		"moveX":function(n){
 			if(this.board.checkTetrimino(this.ttmn,this.ttmn.x+n,this.ttmn.y)){
 				this.ttmn.x = this.ttmn.x+n;
+				this.onMoveX(n);
 			}
+		},
+		"cbOnScore":function(score,gap){
+			
+		},
+		"onScore":function(score,gap){
+			this.cbOnScore(score,gap);
+			this.draw();
+		},
+		"cbOnBottom":function(){
+			
 		},
 		"onBottom":function(){
 			this.board.insertTetrimino(this.ttmn,this.ttmn.x,this.ttmn.y)
@@ -163,21 +180,32 @@ var Tetris = (function(){
 			var ys = this.board.searchFilledRow();
 			if(ys.length>0){
 				this.score += ys.length;
-				console.log("삭제될 ROW",ys);
+				this.onScore(this.score,ys.length);
+				// console.log("삭제될 ROW",ys);
 				this.board.map = this.board.removeRows(ys,this.board.w,this.board.map);
 			}
-			
 			// this.ttmn.randomCreate(); //새로운 블록 만들기
 			this.ttmn.create(); //새로운 블록 만들기
+			this.cbOnBottom();
+			this.draw();
+		},
+		"cbOnMoveY":function(){
+			
+		},
+		"onMoveY":function(n){
+			this.cbOnMoveY();
+			this.draw();
 		},
 		"moveY":function(n){
 			if(this.board.checkTetrimino(this.ttmn,this.ttmn.x,this.ttmn.y+n)){
 				this.ttmn.y = this.ttmn.y+n;
+				this.onMoveY(n);
 			}else{
+				this.onMoveY(n);
 				this.onBottom();
 			}
 		},
-		"toBottom":function(){
+		"moveBottom":function(){
 			var y = this.ttmn.y;
 			while(this.board.checkTetrimino(this.ttmn,this.ttmn.x,++y)){
 				
@@ -185,8 +213,15 @@ var Tetris = (function(){
 			this.ttmn.y= y-1;
 			this.onBottom();
 		},
+		"cbOnRotate":function(r){
+			
+		},
+		"onRotate":function(r){
+			this.cbOnRotate(r);
+			this.draw();
+		},
 		"rotate":function(r){
-			if(r==0) return;
+			if(r==0) return true;
 			this.ttmn.rotate(r);
 			if(!this.board.checkTetrimino(this.ttmn,this.ttmn.x,this.ttmn.y)){
 				if(this.board.checkTetrimino(this.ttmn,this.ttmn.x-1,this.ttmn.y)){
@@ -198,17 +233,21 @@ var Tetris = (function(){
 				}else if(this.board.checkTetrimino(this.ttmn,this.ttmn.x+2,this.ttmn.y)){
 					this.ttmn.x = this.ttmn.x+2
 				}else{
-					this.ttmn.rotate(r*-1);	
+					this.ttmn.rotate(r*-1); //회전 불가
+					return false;
 				}
-				
 			}
-			return false;
+			this.onRotate(r);
+			return true;
 		},
 		"print":function(){
-			var map = this.board.mapWithTetrimino(this.ttmn,this.ttmn.x,this.ttmn.y);
+			var map = this.getBoardMap();
 			if(map !== false){
-				$("#output").val(this.board.print(map));
+				$("#output").val(this.board.format(map));
 			}			
+		},
+		"getBoardMap":function(){
+			return this.board.mapWithTetrimino(this.ttmn);
 		},
 		"test":function(){
 			for(var i=0,m=this.board.w;i<m-1;i++){
