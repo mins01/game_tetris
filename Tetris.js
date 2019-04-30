@@ -1,3 +1,4 @@
+"use strict"
 var Tetris = (function(){
 	var Tetris = function(){
 		this.init();
@@ -32,10 +33,11 @@ var Tetris = (function(){
 			this.score = 0;
 			this.onScore(0,0);
 			this.board.clear();
-			this.draw();
+
 			this.timer.stop();
 			this.level.level = 1;
 			this.level.timer = this.timer;
+			this.draw();
 		},
 		"timer":{
 			"tm":null,
@@ -237,6 +239,8 @@ var Tetris = (function(){
 			this.draw();
 		},
 		"moveX":function(n){
+			if(!this.gaming){return;}
+			if(n==0){return;}
 			if(this.board.checkTetrimino(this.ttmn,this.ttmn.x+n,this.ttmn.y)){
 				this.ttmn.x = this.ttmn.x+n;
 				this.onMoveX(n);
@@ -285,6 +289,9 @@ var Tetris = (function(){
 			this.draw();
 		},
 		"moveY":function(n){
+			if(!this.gaming){return;}
+			if(n==0){return;}
+
 			if(this.board.checkTetrimino(this.ttmn,this.ttmn.x,this.ttmn.y+n)){
 				this.ttmn.y = this.ttmn.y+n;
 				this.onMoveY(n);
@@ -294,6 +301,7 @@ var Tetris = (function(){
 			}
 		},
 		"moveBottom":function(){
+			if(!this.gaming){return;}
 			var y = this.ttmn.y;
 			while(this.board.checkTetrimino(this.ttmn,this.ttmn.x,++y)){
 
@@ -344,11 +352,12 @@ var Tetris = (function(){
 			console.log("GAMEOVER");
 		},
 		"onGameOver":function(){
+			this.gaming=false;
 			this.timer.stop();
 			this.cbOnGameOver();
 		},
 		"checkGameOver":function(){
-			if(this.board.isGameOver()){
+			if(this.gaming && this.board.isGameOver()){
 				this.onGameOver();
 				return true;
 			}
@@ -369,6 +378,7 @@ var Tetris = (function(){
 		},
 		"start":function(){
 			this.reset();
+			this.gaming = true;
 			this.resume()
 
 		},
@@ -380,8 +390,8 @@ var Tetris = (function(){
 			}
 		},
 		"resume":function(){
-			this.gaming = true;
 			this.timer.start(this.fnMoveY(),this.level.intervalMoveY/this.level.level);
+			this.draw()
 		},
 		"sleep":function(){
 			var thisC = this;
@@ -396,7 +406,6 @@ var Tetris = (function(){
 
 		},
 		"stop":function(){
-			this.gaming = false;
 			this.timer.stop();
 		},
 

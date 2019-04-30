@@ -1,3 +1,4 @@
+"use strict"
 var tetrisTextGame = (function(){
 	var ttr = new Tetris();
 
@@ -17,6 +18,9 @@ var tetrisTextGame = (function(){
 		"stop":function(){
 			ttr.stop();
 		},
+		"gameOver":function(){
+			ttr.gameOver();
+		},
 		"draw":function(){
 			var map = ttr.getBoardMap();
 			var mapU = map.slice(0,(ttr.board.w*4));
@@ -25,23 +29,26 @@ var tetrisTextGame = (function(){
 			var str = "";
 
 			str+="LEVEL : "+ttr.level.level+"\n";
-			str+="SCORE : "+ttr.score+"\n";
-			str += "┗━ＮＥＸＴ"+(new Array(ttr.board.w-5)).fill("━").join("")+"┛"+"\n";
-			var nextTtmn = ttr.ttmn.nextData.format(ttmnNextMap).replace(/0/g,'　').replace(/,/g,'').replace(/\d/g,'■')
-			if(ttr.ttmn.nextData.h==2){
-				str +="\n";
-				str += nextTtmn
-				str +="\n";
-			}else if(ttr.ttmn.nextData.h==3){
-				str +="\n";
-				str += nextTtmn;
+			if(ttr.gaming){
+				str+="SCORE : "+ttr.score+"\n";
 			}else{
-				str += nextTtmn;
+				str+="END SCORE : "+ttr.score+"\n";
 			}
+
+			str += "┣ＮＥＸＴ"+(new Array(ttr.board.w-4)).fill("━").join("")+"┫"+"\n";
+			var mapNext = (new Array(ttr.board.w*4)).fill(0);
+			var ttmn = {
+				"data":ttr.ttmn.nextData
+			}
+			var x = Math.floor((ttr.board.w-ttr.ttmn.nextData.w)/2);
+			var y = (ttr.ttmn.nextData.w==2)?1:(ttr.ttmn.nextData.w==3)?1:0;
+			mapNext = ttr.board.mergeWithTetrimino(mapNext,ttmn,x,y);
+			// console.log(mapNext);
+			str += ttr.board.format(mapNext).replace(/0/g,'◆').replace(/,/g,'').replace(/\d/g,'□').replace(/\|/g,"┃").replace(/X/g,"│");
 			str +="\n";
-			str += "┏"+(new Array(ttr.board.w)).fill("━").join("")+"┓"+"\n";
-			str += ttr.board.format(mapU).replace(/0/g,'◇').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│")+"\n";
-			// str += "┠"+(new Array(ttr.board.w)).fill("▽").join("")+"┨"+"\n";
+			str += "┣"+(new Array(ttr.board.w)).fill("━").join("")+"┫"+"\n";
+			str += ttr.board.format(mapU).replace(/0/g,'▩').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│");
+			str +="\n";
 			str += ttr.board.format(mapD).replace(/0/g,'□').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│");;
 			str +="\n";
 			str += "┗"+(new Array(ttr.board.w)).fill("━").join("")+"┛";
@@ -59,10 +66,6 @@ var tetrisTextGame = (function(){
 		}		,
 		"rotate":function(r) {
 			ttr.rotate(r);
-		},
-		"gameOver":function(){
-			this.stop();
-			setTimeout(function(){ alert("GameOver"); } ,0);
 		},
 		"onkeyDown":function(evt){
 			// console.log(evt.key)
@@ -115,7 +118,7 @@ var tetrisTextGame = (function(){
 		console.log("scoreUP : +"+gap+ " = "+newScore)
 	}
 	ttr.cbOnGameOver = function(newScore,gap){
-		tetrisTextGame.gameOver()
+		tetrisTextGame.draw();
 	}
 
 

@@ -9,7 +9,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+	<link rel="shortcut icon" href="http://www.mins01.com/favicon.ico">
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-28167507-1"></script>
 	<script>
@@ -70,10 +70,13 @@
 	<script src="Tetrimino.js"></script>
 	<script src="tetriminoMaps.js"></script>
 	<script src="tetrisTextGame.js"></script>
+	<script src="GamepadLayout.js"></script>
+
 	<script>
 	var ttrtg = tetrisTextGame;
 	// var ttr = new Tetris();
 	$(function(){
+		GamepadLayout.init();
 		// ttr.create(8,10);
 		// ttr.print();
 		ttrtg.create(8,10);
