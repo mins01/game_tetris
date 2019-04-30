@@ -2,14 +2,15 @@ var Tetris = (function(){
 	var Tetris = function(){
 		this.init();
 	}
-	
+
 	Tetris.prototype ={
 		"init":function(){
-			this.block=null;	
+			this.block=null;
 			this.ttmn.data = new Tetrimino();
 			this.ttmn.nextData = new Tetrimino();
 			this.ttmn.board = this.board;
 			this.score = 0;
+			this.gaming = false;
 		},
 		"create":function(w,h){
 			if(w==null) w = 10;
@@ -18,9 +19,9 @@ var Tetris = (function(){
 			h+=4;//4는 테트리미노 여유 부분
 			console.log("create",w,h);
 			this.board.create(w,h);
-			// this.ttmn.randomCreate();			
+			// this.ttmn.randomCreate();
 			this.reset();
-			
+
 		},
 		"reset":function(){
 			this.createTetrimino();
@@ -28,24 +29,28 @@ var Tetris = (function(){
 			this.onScore(0,0);
 			this.board.clear();
 			this.draw();
+			this.timer.stop();
+		},
+		"timer":{
+			"tm":null,
+			"fn":null,
+			"start":function(fn,interval){
+				console.log("timer.start")
+				this.stop();
+				this.tm = setInterval(function(){fn()}, interval);
+			},
+			"stop":function(){
+				console.log("timer.stop")
+				if(this.tm != null) {
+					clearInterval(this.tm);
+					this.tm = null;
+				}
+			}
 		},
 		"ttmn":{
 			"x":0,"y":0,
 			"data":null,"board":null,
-			"nextType":-1,
-			// "randomCreate":function(){
-			// 	if(this.nextType==-1){
-			// 		this.nextType = Math.floor(Math.random()*tetriminoMaps.count+1);
-			// 	}
-			// 
-			// 	this.data.create(this.nextType,0);
-			// 	this.nextType = Math.floor(Math.random()*tetriminoMaps.count+1);
-			// 	this.nextData.create(this.nextType,0);
-			// 
-			// 	// this.data.randomCreate(1,0);
-			// 	this.x = Math.floor((this.board.w-this.data.w)/2);
-			// 	this.y = 0;
-			// },
+			"nextType":0,
 			"create":function(){
 				if(this.nextType==-1){
 					this.nextType = Math.floor(Math.random()*tetriminoMaps.count+1);
@@ -53,7 +58,7 @@ var Tetris = (function(){
 				this.data.create(this.nextType,0);
 				this.nextType = Math.floor(Math.random()*tetriminoMaps.count+1);
 				this.nextData.create(this.nextType,0);
-				
+
 				this.x = Math.floor((this.board.w-this.data.w)/2);
 				this.y = 0;
 			},
@@ -80,11 +85,11 @@ var Tetris = (function(){
 					// if(i/this.w < 4){
 					// 	msg.push('X'+map.slice(i,i+this.w).join(',')+'X');
 					// }else{
-					// 	msg.push('|'+map.slice(i,i+this.w).join(',')+'|');	
+					// 	msg.push('|'+map.slice(i,i+this.w).join(',')+'|');
 					// }
-					msg.push('|'+map.slice(i,i+this.w).join(',')+'|');	
+					msg.push('|'+map.slice(i,i+this.w).join(',')+'|');
 				}
-				// console.log(msg.join("\n"));	
+				// console.log(msg.join("\n"));
 				return msg.join("\n");
 			},
 			"mergeWithTetrimino":function(map,ttmn,x,y){
@@ -92,7 +97,7 @@ var Tetris = (function(){
 				for(var iy=0,my=ttmn.data.h;iy<my;iy++){
 					var mapY = y+iy;
 					if(mapY<0){ continue;}
-					var arr = ttmn.data.map.slice(iy*ttmn.data.w,iy*ttmn.data.w+ttmn.data.w);	
+					var arr = ttmn.data.map.slice(iy*ttmn.data.w,iy*ttmn.data.w+ttmn.data.w);
 					// console.log(arr);
 					for(var ix=0,mx=arr.length;ix<mx;ix++){
 						var mapX = x+ix;
@@ -123,7 +128,7 @@ var Tetris = (function(){
 						console.warn('checkOverTetrimino range-out Y',mapY);
 						return false;
 					}
-					var arr = ttmn.data.map.slice(iy*ttmn.data.w,iy*ttmn.data.w+ttmn.data.w);	
+					var arr = ttmn.data.map.slice(iy*ttmn.data.w,iy*ttmn.data.w+ttmn.data.w);
 					// console.log(arr);
 					for(var ix=0,mx=arr.length;ix<mx;ix++){
 						var mapX = x+ix;
@@ -134,7 +139,7 @@ var Tetris = (function(){
 							console.warn('checkOverTetrimino range-out X',mapX,mapY);
 							return false;
 						}
-						
+
 						// console.log(mapX,mapY);
 						if(mapY*this.w + mapX >= map.length){
 							console.warn('checkOverTetrimino range-out Y 2',mapY);
@@ -195,7 +200,7 @@ var Tetris = (function(){
 			this.onDraw(this.board,this.ttmn);
 		},
 		"cbOnMoveX":function(n){
-			
+
 		},
 		"onMoveX":function(n){
 			this.cbOnMoveX(n);
@@ -208,14 +213,14 @@ var Tetris = (function(){
 			}
 		},
 		"cbOnScore":function(score,gap){
-			
+
 		},
 		"onScore":function(score,gap){
 			this.cbOnScore(score,gap);
 			this.draw();
 		},
 		"cbOnBottom":function(){
-			
+
 		},
 		"createTetrimino":function(){
 			// this.ttmn.randomCreate(); //새로운 블록 만들기
@@ -232,15 +237,17 @@ var Tetris = (function(){
 				this.board.map = this.board.removeRows(ys,this.board.w,this.board.map);
 			}
 			if(this.checkGameOver()){
-				
+
 			}else{
 				this.createTetrimino();
-				this.cbOnBottom();	
+				this.cbOnBottom();
 			}
+			this.sleep();
 			this.draw();
+
 		},
 		"cbOnMoveY":function(){
-			
+
 		},
 		"onMoveY":function(n){
 			this.cbOnMoveY();
@@ -258,13 +265,13 @@ var Tetris = (function(){
 		"moveBottom":function(){
 			var y = this.ttmn.y;
 			while(this.board.checkTetrimino(this.ttmn,this.ttmn.x,++y)){
-				
+
 			}
 			this.ttmn.y= y-1;
 			this.onBottom();
 		},
 		"cbOnRotate":function(r){
-			
+
 		},
 		"onRotate":function(r){
 			this.cbOnRotate(r);
@@ -294,7 +301,7 @@ var Tetris = (function(){
 			var map = this.getBoardMap();
 			if(map !== false){
 				$("#output").val(this.board.format(map));
-			}			
+			}
 		},
 		"getBoardMap":function(){
 			return this.board.mapWithTetrimino(this.ttmn);
@@ -306,6 +313,7 @@ var Tetris = (function(){
 			console.log("GAMEOVER");
 		},
 		"onGameOver":function(){
+			this.timer.stop();
 			this.cbOnGameOver();
 		},
 		"checkGameOver":function(){
@@ -315,17 +323,49 @@ var Tetris = (function(){
 			}
 			return false;
 		},
+		"gameOver":function(){
+			this.onGameOver();
+		},
 		"test":function(){
 			for(var i=0,m=this.board.w;i<m-1;i++){
-				this.board.map[this.board.w*(this.board.h-1) +i]=2;	
+				this.board.map[this.board.w*(this.board.h-1) +i]=2;
 			}
-			this.board.map[this.board.w*(this.board.h-2) +3]=2;	
+			this.board.map[this.board.w*(this.board.h-2) +3]=2;
 			for(var i=0,m=this.board.w;i<m-1;i++){
-				this.board.map[this.board.w*(this.board.h-3) +i]=2;	
+				this.board.map[this.board.w*(this.board.h-3) +i]=2;
 			}
-			
-		}
-		
+
+		},
+		"start":function(){
+			this.reset();
+			this.resume()
+
+		},
+		"resume":function(){
+			this.gaming = true;
+			var thisC = this;
+			this.timer.start(function(){
+				console.log("moveY(1)");
+				thisC.moveY(1);
+			},1000);
+		},
+		"sleep":function(){
+			var thisC = this;
+			if(this.gaming){
+				this.timer.start(function(){
+					thisC.resume();
+					console.log("sleep");
+				},1000);
+			}else{
+				this.timer.stop();
+			}
+
+		},
+		"stop":function(){
+			this.gaming = false;
+			this.timer.stop();
+		},
+
 	}
 	return Tetris;
 })()

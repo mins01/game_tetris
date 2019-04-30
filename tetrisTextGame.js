@@ -1,28 +1,8 @@
 var tetrisTextGame = (function(){
 	var ttr = new Tetris();
 
-	var timer = {
-		"tm":null,
-		"fn":null,
-		"setFn":function(fn){
-			this.fn = function(){
-				fn();
-			};
-		},
-		"start":function(interval,fn){
-			console.log("start")
-			this.stop();
-			this.tm = setInterval(function(){fn()}, interval);
-		},
-		"stop":function(){
-			console.log("clear")
-			if(this.tm) clearInterval(this.tm);
-		}
-	};
-
 	var tetrisTextGame = {
 		"ttr":ttr,
-		"timer":timer,
 		"init":function(){
 			this.ttr = new Tetris();
 		},
@@ -32,23 +12,10 @@ var tetrisTextGame = (function(){
 			$("#output").attr("rows",y+13)
 		},
 		"start":function(){
-			ttr.reset();
-			this.resume()
-		},
-		"resume":function(){
-			timer.start(1000,function(){
-				console.log("moveY(1)");
-				tetrisTextGame.moveY(1);
-			});
-		},
-		"sleep":function(){
-			timer.start(2000,function(){
-				tetrisTextGame.resume();
-				console.log("sleep");
-			});
+			ttr.start()
 		},
 		"stop":function(){
-			timer.stop();
+			ttr.stop();
 		},
 		"draw":function(){
 			var map = ttr.getBoardMap();
@@ -72,7 +39,7 @@ var tetrisTextGame = (function(){
 			}
 			str +="\n";
 			str += "┏"+(new Array(ttr.board.w)).fill("━").join("")+"┓"+"\n";
-			str += ttr.board.format(mapU).replace(/0/g,'□').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│")+"\n";
+			str += ttr.board.format(mapU).replace(/0/g,'▤').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│")+"\n";
 			// str += "┠"+(new Array(ttr.board.w)).fill("▽").join("")+"┨"+"\n";
 			str += ttr.board.format(mapD).replace(/0/g,'□').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│");;
 			str +="\n";
@@ -98,6 +65,7 @@ var tetrisTextGame = (function(){
 		},
 		"onkeyDown":function(evt){
 			// console.log(evt.key)
+			if(!ttr.gaming) return;
 			var r = false;
 			switch (evt.key) {
 				case 'ArrowUp':
@@ -128,7 +96,7 @@ var tetrisTextGame = (function(){
 		tetrisTextGame.draw();
 	}
 	ttr.cbOnBottom = function(){
-		tetrisTextGame.sleep();
+		// tetrisTextGame.sleep();
 		// tetrisTextGame.draw();
 	}
 	ttr.cbOnMoveX = function(n){
@@ -142,7 +110,7 @@ var tetrisTextGame = (function(){
 		// tetrisTextGame.draw();
 	}
 	ttr.cbOnScore = function(newScore,gap){
-		if(gap>0) tetrisTextGame.sleep();
+		if(gap>0) this.sleep();
 		console.log("scoreUP : +"+gap+ " = "+newScore)
 	}
 	ttr.cbOnGameOver = function(newScore,gap){
