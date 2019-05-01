@@ -7,6 +7,7 @@ var tetrisTextGame = (function(){
 		"init":function(){
 			this.ttr = new Tetris();
 		},
+		// == ttr wrapper
 		"create":function(x,y){
 			this.stop();
 			ttr.create(x,y);
@@ -21,6 +22,19 @@ var tetrisTextGame = (function(){
 		"gameOver":function(){
 			ttr.gameOver();
 		},
+		"moveX":function(x){
+			ttr.moveX(x);
+		},
+		"moveY":function(y){
+			ttr.moveY(y);
+		},
+		"moveBottom":function() {
+			ttr.moveBottom();
+		}		,
+		"rotate":function(r) {
+			ttr.rotate(r);
+		},
+		// == end ttr wrapper
 		"draw":function(){
 			var map = ttr.getBoardMap();
 			var mapU = map.slice(0,(ttr.board.w*4));
@@ -55,18 +69,6 @@ var tetrisTextGame = (function(){
 
 			$("#output").val(str);
 		},
-		"moveX":function(x){
-			ttr.moveX(x);
-		},
-		"moveY":function(y){
-			ttr.moveY(y);
-		},
-		"moveBottom":function() {
-			ttr.moveBottom();
-		}		,
-		"rotate":function(r) {
-			ttr.rotate(r);
-		},
 		"onkeyDown":function(evt){
 			// console.log(evt.key)
 			if(!ttr.gaming) return;
@@ -96,6 +98,8 @@ var tetrisTextGame = (function(){
 			return false;
 		}
 	};
+
+	// == set ttr callback
 	ttr.cbOnDraw = function(){
 		tetrisTextGame.draw();
 	}
@@ -120,7 +124,7 @@ var tetrisTextGame = (function(){
 	ttr.cbOnGameOver = function(newScore,gap){
 		tetrisTextGame.draw();
 	}
-
+	// == end set ttr callback
 
 	return tetrisTextGame;
 })()
