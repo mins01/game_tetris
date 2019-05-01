@@ -2,16 +2,16 @@
 var tetrisTextGame = (function(){
 	var ttr = new Tetris();
 
-	var tetrisTextGame = {
+	var tetrisGame = {
 		"ttr":ttr,
 		"init":function(){
-			this.ttr = new Tetris();
+			// this.ttr = new Tetris();
 		},
 		// == ttr wrapper
-		"create":function(x,y){
+		"create":function(w,h){
 			this.stop();
-			ttr.create(x,y);
-			$("#output").attr("rows",y+13)
+			ttr.create(w,h);
+			$("#output").attr("rows",h+13)
 		},
 		"start":function(){
 			ttr.start()
@@ -101,30 +101,30 @@ var tetrisTextGame = (function(){
 
 	// == set ttr callback
 	ttr.cbOnDraw = function(){
-		tetrisTextGame.draw();
+		tetrisGame.draw();
 	}
 	ttr.cbOnBottom = function(){
-		// tetrisTextGame.sleep();
-		// tetrisTextGame.draw();
+		// tetrisGame.sleep();
+		// tetrisGame.draw();
 	}
 	ttr.cbOnMoveX = function(n){
 		// console.log('x');
-		// tetrisTextGame.draw();
+		// tetrisGame.draw();
 	}
 	ttr.cbOnMoveY = function(n){
-		// tetrisTextGame.draw();
+		// tetrisGame.draw();
 	}
 	ttr.cbOnRotate = function(n){
-		// tetrisTextGame.draw();
+		// tetrisGame.draw();
 	}
 	ttr.cbOnScore = function(newScore,gap){
 		if(gap>0) this.sleep();
 		console.log("scoreUP : +"+gap+ " = "+newScore)
 	}
 	ttr.cbOnGameOver = function(newScore,gap){
-		tetrisTextGame.draw();
+		tetrisGame.draw();
 	}
 	// == end set ttr callback
 
-	return tetrisTextGame;
+	return tetrisGame;
 })()

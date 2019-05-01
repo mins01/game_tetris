@@ -109,13 +109,13 @@ var GamepadLayout = {
 
           switch(i2){
             case 0:;
-              ttrtg.moveX(v);
+              ttrg.moveX(v);
             break;
             case 1:;
-              ttrtg.moveY(v);
+              if(v==1) ttrg.moveY(v);
             break;
             case 2:;
-              ttrtg.rotate(v);
+              ttrg.rotate(v);
             break;
           }
         }
@@ -129,33 +129,33 @@ var GamepadLayout = {
           switch(i2){
             case 14:
             case 4:
-              ttrtg.moveX(-1);
+              ttrg.moveX(-1);
             break;
             case 15:
             case 5:
-              ttrtg.moveX(1);
+              ttrg.moveX(1);
             break;
             case 13:
-              ttrtg.moveY(1);
+              ttrg.moveY(1);
             break;
             case 2:
             case 3:
             case 6:
-              ttrtg.rotate(-1);
+              ttrg.rotate(-1);
             break;
             case 1:
             case 7:
             case 12:
-              ttrtg.rotate(1);
+              ttrg.rotate(1);
             break;
             case 0:
-              ttrtg.moveBottom(1);
+              ttrg.moveBottom(1);
             break;
             case 9:
-              ttrtg.start();
+              ttrg.start();
             break;
             case 8:
-              ttrtg.gameOver();
+              ttrg.gameOver();
             break;
           }
         }

@@ -1,0 +1,124 @@
+@charset "UTF-8";
+html,body{padding:0;margin:0;}
+body{
+  position: fixed;
+  top: 0;  left: 0;  bottom: 0;  right: 0;
+}
+
+#ttrbg{
+    font-size:30px;
+    margin:0 auto;
+    position: relative;
+}
+
+#ttrbg[data-gaming="1"]{
+    filter:grayscale(0)
+}
+#ttrbg[data-gaming="0"]{
+    transition: filter  1s ease-out;
+    filter:grayscale(1)
+}
+
+
+
+#ttrbg .ready,#ttrbg .end ,#ttrbg .next {
+  margin:0 auto;
+  display: grid !important;
+  /* grid-template-columns: repeat(6,1em);
+  grid-template-rows: repeat(12,1em); */
+}
+#ttrbg .ttrbg-grid.next{
+  font-size:0.5em;
+  border:0px dashed transparent;
+  border-width:0px 0px 1px 1px;
+  grid-template-columns: repeat(4,1em);
+  grid-template-rows: repeat(4,1em);
+  width:4em;
+  /* height:4em; */
+  margin:0 0 2px auto;
+  opacity: 0.4;
+}
+#ttrbg .ttrbg-grid.ready{
+  border:0px dashed transparent;
+  border-width:0px 0px 0 1px;
+}
+#ttrbg .ttrbg-grid.end{
+  border:1px solid #999;
+  border-width:0px 0px 1px 1px;
+}
+
+/* #ttrbg div{ width:1em;height:1em;} */
+
+
+
+.ttrbg-grid div.box{
+ box-sizing: content-box;
+}
+.ttrbg-grid div.box-ready{
+  border:0px dashed transparent;
+  border-width:1px 1px 0 0;
+}
+.ttrbg-grid div.box-next{
+  border:0px dashed transparent;
+  border-width:1px 1px 0 0;
+}
+.ttrbg-grid div.box-end{
+  border:1px solid #999;
+  border-width:1px 1px 0 0;
+}
+
+div.box[data-color="0"]{
+  background-color:  transparent;
+}
+div.box[data-color="1"]{
+  background-color:  #A80000;
+}
+div.box[data-color="2"]{
+  background-color:  #A800A8;
+}
+div.box[data-color="3"]{
+  background-color:  #A85400;
+}
+div.box[data-color="4"]{
+  background-color:  #00A800;
+}
+div.box[data-color="5"]{
+  background-color:  #00A8A8;
+}
+div.box[data-color="6"]{
+  background-color:  #0000A8;
+}
+div.box[data-color="7"]{
+  background-color:  #A6A800;
+}
+
+
+
+.info-box{
+  font-size:0.5em;
+  display: block;
+  position: relative;
+  height: 2em;
+  margin-bottom: 10px;
+  z-index: 10px;
+  margin-bottom: -2em;
+}
+#textLevel{
+  position: absolute;
+  top: 0em;
+  line-height: 1em;
+}
+#textLevel::before{
+  content: "LEVEL : ";
+  font-size:0.5em;
+}
+#textScore{
+  position: absolute;
+  top: 1em;
+  line-height: 1em;
+}
+#textScore::before{
+  content: "SCORE : ";
+  font-size:0.5em;
+
+}

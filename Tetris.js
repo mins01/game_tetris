@@ -17,6 +17,9 @@ var Tetris = (function(){
 				thisC.resume();
 			}
 		},
+		"onCreate":function(w,h){
+
+		},
 		"create":function(w,h){
 			if(w==null) w = 10;
 			if(h==null) h = 20;
@@ -24,9 +27,8 @@ var Tetris = (function(){
 			h+=4;//4는 테트리미노 여유 부분
 			console.log("create",w,h);
 			this.board.create(w,h);
-			// this.ttmn.randomCreate();
+			this.onCreate(w,h);
 			this.reset();
-
 		},
 		"reset":function(){
 			this.createTetrimino();
@@ -124,7 +126,9 @@ var Tetris = (function(){
 				// console.log(msg.join("\n"));
 				return msg.join("\n");
 			},
-			"mergeWithTetrimino":function(map,ttmn,x,y){
+			"mergeWithTetrimino":function(map,ttmn,x,y,w,h){
+				if(w==null) w = this.w;
+				if(h==null) h = this.h;
 				// var map = this.map.slice(0);
 				for(var iy=0,my=ttmn.data.h;iy<my;iy++){
 					var mapY = y+iy;
@@ -134,7 +138,7 @@ var Tetris = (function(){
 					for(var ix=0,mx=arr.length;ix<mx;ix++){
 						var mapX = x+ix;
 						if(arr[ix]==0){continue;}
-						map[mapY*this.w + mapX] = arr[ix];
+						map[mapY*w + mapX] = arr[ix];
 					}
 				}
 				return map
