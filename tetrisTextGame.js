@@ -51,12 +51,10 @@ var tetrisTextGame = (function(){
 
 			str += "┣ＮＥＸＴ"+(new Array(ttr.board.w-4)).fill("━").join("")+"┫"+"\n";
 			var mapNext = (new Array(ttr.board.w*4)).fill(0);
-			var ttmn = {
-				"data":ttr.ttmn.nextData
-			}
-			var x = Math.floor((ttr.board.w-ttr.ttmn.nextData.w)/2);
-			var y = (ttr.ttmn.nextData.w==2)?1:(ttr.ttmn.nextData.w==3)?1:0;
-			mapNext = ttr.board.mergeWithTetrimino(mapNext,ttmn,x,y);
+
+			var x = Math.floor((ttr.board.w-ttr.ttmn.next.w)/2);
+			var y = (ttr.ttmn.next.w==2)?1:(ttr.ttmn.next.w==3)?1:0;
+			mapNext = ttr.board.mergeWithTetrimino(mapNext,ttr.ttmn.next,x,y);
 			// console.log(mapNext);
 			str += ttr.board.format(mapNext).replace(/0/g,'◆').replace(/,/g,'').replace(/\d/g,'□').replace(/\|/g,"┃").replace(/X/g,"│");
 			str +="\n";

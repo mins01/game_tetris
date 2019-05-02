@@ -83,56 +83,27 @@ var tetrisBoxGame = (function(){
 			var ttmnNextMap = ttr.getTtmnNextMap();
 			for(var i=0,m=map.length;i<m;i++){
 				// this.divs[i].innerText = map[i];
-				$(this.divs[i]).attr('data-color',map[i]);
+				var n = map[i]%100;
+				$(this.divs[i]).attr('data-moving',Math.floor((map[i]-n)/100));
+				$(this.divs[i]).attr('data-color',n);
 			}
 			this.$ttrbg.attr("data-gaming",ttr.gaming?1:0);
 
 
 			var mapNext = (new Array(4*4)).fill(0);
-			var ttmn = {
-				"data":ttr.ttmn.nextData
-			}
-			var x = Math.floor((4-ttr.ttmn.nextData.w)/2);
-			var y = (ttr.ttmn.nextData.w==2)?1:(ttr.ttmn.nextData.w==3)?1:0;
-			mapNext = ttr.board.mergeWithTetrimino(mapNext,ttmn,x,y,4,4);
+			var x = Math.floor((4-ttr.ttmn.next.w)/2);
+			var y = (ttr.ttmn.next.w==2)?1:(ttr.ttmn.next.w==3)?1:0;
+			mapNext = ttr.board.mergeWithTetrimino(mapNext,ttr.ttmn.next,x,y,4,4);
 
 			for(var i=0,m=mapNext.length;i<m;i++){
 				// this.divs[i].innerText = map[i];
-				$(this.nextDivs[i]).attr('data-color',mapNext[i]);
+				$(this.nextDivs[i]).attr('data-color',mapNext[i]%100);
 			}
 
 
 			this.$textLevel.text(ttr.level.level)
 			this.$textScore.text(ttr.score)
 
-			// var str = "";
-			//
-			// str+="LEVEL : "+ttr.level.level+"\n";
-			// if(ttr.gaming){
-			// 	str+="SCORE : "+ttr.score+"\n";
-			// }else{
-			// 	str+="END SCORE : "+ttr.score+"\n";
-			// }
-			//
-			// str += "┣ＮＥＸＴ"+(new Array(ttr.board.w-4)).fill("━").join("")+"┫"+"\n";
-			// var mapNext = (new Array(ttr.board.w*4)).fill(0);
-			// var ttmn = {
-			// 	"data":ttr.ttmn.nextData
-			// }
-			// var x = Math.floor((ttr.board.w-ttr.ttmn.nextData.w)/2);
-			// var y = (ttr.ttmn.nextData.w==2)?1:(ttr.ttmn.nextData.w==3)?1:0;
-			// mapNext = ttr.board.mergeWithTetrimino(mapNext,ttmn,x,y);
-			// // console.log(mapNext);
-			// str += ttr.board.format(mapNext).replace(/0/g,'◆').replace(/,/g,'').replace(/\d/g,'□').replace(/\|/g,"┃").replace(/X/g,"│");
-			// str +="\n";
-			// str += "┣"+(new Array(ttr.board.w)).fill("━").join("")+"┫"+"\n";
-			// str += ttr.board.format(mapU).replace(/0/g,'▩').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│");
-			// str +="\n";
-			// str += ttr.board.format(mapD).replace(/0/g,'□').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│");;
-			// str +="\n";
-			// str += "┗"+(new Array(ttr.board.w)).fill("━").join("")+"┛";
-			//
-			// $("#output").val(str);
 		},
 		"onkeyDown":function(evt){
 			// console.log(evt.key)

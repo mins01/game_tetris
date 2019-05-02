@@ -21,11 +21,11 @@ var Tetrimino = (function(){
 			this.r = r;
 			this.w = tetriminoMaps[this.type].w
 			this.h = tetriminoMaps[this.type].h
-			this.map = tetriminoMaps[this.type].map[this.r];
+			this.map = tetriminoMaps[this.type].map[this.r].slice(0);
 		},
 		"rotate":function(r){
 			this.r = (4+r)%4;
-			this.map = tetriminoMaps[this.type].map[this.r];
+			this.map = tetriminoMaps[this.type].map[this.r].slice(0);
 		},
 		"format":function(map){
 			var msg = [];
