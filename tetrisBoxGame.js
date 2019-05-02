@@ -12,8 +12,8 @@ var tetrisBoxGame = (function(){
 		},
 		"onresize":function(){
 			var rs = document.body.getBoundingClientRect()
-
-			var ft = Math.max(8,Math.min(Math.floor((rs.width-10)/ttr.board.w),Math.floor((rs.height-20)/(ttr.board.h+4))))
+			var rs2 = document.querySelector("#container").getBoundingClientRect()
+			var ft = Math.max(10,Math.min(Math.floor((rs2.width-10)/ttr.board.w),Math.floor((rs.height-20)/(ttr.board.h+4))))
 			this.$ttrbg.css("fontSize",ft+'px');
 			console.log("fontSize",ft);
 		},
