@@ -62,7 +62,7 @@ var Tetris = (function(){
 			"level":0,
 			"timer":null,
 			"intervalMoveY":2000,
-			"intervalSleep":2000,
+			"intervalSleep":1000,
 			"cbOnLevelUp":function(l){
 			},
 			"onLevelUp":function(l){
@@ -124,12 +124,12 @@ var Tetris = (function(){
 				var msg = [];
 				//-- k-p 배열에서 p-k 배열로 만들어서 출력
 				for(var i=0,m=map.length;i<m;i+=this.w){
-					
+
 					var tMap = map.slice(i,i+this.w);
 					for(var i2=0,m2=tMap.length;i2<m2;i2++){
 						tMap[i2]= tMap[i2] % 100;
 					}
-					
+
 					msg.push('|'+tMap.join(',')+'|');
 				}
 				// console.log(msg.join("\n"));
@@ -305,31 +305,33 @@ var Tetris = (function(){
 				this.removeRows(ys,this.board.w,this.board.map);
 			}else{
 				if(this.checkGameOver()){
-	
+
 				}else{
 					this.createTetrimino();
 					this.cbOnBottom();
 				}
 				this.sleep();
-				this.draw();	
+				this.draw();
 			}
-			
+
 
 		},
-		"cbOnRemoveRows":function(ys,w,map){
-			
-		},
-		"onRemoveRows":function(ys,w,map){
-			// this.cbOnRemoveRows(ys,w,map);
-		},
-		"markRemoveRows":function(ys,w,map){
-			// this.onRemoveRows(ys,w,map);
-			return this.board.markRemoveRows(ys,this.board.w,this.board.map)
+		"fnRemoveRows":function(ys,w,map){
+			var thisC = this;
+			return function(){
+				thisC.resume();
+				console.log("removeRows");
+				thisC.board.map = thisC.board.removeRows(ys,w,map)
+				thisC.moveYable = true;
+
+				thisC.sleep();
+				thisC.draw();
+			}
 		},
 		"removeRows":function(ys,w,map){
 			var thisC = this;
 			this.moveYable = false;
-			
+
 			if(thisC.checkGameOver()){
 
 			}else{
@@ -337,21 +339,10 @@ var Tetris = (function(){
 				thisC.cbOnBottom();
 			}
 			this.board.map = this.board.markRemoveRows(ys,this.board.w,this.board.map)
-
-			// console.log(this.board.format(this.board.map));
 			this.draw();
-			
-			if(this.gaming){
-				this.timer.start(function(){
-					thisC.resume();
-					console.log("removeRows");
-					thisC.board.map = thisC.board.removeRows(ys,thisC.board.w,thisC.board.map)
-					thisC.moveYable = true;
 
-					thisC.sleep();
-					thisC.draw();
-					
-				},500);
+			if(this.gaming){
+				this.timer.start(this.fnRemoveRows(ys,this.board.w,this.board.map),500);
 			}else{
 				this.timer.stop();
 			}
@@ -470,17 +461,20 @@ var Tetris = (function(){
 			this.timer.start(this.fnMoveY(),this.level.intervalMoveY/this.level.level);
 			this.draw()
 		},
-		"sleep":function(){
+		"fnSleep":function(){
 			var thisC = this;
+			return function(){
+				thisC.resume();
+				console.log("sleep");
+			}
+
+		},
+		"sleep":function(){
 			if(this.gaming){
-				this.timer.start(function(){
-					thisC.resume();
-					console.log("sleep");
-				},1000);
+				this.timer.start(this.fnSleep(),this.level.intervalSleep/this.level.level);
 			}else{
 				this.timer.stop();
 			}
-
 		},
 		"stop":function(){
 			this.timer.stop();
