@@ -94,6 +94,7 @@
 		ttrg2.init('ttrbg2');
 		ttrg2.create(10,20);
 		ttrg2.keyboard = 2;
+		
 		$(document).on('keydown',function(event){
 			ttrg.onkeyDown(event)
 			ttrg2.onkeyDown(event)
@@ -102,7 +103,15 @@
 			ttrg.onresize();
 			ttrg2.onresize();
 		})
-		
+		//배틀 기능
+		ttrg.cbOnRemoveRows = function(ys,w,map){
+			console.log("cbOnRemoveRows ttrg2.beAttacked");
+			ttrg2.beAttacked(ys.length);
+		}
+		ttrg2.cbOnRemoveRows = function(ys,w,map){
+			console.log("cbOnRemoveRows ttrg.beAttacked");
+			ttrg.beAttacked(ys.length);
+		}
 	})
 
 	</script>

@@ -148,6 +148,12 @@ var tetrisBoxGame = function(){
 				evt.preventDefault ()
 			}
 			return false;
+		},
+		"cbOnRemoveRows":function(ys,w,map){
+			
+		},
+		"beAttacked":function(cnt){
+			ttr.beAttacked(cnt);
 		}
 	};
 
@@ -183,6 +189,10 @@ var tetrisBoxGame = function(){
 	ttr.cbOnGameOver = function(newScore,gap){
 		GamepadLayout.longRumble(0);
 		tetrisGame.draw();
+	}
+	
+	ttr.cbOnRemoveRows = function(ys,w,map){
+		tetrisGame.cbOnRemoveRows(ys,w,map);
 	}
 	// == end set ttr callback
 
