@@ -157,7 +157,13 @@ var Tetris = (function(){
 				thisC.board.map = thisC.board.removeRows(ys,w,map)
 				thisC.moveYable = true;
 				thisC.onRemoveRows(ys,w,mapC);
-				thisC.sleep();
+				
+				if(thisC.checkGameOver()){
+
+				}else{
+					thisC.createTetrimino();
+					thisC.sleep();
+				}
 				thisC.draw();
 			}
 		},
@@ -165,12 +171,7 @@ var Tetris = (function(){
 			var thisC = this;
 			this.moveYable = false;
 
-			if(thisC.checkGameOver()){
 
-			}else{
-				thisC.createTetrimino();
-				thisC.cbOnBottom();
-			}
 			this.board.map = this.board.markRemoveRows(ys,this.board.w,this.board.map)
 			this.draw();
 
