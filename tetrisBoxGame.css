@@ -72,11 +72,11 @@ body{
 
 
 .ttrbg-grid div.box[data-moving="2"]{
-  transition: filter  0.2s ease-out;
+  /* transition: filter  0.2s ease-out; */
   filter: grayscale(1);
 }
 .ttrbg-grid div.box[data-moving="1"]:not([data-color="0"]){
-  
+
 }
 .ttrbg-grid div.box[data-moving="0"]:not([data-color="0"]){
   /* transition: background-color  1s ease-out; */

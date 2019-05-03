@@ -89,80 +89,84 @@ var GamepadLayout = {
     var c = navigator.getGamepads();
     var gp = c[0]
 
+    if(gp.axes){
+      for(var i2=0,m2=gp.axes.length;i2<m2;i2++){
 
-    for(var i2=0,m2=gp.axes.length;i2<m2;i2++){
+        if(tm-this.axesHis[i2] > 200){
+          this.axesHis[i2] = tm;
+          var v = gp.axes[i2];
+          // console.log(v)
+          if(v>0.5){
+            v = 1
+          }else if(v<-0.5){
+            v = -1
+          }else{
+            this.axesHis[i2] = 0;
+            v = 0
+          }
 
-      if(tm-this.axesHis[i2] > 200){
-        this.axesHis[i2] = tm;
-        var v = gp.axes[i2];
-        // console.log(v)
-        if(v>0.5){
-          v = 1
-        }else if(v<-0.5){
-          v = -1
+          if(this.axesHis[i2] != v){
+
+            switch(i2){
+              case 0:;
+                ttrg.moveX(v);
+              break;
+              case 1:;
+                if(v==1) ttrg.moveY(v);
+              break;
+              case 2:;
+                ttrg.rotate(v);
+              break;
+            }
+          }
+        }
+
+      }
+    }
+    if(gp.buttons){
+      for(var i2=0,m2=gp.buttons.length;i2<m2;i2++){
+        if(gp.buttons[i2].pressed){
+          if(tm-this.btnHis[i2] > 200){
+            this.btnHis[i2] = tm;
+            switch(i2){
+              case 14:
+              case 4:
+                ttrg.moveX(-1);
+              break;
+              case 15:
+              case 5:
+                ttrg.moveX(1);
+              break;
+              case 13:
+                ttrg.moveY(1);
+              break;
+              case 2:
+              case 3:
+              case 6:
+                ttrg.rotate(-1);
+              break;
+              case 1:
+              case 7:
+              case 12:
+                ttrg.rotate(1);
+              break;
+              case 0:
+                ttrg.moveBottom(1);
+              break;
+              case 9:
+                if(!ttrg.ttr.gaming) ttrg.start();
+              break;
+              case 8:
+                ttrg.gameOver();
+              break;
+            }
+          }
         }else{
-          this.axesHis[i2] = 0;
-          v = 0
-        }
-
-        if(this.axesHis[i2] != v){
-
-          switch(i2){
-            case 0:;
-              ttrg.moveX(v);
-            break;
-            case 1:;
-              if(v==1) ttrg.moveY(v);
-            break;
-            case 2:;
-              ttrg.rotate(v);
-            break;
-          }
+          this.btnHis[i2] = 0;
         }
       }
+    }
 
-    }
-    for(var i2=0,m2=gp.buttons.length;i2<m2;i2++){
-      if(gp.buttons[i2].pressed){
-        if(tm-this.btnHis[i2] > 200){
-          this.btnHis[i2] = tm;
-          switch(i2){
-            case 14:
-            case 4:
-              ttrg.moveX(-1);
-            break;
-            case 15:
-            case 5:
-              ttrg.moveX(1);
-            break;
-            case 13:
-              ttrg.moveY(1);
-            break;
-            case 2:
-            case 3:
-            case 6:
-              ttrg.rotate(-1);
-            break;
-            case 1:
-            case 7:
-            case 12:
-              ttrg.rotate(1);
-            break;
-            case 0:
-              ttrg.moveBottom(1);
-            break;
-            case 9:
-              ttrg.start();
-            break;
-            case 8:
-              ttrg.gameOver();
-            break;
-          }
-        }
-      }else{
-        this.btnHis[i2] = 0;
-      }
-    }
 
   },
   "testRumble":function(idx){
@@ -170,13 +174,13 @@ var GamepadLayout = {
     console.log(gs);
     if(!gs[idx]){
       console.log('fail : testRumble',idx)
-      alert('fail : testRumble '+idx)
+      // alert('fail : testRumble '+idx)
       return false;
     }
     var g = gs[idx];
     if(!g.vibrationActuator){
       console.log('fail : g.vibrationActuator ',idx)
-      alert('fail : g.vibrationActuator '+idx)
+      // alert('fail : g.vibrationActuator '+idx)
       return false;
     }
     g.vibrationActuator.playEffect(g.vibrationActuator.type, {
@@ -186,6 +190,52 @@ var GamepadLayout = {
         strongMagnitude: 1
     });
     console.log('playEffect : testRumble',idx)
+  },
+  "shortRumble":function(idx,startDelay){
+    if(startDelay==null) startDelay=0;
+    var gs = navigator.getGamepads();;
+    console.log(gs);
+    if(!gs[idx]){
+      console.log('fail : testRumble',idx)
+      // alert('fail : testRumble '+idx)
+      return false;
+    }
+    var g = gs[idx];
+    if(!g.vibrationActuator){
+      console.log('fail : g.vibrationActuator ',idx)
+      // alert('fail : g.vibrationActuator '+idx)
+      return false;
+    }
+    g.vibrationActuator.playEffect(g.vibrationActuator.type, {
+        startDelay: startDelay,
+        duration: 100,
+        weakMagnitude: 0.3,
+        strongMagnitude: 1
+    });
+    console.log('playEffect : shortRumble',idx)
+  },
+  "longRumble":function(idx,startDelay){
+    if(startDelay==null) startDelay=0;
+    var gs = navigator.getGamepads();;
+    console.log(gs);
+    if(!gs[idx]){
+      console.log('fail : testRumble',idx)
+      // alert('fail : testRumble '+idx)
+      return false;
+    }
+    var g = gs[idx];
+    if(!g.vibrationActuator){
+      console.log('fail : g.vibrationActuator ',idx)
+      // alert('fail : g.vibrationActuator '+idx)
+      return false;
+    }
+    g.vibrationActuator.playEffect(g.vibrationActuator.type, {
+        startDelay: startDelay,
+        duration: 3000,
+        weakMagnitude: 0.1,
+        strongMagnitude: 1
+    });
+    console.log('playEffect : longRumble',idx)
   }
 
 }

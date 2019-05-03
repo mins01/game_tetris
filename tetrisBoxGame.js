@@ -168,8 +168,16 @@ var tetrisBoxGame = function(){
 	ttr.cbOnScore = function(newScore,gap){
 		if(gap>0) this.sleep();
 		console.log("scoreUP : +"+gap+ " = "+newScore)
+		switch(gap){
+			case 4:setTimeout(function(){ GamepadLayout.shortRumble(0) },600);
+			case 3:setTimeout(function(){ GamepadLayout.shortRumble(0) },400);
+			case 2:setTimeout(function(){ GamepadLayout.shortRumble(0) },200);
+			case 1:GamepadLayout.shortRumble(0);
+			break;
+		}
 	}
 	ttr.cbOnGameOver = function(newScore,gap){
+		GamepadLayout.longRumble(0);
 		tetrisGame.draw();
 	}
 	// == end set ttr callback
