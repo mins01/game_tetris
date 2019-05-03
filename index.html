@@ -74,14 +74,14 @@
 	<script src="GamepadLayout.js"></script>
 
 	<script>
-	var ttrg = tetrisBoxGame;
-	// var ttr = new Tetris();
+	var ttrg = tetrisBoxGame();
+
 	$(function(){
 		GamepadLayout.init();
-		// ttr.create(8,10);
-		// ttr.print();
-		ttrg.init();
+		ttrg.title="p1";
+		ttrg.init('ttrbg');
 		ttrg.create(8,10);
+
 		$(document).on('keydown',function(event){
 			ttrg.onkeyDown(event)
 		})
@@ -120,13 +120,33 @@
 				<button type="button" class="btn btn-info" onclick="ttrg.start();blur()">start</button>
 			</div>
 		</div>
-		<div id="ttrbg">
+		<div id="ttrbg" class="ttrbg">
 			<div class="info-box">
 
-				<div id="textLevel">
+				<div class="textLevel">
 
 				</div>
-				<div id="textScore">
+				<div class="textScore">
+
+				</div>
+				<div class="ttrbg-grid next">
+					<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+					<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+					<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+					<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+				</div>
+			</div>
+
+			<div class="ttrbg-grid ready"></div>
+			<div class="ttrbg-grid end"></div>
+		</div>
+		<div id="ttrbg2" class="ttrbg">
+			<div class="info-box">
+
+				<div class="textLevel">
+
+				</div>
+				<div class="textScore">
 
 				</div>
 				<div class="ttrbg-grid next">
@@ -153,7 +173,7 @@
 
 
 		<div>
-			<a href="tetrisTextGame.html">ver text</a>
+			<a href="index.html">index</a> , <a href="tetrisTextGame.html">ver text</a> , 	<a href="tetrisBoxGame2P.html">2P</a>
 		</div>
 	</div>
 

@@ -1,14 +1,17 @@
 "use strict"
-var tetrisBoxGame = (function(){
+var tetrisBoxGame = function(){
 	var ttr = new Tetris();
 
 	var tetrisGame = {
+		"title":"",
+		"player":1,
+		"keyboard":0, //0:화살표, 1:wadsx , 2:NUMPAD 84652
 		"ttr":ttr,
-		"init":function(){
+		"init":function(ttrbg_id){
 			// this.ttr = new Tetris();
-			this.$ttrbg = $("#ttrbg");
-			this.$textLevel = $("#textLevel");
-			this.$textScore = $("#textScore");
+			this.$ttrbg = $("#"+ttrbg_id+".ttrbg");
+			this.$textLevel = $("#"+ttrbg_id+" .textLevel");
+			this.$textScore = $("#"+ttrbg_id+" .textScore");
 		},
 		"onresize":function(){
 			var rs = document.body.getBoundingClientRect()
@@ -23,9 +26,9 @@ var tetrisBoxGame = (function(){
 		// == ttr wrapper
 		"create":function(w,h){
 			this.stop();
-			var $ttrbgReady = $("#ttrbg .ready");
-			var $ttrbgEnd = $("#ttrbg .end");
-			this.nextDivs = $("#ttrbg .next div").get();
+			var $ttrbgReady = this.$ttrbg.find(".ready");
+			var $ttrbgEnd = this.$ttrbg.find(".end");
+			this.nextDivs = this.$ttrbg.find(".next div").get();
 			$ttrbgReady.html('');
 			$ttrbgEnd.html('');
 			var n = w*4;
@@ -36,7 +39,7 @@ var tetrisBoxGame = (function(){
 			while(n-- > 0){
 				$ttrbgEnd.append('<div class="box box-end"></div>')
 			}
-			this.divs = $("#ttrbg .ready div,#ttrbg .end div").get();
+			this.divs = this.$ttrbg.find(".ready div , .end div").get();
 
 			$ttrbgReady.css('width',w+'em')
 			// .css('height',(4)+'em')
@@ -106,27 +109,36 @@ var tetrisBoxGame = (function(){
 
 		},
 		"onkeyDown":function(evt){
-			// console.log(evt.key)
+			// console.log(evt.key,evt.keyCode)
 			if(!ttr.gaming) return;
 			var r = false;
-			switch (evt.key) {
-				case 'ArrowUp':
-					this.rotate(1);	r=true;
-				break;
-				case 'ArrowLeft':
-					this.moveX(-1);	r=true;
-				break;
-				case 'ArrowRight':
-					this.moveX(1);	r=true;
-				break;
-				case 'ArrowDown':
-					this.moveY(1);	r=true;
-				break;
-				case ' ':
-					this.moveBottom();	r=true;
-				break;
-				default:
+			//0:화살표, 1:wadsx , 2:NUMPAD 84652
+			if(this.keyboard==0){
+				switch (evt.key) {
+					case 'ArrowUp':	this.rotate(1);	r=true; break;
+					case 'ArrowLeft': this.moveX(-1);	r=true; break;
+					case 'ArrowRight': this.moveX(1);	r=true; break;
+					case 'ArrowDown': this.moveY(1);	r=true; break;
+					case ' ': this.moveBottom();	r=true; break;
+				}	
+			}else if(this.keyboard==1){
+				switch (evt.key) {
+					case 'w':	this.rotate(1);	r=true; break;
+					case 'a': this.moveX(-1);	r=true; break;
+					case 'd': this.moveX(1);	r=true; break;
+					case 's': this.moveY(1);	r=true; break;
+					case 'x': this.moveBottom();	r=true; break;
+				}	
+			}else if(this.keyboard==2){
+				switch (evt.keyCode) {
+					case 104:	this.rotate(1);	r=true; break;
+					case 100: this.moveX(-1);	r=true; break;
+					case 102: this.moveX(1);	r=true; break;
+					case 101: this.moveY(1);	r=true; break;
+					case 98: this.moveBottom();	r=true; break;
+				}	
 			}
+			
 			if(r){
 				evt.stopPropagation()
 				evt.preventDefault ()
@@ -163,4 +175,4 @@ var tetrisBoxGame = (function(){
 	// == end set ttr callback
 
 	return tetrisGame;
-})()
+}

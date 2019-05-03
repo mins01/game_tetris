@@ -7,29 +7,29 @@ body{
   top: 0;  left: 0;  bottom: 0;  right: 0;
 }
 
-#ttrbg{
+.ttrbg{
     font-size:30px;
     margin:0 auto;
     position: relative;
 }
 
-#ttrbg[data-gaming="1"]{
+.ttrbg[data-gaming="1"]{
     filter:grayscale(0)
 }
-#ttrbg[data-gaming="0"]{
+.ttrbg[data-gaming="0"]{
     transition: filter  1s ease-out;
     filter:grayscale(1);
 }
 
 
 
-#ttrbg .ready,#ttrbg .end ,#ttrbg .next {
+.ttrbg .ready,.ttrbg .end ,.ttrbg .next {
   margin:0 auto;
   display: grid !important;
   /* grid-template-columns: repeat(6,1em);
   grid-template-rows: repeat(12,1em); */
 }
-#ttrbg .ttrbg-grid.next{
+.ttrbg .ttrbg-grid.next{
   font-size:0.5em;
   border:0px dashed transparent;
   border-width:0px 0px 1px 1px;
@@ -40,16 +40,16 @@ body{
   margin:0 0 2px auto;
   opacity: 0.4;
 }
-#ttrbg .ttrbg-grid.ready{
+.ttrbg .ttrbg-grid.ready{
   border:0px dashed transparent;
   border-width:0px 0px 0 1px;
 }
-#ttrbg .ttrbg-grid.end{
+.ttrbg .ttrbg-grid.end{
   border:1px solid #999;
   border-width:0px 0px 1px 1px;
 }
 
-/* #ttrbg div{ width:1em;height:1em;} */
+/* .ttrbg div{ width:1em;height:1em;} */
 
 
 
@@ -122,21 +122,21 @@ div.box[data-color="7"]{
   z-index: 10px;
   margin-bottom: -2em;
 }
-#textLevel{
+.textLevel{
   position: absolute;
   top: 0em;
   line-height: 1em;
 }
-#textLevel::before{
+.textLevel::before{
   content: "LEVEL : ";
   font-size:0.5em;
 }
-#textScore{
+.textScore{
   position: absolute;
   top: 1em;
   line-height: 1em;
 }
-#textScore::before{
+.textScore::before{
   content: "SCORE : ";
   font-size:0.5em;
 

@@ -42,8 +42,8 @@
 	<!-- meta og -->
 
 	<meta property="og:title" content="tetris">
-	<meta property="og:description" content="tetris ver text">
-	<meta name="og:image" content="tetrisTextGame.png">
+	<meta property="og:description" content="tetris ver box">
+	<meta name="og:image" content="tetrisBoxGame.png">
 	<meta property="og:image:width" content="150">
 	<meta property="og:image:height" content="349" />
 	<meta property="og:site_name" content="tetris" />
@@ -52,7 +52,7 @@
 	<!-- //meta og -->
 
 	<style>
-	#div_control{opacity:0.3;position:absolute; bottom:30%;width:100%; height:200px; display:none; z-index:100}
+	#div_control{opacity:0.3;position:fixed;; bottom:30%;width:100%; height:200px; display:none; z-index:100}
 	#div_control button{ border:2px solid #ccc; padding:2px; margin:2px; width:60px; height:60px; line-height:20px; font-size:12px;}
 	#select_scale{display:none;}
 	@media all and (max-width:800px) {
@@ -65,50 +65,118 @@
 		line-height:1em; text-align:center;width:100%; font-size:16px;
 	}
 	</style>
+	<link rel="stylesheet" href="tetrisBoxGame.css">
+	<link rel="stylesheet" href="tetrisBoxGame2P.css">
 
 	<script src="Tetris.js"></script>
 	<script src="Tetrimino.js"></script>
 	<script src="tetriminoMaps.js"></script>
-	<script src="tetrisTextGame.js"></script>
+	<script src="tetrisBoxGame.js"></script>
 	<script src="GamepadLayout.js"></script>
 
 	<script>
-	var ttrg = tetrisTextGame;
+	var ttrgs = []
+	var ttrg = tetrisBoxGame();
+	var ttrg2 = tetrisBoxGame();
+	ttrgs = [ttrg,ttrg2]
 	// var ttr = new Tetris();
 	$(function(){
 		GamepadLayout.init();
 		// ttr.create(8,10);
 		// ttr.print();
-		ttrg.init();
-		ttrg.create(8,10);
+		ttrg.title="p1";
+		
+		ttrg.init('ttrbg');
+		ttrg.create(10,20);
+		ttrg.keyboard = 1;
+		
+		ttrg2.title="p2";
+		ttrg2.init('ttrbg2');
+		ttrg2.create(10,20);
+		ttrg2.keyboard = 2;
 		$(document).on('keydown',function(event){
 			ttrg.onkeyDown(event)
+			ttrg2.onkeyDown(event)
 		})
+		$(window).on('resize',function(event){
+			ttrg.onresize();
+			ttrg2.onresize();
+		})
+		
 	})
 
 	</script>
 
 </head>
 <body>
-	<div class="container">
-		<h1>tetris </h1>
-		<textarea id="output" cols="20" rows="30" readonly wrap="hard"></textarea>
-		<hr />
-		<div class="input-group mb-3">
-			<select class="form-control" onchange="var x = this.value.split(',');ttrg.create(parseInt(x[0]),parseInt(x[1]));">
-				<option value="8,10">8x10</option>
-				<option value="6,6">4x6</option>
-				<option value="10,20">10x20</option>
-				<option value="20,20">20x20</option>
-				<option value="30,20">30x20</option>
-				<option value="40,20">40x20</option>
+	<div class="container" id="container" style="max-width:2000px; padding:0 5px;">
+		<h1 class="sr-only">tetris</h1>
+		<div class="input-group my-1">
+			<div class="input-group-prepend">
+				<span class="input-group-text" >Tetris</span>
+			</div>
+			<select class="form-control" onchange="var x = this.value.split(',');ttrg.create(parseInt(x[0]),parseInt(x[1]));ttrg2.create(parseInt(x[0]),parseInt(x[1]));">
+				<option value="6,8">6x8</option>
+				<option value="8,10" >8x10</option>
+				<option value="10,20" selected>10x20</option>
+				<option value="14,20">14x20</option>
 			</select>
 			<div class="input-group-append">
-				<button type="button" class="btn btn-info" onclick="ttrg.start();blur()">start</button>
+				<button type="button" class="btn btn-info" onclick="ttrg.start();ttrg2.start();blur()">start</button>
 			</div>
 		</div>
-
-
+		<div class="gameBoxes">
+			<div class="gameBox">
+				<div id="ttrbg" class="ttrbg">
+					<div class="info-box">
+		
+						<div class="textLevel">
+		
+						</div>
+						<div class="textScore">
+		
+						</div>
+						<div class="ttrbg-grid next">
+							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+						</div>
+					</div>
+		
+					<div class="ttrbg-grid ready"></div>
+					<div class="ttrbg-grid end"></div>
+				</div>
+				<div class="text-center">
+					Player1 key : 🔄 = w , ⬅️ = a , ➡️ = d , ⬇️ = s , ⏬ = x
+				</div>
+			</div>
+			<div class="gameBox">
+				<div id="ttrbg2" class="ttrbg">
+					<div class="info-box">
+		
+						<div class="textLevel">
+		
+						</div>
+						<div class="textScore">
+		
+						</div>
+						<div class="ttrbg-grid next">
+							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+						</div>
+					</div>
+		
+					<div class="ttrbg-grid ready"></div>
+					<div class="ttrbg-grid end"></div>
+				</div>
+				<div class="text-center">
+					Player2 key : 🔄 = 8 , ⬅️ = 4 , ➡️ = 6 , ⬇️ = 5 , ⏬ = 2
+				</div>
+			</div>
+		</div>
 		<!-- <hr />
 		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrg.moveX(-1);">left</button>
 		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrg.moveX(1);">right</button>
@@ -117,19 +185,11 @@
 		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrg.rotate(-1);">rotate left</button>
 		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrg.rotate(1);">rotate right</button> -->
 
-		<div class="text-center">
-			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-			<!-- 320x50_sliding_puzzle -->
-			<ins class="adsbygoogle"
-					 style="display:inline-block;width:320px;height:50px"
-					 data-ad-client="ca-pub-5804424351292113"
-					 data-ad-slot="8449820293"></ins>
-			<script>
-			(adsbygoogle = window.adsbygoogle || []).push({});
-			</script>
+
+		<div>
+			<a href="index.html">index</a> , <a href="tetrisTextGame.html">ver text</a> , 	<a href="tetrisBoxGame2P.html">2P</a>
 		</div>
 		
-		<a href="index.html">index</a> , <a href="tetrisTextGame.html">ver text</a> , 	<a href="tetrisBoxGame2P.html">2P</a>
 	</div>
 
 	<div id="div_control" style="">
@@ -143,6 +203,17 @@
 			<button type="button" onclick="ttrg.moveX(1);"  style="display:block;">RIGHT</button>
 			<button type="button" onclick="ttrg.moveY(1);"  style="display:block;">DOWN</button>
 		</div>
+	</div>
+	<div class="text-center">
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- 320x50_sliding_puzzle -->
+		<ins class="adsbygoogle"
+				 style="display:inline-block;width:320px;height:50px"
+				 data-ad-client="ca-pub-5804424351292113"
+				 data-ad-slot="8449820293"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
 	</div>
 </body>
 </html>
