@@ -18,9 +18,17 @@ var tetrisBoxGame = function(){
 		"onresize":function(){
 			var rs = document.body.getBoundingClientRect()
 			var rs2 = document.querySelector("#container").getBoundingClientRect()
-			var ft = Math.max(10,Math.min(Math.floor((rs2.width-10)/ttr.board.w),Math.floor((rs.height-20)/(ttr.board.h+4))))
+			var ft = Math.max(4,Math.min(Math.floor((rs2.width-10)/ttr.board.w),Math.floor((rs.height-20)/(ttr.board.h+4))))
 			this.$ttrbg.css("fontSize",ft+'px');
+			// this.$ttrbg.css("width",(ttr.board.w*ft)+'px').css("height",((ttr.board.h+4)*ft)+'px');
 			console.log("fontSize",ft);
+			
+			
+			var $ttrbgReady = this.$ttrbg.find(".ready");
+			var $ttrbgEnd = this.$ttrbg.find(".end");
+			$ttrbgReady.css("width",(ttr.board.w*ft)+'px').css("height",(4*ft)+'px');
+			$ttrbgEnd.css("width",(ttr.board.w*ft)+'px').css("height",((ttr.board.h-4)*ft)+'px');
+
 		},
 		"divs":[],
 		"nextDivs":[],
@@ -43,16 +51,12 @@ var tetrisBoxGame = function(){
 			}
 			this.divs = this.$ttrbg.find(".ready div , .end div").get();
 
-			$ttrbgReady.css('width',w+'em')
-			// .css('height',(4)+'em')
-			.css('gridTemplateColumns','repeat('+w+',1em)')
-			.css('gridTemplateRows','repeat('+(4)+',1em)')
+			$ttrbgReady.css('gridTemplateColumns','repeat('+w+',1fr)')
+			.css('gridTemplateRows','repeat('+(4)+',1fr)')
 
-			$ttrbgEnd.css('width',w+'em')
-			// .css('height',(h)+'em')
-			.css('gridTemplateColumns','repeat('+w+',1em)')
-			.css('gridTemplateRows','repeat('+(h)+',1em)');
-			this.$ttrbg.css('width',w+'em')
+			$ttrbgEnd.css('gridTemplateColumns','repeat('+w+',1fr)')
+			.css('gridTemplateRows','repeat('+h+',1fr)')
+			// this.$ttrbg.css('width',w+'em')
 			// var ft = Math.max(8,Math.min(Math.floor(300/w),Math.floor(480/(h+4))))
 			ttr.create(w,h);
 			this.onresize()
