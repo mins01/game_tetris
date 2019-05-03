@@ -12,6 +12,8 @@ var tetrisBoxGame = function(){
 			this.$ttrbg = $("#"+ttrbg_id+".ttrbg");
 			this.$textLevel = $("#"+ttrbg_id+" .textLevel");
 			this.$textScore = $("#"+ttrbg_id+" .textScore");
+			this.$textRemovedBlocks = $("#"+ttrbg_id+" .textRemovedBlocks");
+			this.$textUsedTetriminoes = $("#"+ttrbg_id+" .textUsedTetriminoes");
 		},
 		"onresize":function(){
 			var rs = document.body.getBoundingClientRect()
@@ -105,7 +107,9 @@ var tetrisBoxGame = function(){
 
 
 			this.$textLevel.text(ttr.level.level)
-			this.$textScore.text(ttr.score)
+			this.$textScore.text(ttr.info.score)
+			this.$textRemovedBlocks.text(ttr.info.removedBlocks)
+			this.$textUsedTetriminoes.text(ttr.info.usedTetriminoes)
 
 		},
 		"onkeyDown":function(evt){

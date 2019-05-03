@@ -114,7 +114,7 @@ div.box[data-color="7"]{
 
 
 .info-box{
-  font-size:0.5em;
+  
   display: block;
   position: relative;
   height: 2em;
@@ -122,22 +122,47 @@ div.box[data-color="7"]{
   z-index: 10px;
   margin-bottom: -2em;
 }
-.textLevel{
+.textInfo{
+  font-size:0.5em;
   position: absolute;
-  top: 0em;
+
   line-height: 1em;
+  z-index: 10;
+}
+.textInfo::before{
+  font-size:0.5em;
+  text-transform: uppercase;
+}
+
+.textLevel{
+  top: 0em;
+  left:0;
 }
 .textLevel::before{
   content: "LEVEL : ";
-  font-size:0.5em;
 }
 .textScore{
-  position: absolute;
   top: 1em;
-  line-height: 1em;
+  left:0;
 }
 .textScore::before{
   content: "SCORE : ";
-  font-size:0.5em;
 
 }
+.textRemovedBlocks{
+  top: 1em;
+  right: 0em;
+}
+.textRemovedBlocks::before{
+  content: "Removed Blocks : ";
+}
+
+.textUsedTetriminoes{
+  top: 0em;
+  right: 0em;
+}
+.textUsedTetriminoes::before{
+  content: "Used Tetriminoes : ";
+}
+
+

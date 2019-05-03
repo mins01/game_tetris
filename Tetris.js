@@ -16,6 +16,11 @@ var Tetris = (function(){
 			this.ttmn.next = new Tetrimino();
 			this.ttmn.board = this.board;
 			this.score = 0;
+			this.info = {
+				"score":0,
+				"removedBlocks":0,
+				"usedTetriminoes":0,
+			}
 			this.gaming = false;
 			this.moveYable = false;
 			this.level.cbOnLevelUp = function(){
@@ -39,12 +44,16 @@ var Tetris = (function(){
 		"reset":function(){
 			this.createTetrimino();
 			this.score = 0;
+			this.info.score = 0;
+			this.info.removedBlocks = 0;
+			this.info.usedTetriminoes = 0;
 			this.onScore(0,0);
 			this.board.clear();
 
 			this.timer.stop();
 			this.level.level = 1;
 			this.level.timer = this.timer;
+			
 			this.draw();
 		},
 		
@@ -73,12 +82,17 @@ var Tetris = (function(){
 				this.onMoveX(n);
 			}
 		},
-		"cbOnScore":function(score,gap){
+		"cbOnScore":function(newScore,gap){
 
 		},
-		"onScore":function(score,gap){
-			this.cbOnScore(score,gap);
-			this.level.checkLevelUp(score);
+		"onScore":function(newScore,gap){
+			if(gap>0){
+				this.info.score=newScore;
+				this.score = this.info.score;
+				this.info.removedBlocks+=gap*this.board.w;
+			}
+			this.cbOnScore(newScore,gap);
+			this.level.checkLevelUp(newScore);
 			this.draw();
 		},
 		"cbOnBottom":function(){
@@ -91,10 +105,10 @@ var Tetris = (function(){
 		"onBottom":function(){
 			this.board.insertTetrimino(this.ttmn,this.ttmn.x,this.ttmn.y)
 			// console.log("insertTetrimino",this.ttmn.x,this.ttmn.y)
+			this.info.usedTetriminoes++;
 			var ys = this.board.searchFilledRow();
 			if(ys.length>0){
-				this.score += ys.length;
-				this.onScore(this.score,ys.length);
+				this.onScore(this.info.score + ys.length,ys.length);
 				// console.log("삭제될 ROW",ys);
 				// this.board.map = this.markRemoveRows(ys,this.board.w,this.board.map);
 				this.removeRows(ys,this.board.w,this.board.map);
