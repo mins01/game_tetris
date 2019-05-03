@@ -217,6 +217,7 @@ var Tetris = (function(){
 			this.draw();
 		},
 		"rotate":function(r){
+			if(!this.gaming){return;}
 			if(r==0) return true;
 			this.ttmn.rotate(r);
 			if(!this.board.checkTetrimino(this.ttmn,this.ttmn.x,this.ttmn.y)){
