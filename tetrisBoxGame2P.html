@@ -148,7 +148,17 @@
 					<div class="ttrbg-grid end"></div>
 				</div>
 				<div class="text-center">
-					Player1 key : 🔄 = w , ⬅️ = a , ➡️ = d , ⬇️ = s , ⏬ = x
+					<div class="input-group my-1 mx-auto" style="width:300px">
+						<div class="input-group-prepend">
+							<span class="input-group-text" >Player1 key</span>
+						</div>
+						<select class="form-control" onchange="ttrg.keyboard=this.value">
+							<option value="0">🔄 = ⬆️ , ⬅️ = ⬅️ , ➡️ = ➡️ , ⬇️ = ⬇️ , ⏬ = space</option>
+							<option value="1" selected >🔄 = w , ⬅️ = a , ➡️ = d , ⬇️ = s , ⏬ = x</option>
+							<option value="2" >NUM : 🔄 = 8 , ⬅️ = 4 , ➡️ = 6 , ⬇️ = 5 , ⏬ = 2</option>
+						</select>
+					</div>
+					
 				</div>
 			</div>
 			<div class="gameBox">
@@ -173,7 +183,16 @@
 					<div class="ttrbg-grid end"></div>
 				</div>
 				<div class="text-center">
-					Player2 key : 🔄 = 8 , ⬅️ = 4 , ➡️ = 6 , ⬇️ = 5 , ⏬ = 2
+					<div class="input-group my-1 mx-auto" style="width:300px">
+						<div class="input-group-prepend">
+							<span class="input-group-text" >Player1 key</span>
+						</div>
+						<select class="form-control" onchange="ttrg2.keyboard=this.value">
+							<option value="0">🔄 = ⬆️ , ⬅️ = ⬅️ , ➡️ = ➡️ , ⬇️ = ⬇️ , ⏬ = space</option>
+							<option value="1"  >🔄 = w , ⬅️ = a , ➡️ = d , ⬇️ = s , ⏬ = x</option>
+							<option value="2" selected >NUM : 🔄 = 8 , ⬅️ = 4 , ➡️ = 6 , ⬇️ = 5 , ⏬ = 2</option>
+						</select>
+					</div>
 				</div>
 			</div>
 		</div>
