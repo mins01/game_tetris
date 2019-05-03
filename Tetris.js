@@ -125,14 +125,38 @@ var Tetris = (function(){
 
 
 		},
+		"beAttacked":function(cnt){
+			var rows = [];
+			var row = this.board.createRandomRow(this.board.w,cnt);
+			for(var i=0,m=cnt;i<m;i++){
+				rows.push(row);
+			}
+			this.insertRowsToBottom(rows);
+			this.draw();
+		},
+		"insertRowsToBottom":function(rows){
+			this.board.map = this.board.insertRowsToBottom(rows,this.board.map);
+			this.draw();
+		},
+		"cbOnRemoveRows":function(ys,w,map){
+			// var rows = [];
+			// for(var i=0,m=ys.length;i<m;i++){
+			// 	rows.push(this.board.createRandomRow(w,ys.length));
+			// }
+			// this.insertRowsToBottom(rows);
+		},
+		"onRemoveRows":function(ys,w,map){
+			this.cbOnRemoveRows(ys,w,map);
+		},
 		"fnRemoveRows":function(ys,w,map){
 			var thisC = this;
 			return function(){
 				thisC.resume();
 				console.log("removeRows");
+				var mapC = map.slice(0);
 				thisC.board.map = thisC.board.removeRows(ys,w,map)
 				thisC.moveYable = true;
-
+				thisC.onRemoveRows(ys,w,mapC);
 				thisC.sleep();
 				thisC.draw();
 			}
@@ -250,7 +274,6 @@ var Tetris = (function(){
 			for(var i=0,m=this.board.w;i<m-1;i++){
 				this.board.map[this.board.w*(this.board.h-3) +i]=2;
 			}
-
 		},
 		"start":function(){
 			this.reset();
@@ -415,6 +438,28 @@ var Tetris = (function(){
 			map = rRow.concat(map);
 			return map;
 		},
+		"insertRowsToBottom":function(rows,map){
+			for(var i=0,m=rows.length;i<m;i++){
+				map = this.insertRowToBottom(rows[i],map)
+			}
+			return map;
+		},
+		"insertRowToBottom":function(row,map){
+			var w = row.length;
+			map.splice(0,w)
+			map = map.concat(row);
+			return map;
+		},
+		"createRandomRow":function(w,emptyCount){
+			var row = new Array(w)
+			row.fill(80);
+			var n = Math.floor(Math.random()*w);
+			for(var i=0,m=emptyCount;i<m;i++){
+				row[n]=0;
+				n = (n+w+Math.floor(Math.random()*2)+1)%w;
+			}
+			return row;
+		},
 		"markRemoveRows":function(ys,w,map){
 			for(var i=0,m=ys.length;i<m;i++){
 				map = this.markRemoveRow(ys[i],w,map)
@@ -438,7 +483,7 @@ var Tetris = (function(){
 				}
 			}
 			return false;
-		}
+		},
 	}
 	
 	Tetris.Ttmn = function(){

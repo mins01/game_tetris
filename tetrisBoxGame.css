@@ -112,6 +112,11 @@ div.box[data-color="7"]{
 }
 
 
+div.box[data-color="80"]{
+  background-color:  #ccc;
+}
+
+
 
 .info-box{
   
