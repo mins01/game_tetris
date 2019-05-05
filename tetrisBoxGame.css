@@ -7,29 +7,35 @@ body{
   top: 0;  left: 0;  bottom: 0;  right: 0;
 }
 
-#ttrbg{
+.ttrbg-layout{
+  border: 3px solid #ccc;
+  border-width: 0 3px 3px 3px;
+  display: inline-block;
+}
+
+.ttrbg{
     font-size:30px;
     margin:0 auto;
     position: relative;
 }
 
-#ttrbg[data-gaming="1"]{
+.ttrbg[data-gaming="1"]{
     filter:grayscale(0)
 }
-#ttrbg[data-gaming="0"]{
+.ttrbg[data-gaming="0"]{
     transition: filter  1s ease-out;
     filter:grayscale(1);
 }
 
 
 
-#ttrbg .ready,#ttrbg .end ,#ttrbg .next {
+.ttrbg .ready,.ttrbg .end ,.ttrbg .next {
   margin:0 auto;
   display: grid !important;
   /* grid-template-columns: repeat(6,1em);
   grid-template-rows: repeat(12,1em); */
 }
-#ttrbg .ttrbg-grid.next{
+.ttrbg .ttrbg-grid.next{
   font-size:0.5em;
   border:0px dashed transparent;
   border-width:0px 0px 1px 1px;
@@ -40,16 +46,15 @@ body{
   margin:0 0 2px auto;
   opacity: 0.4;
 }
-#ttrbg .ttrbg-grid.ready{
+.ttrbg .ttrbg-grid.ready{
   border:0px dashed transparent;
-  border-width:0px 0px 0 1px;
+  /* border-width:0px 0px 0 1px; */
 }
-#ttrbg .ttrbg-grid.end{
-  border:1px solid #999;
-  border-width:0px 0px 1px 1px;
+.ttrbg .ttrbg-grid.end{
+  background-color: #eee;
 }
 
-/* #ttrbg div{ width:1em;height:1em;} */
+/* .ttrbg div{ width:1em;height:1em;} */
 
 
 
@@ -59,31 +64,29 @@ body{
 }
 .ttrbg-grid div.box-ready{
   border:0px dashed transparent;
-  border-width:1px 1px 0 0;
+  /* border-width:1px 1px 0 0; */
 }
 .ttrbg-grid div.box-next{
   border:0px dashed transparent;
-  border-width:1px 1px 0 0;
+  /* border-width:1px 1px 0 0; */
 }
 .ttrbg-grid div.box-end{
-  border:1px solid #999;
-  border-width:1px 1px 0 0;
+  /* border:1px solid #999; */
+  /* border-width:1px 1px 0 0; */
 }
 
-
+/* 삭제될 요소 */
 .ttrbg-grid div.box[data-moving="2"]{
-  /* transition: filter  0.2s ease-out; */
-  filter: grayscale(1);
+  transition: filter  0.2s ease-out;
+  filter: brightness(0.5);
 }
 .ttrbg-grid div.box[data-moving="1"]:not([data-color="0"]){
-
+  filter: brightness(1.2);
 }
 .ttrbg-grid div.box[data-moving="0"]:not([data-color="0"]){
-  /* transition: background-color  1s ease-out; */
-  /* filter: grayscale(0.5); */
+  filter: brightness(0.8);
 }
 .ttrbg-grid div.box[data-moving="0"]{
-  filter: grayscale(0.3);
 }
 
 div.box[data-color="0"]{
@@ -112,9 +115,14 @@ div.box[data-color="7"]{
 }
 
 
+div.box[data-color="80"]{
+  background-color:  #ccc;
+}
+
+
 
 .info-box{
-  font-size:0.5em;
+  
   display: block;
   position: relative;
   height: 2em;
@@ -122,22 +130,47 @@ div.box[data-color="7"]{
   z-index: 10px;
   margin-bottom: -2em;
 }
-#textLevel{
+.textInfo{
+  font-size:0.5em;
   position: absolute;
+
+  line-height: 1em;
+  z-index: 10;
+}
+.textInfo::before{
+  font-size:0.5em;
+  text-transform: uppercase;
+}
+
+.textLevel{
   top: 0em;
-  line-height: 1em;
+  left:0;
 }
-#textLevel::before{
+.textLevel::before{
   content: "LEVEL : ";
-  font-size:0.5em;
 }
-#textScore{
-  position: absolute;
+.textScore{
   top: 1em;
-  line-height: 1em;
+  left:0;
 }
-#textScore::before{
+.textScore::before{
   content: "SCORE : ";
-  font-size:0.5em;
 
 }
+.textRemovedBlocks{
+  top: 1em;
+  right: 0em;
+}
+.textRemovedBlocks::before{
+  content: "Removed Blocks : ";
+}
+
+.textUsedTetriminoes{
+  top: 0em;
+  right: 0em;
+}
+.textUsedTetriminoes::before{
+  content: "Used Tetriminoes : ";
+}
+
+

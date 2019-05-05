@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+.gameBoxes{
+  display: flex;
+}
+.gameBox{
+  flex: 1 0 300px;
+}
