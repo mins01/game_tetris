@@ -63,7 +63,6 @@
 	<script src="Tetrimino.js"></script>
 	<script src="tetriminoMaps.js"></script>
 	<script src="tetrisBoxGame.js"></script>
-	<!-- <script src="GamepadLayout.js"></script> -->
 	<script src="GamepadHandler.js"></script>
 
 	<script>
@@ -108,36 +107,6 @@
 									break;
 								}
 							}
-
-			        // if(tm-this.axesHis[i2] > 200){
-			        //   this.axesHis[i2] = tm;
-			        //   var v = gp.axes[i2];
-			        //   // console.log(v)
-			        //   if(v>0.5){
-			        //     v = 1
-			        //   }else if(v<-0.5){
-			        //     v = -1
-			        //   }else{
-			        //     this.axesHis[i2] = 0;
-			        //     v = 0
-			        //   }
-							//
-			        //   if(this.axesHis[i2] != v){
-							//
-			        //     switch(i2){
-			        //       case 0:;
-			        //         ttrg.moveX(v);
-			        //       break;
-			        //       case 1:;
-			        //         if(v==1) ttrg.moveY(v);
-			        //       break;
-			        //       case 2:;
-			        //         ttrg.rotate(v);
-			        //       break;
-			        //     }
-			        //   }
-			        // }
-
 			      }
 			    }
 			    if(gp.buttons){
@@ -176,14 +145,6 @@
 									break;
 								}
 							}
-			        // if(gp.buttons[i2].pressed){
-			        //   if(tm-this.btnHis[i2] > 200){
-			        //     this.btnHis[i2] = tm;
-							//
-			        //   }
-			        // }else{
-			        //   this.btnHis[i2] = 0;
-			        // }
 			      }
 			    }
 				}

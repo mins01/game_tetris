@@ -19,7 +19,7 @@
 
 		gtag('config', 'UA-28167507-1');
 	</script>
-	
+
 	<!-- jquery 관련 -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
 
@@ -65,7 +65,7 @@
 	<script src="Tetrimino.js"></script>
 	<script src="tetriminoMaps.js"></script>
 	<script src="tetrisBoxGame.js"></script>
-	<script src="GamepadLayout.js"></script>
+	<script src="GamepadHandler.js"></script>
 
 	<script>
 	var ttrgs = []
@@ -74,20 +74,19 @@
 	ttrgs = [ttrg,ttrg2]
 	// var ttr = new Tetris();
 	$(function(){
-		GamepadLayout.init();
-		// ttr.create(8,10);
-		// ttr.print();
+
 		ttrg.title="p1";
-		
 		ttrg.init('ttrbg');
 		ttrg.create(10,20);
 		ttrg.keyboard = 1;
-		
+		ttrg.gamepad = ttrgs.indexOf(ttrg);
+
 		ttrg2.title="p2";
 		ttrg2.init('ttrbg2');
 		ttrg2.create(10,20);
 		ttrg2.keyboard = 2;
-		
+		ttrg2.gamepad = ttrgs.indexOf(ttrg2);
+
 		$(document).on('keydown',function(event){
 			ttrg.onkeyDown(event)
 			ttrg2.onkeyDown(event)
@@ -105,6 +104,79 @@
 			console.log("cbOnRemoveRows ttrg.beAttacked");
 			ttrg.beAttacked(ys.length);
 		}
+
+		//-- 게임패드 연동
+		GamepadHandler.setup(true)
+		GamepadHandler.onbuttonpress = function(gpis){
+
+			for(var i=0,m=gpis.length;i<m;i++){
+				var gp = gpis[i];
+				var ttrg = ttrgs[i];
+				if(ttrg==null || gp==null){continue;}
+				if(gp != null){
+					if(gp.axes){
+						for(var i2=0,m2=gp.axes.length;i2<m2;i2++){
+
+							if(gp.axes[i2]!=0){
+								var v = gp.axes[i2];
+								v = (v>0)?1:-1
+								switch(i2){
+									case 0:;
+										ttrg.moveX(v);
+									break;
+									case 1:;
+										if(v==1) ttrg.moveY(v);
+									break;
+									case 2:;
+										ttrg.rotate(v);
+									break;
+								}
+							}
+						}
+					}
+					if(gp.buttons){
+						for(var i2=0,m2=gp.buttons.length;i2<m2;i2++){
+							if(gp.buttons[i2]!=0){
+								switch(i2){
+									case 14:
+									case 4:
+										ttrg.moveX(-1);
+									break;
+									case 15:
+									case 5:
+										ttrg.moveX(1);
+									break;
+									case 13:
+										ttrg.moveY(1);
+									break;
+									case 2:
+									case 3:
+									case 6:
+										ttrg.rotate(-1);
+									break;
+									case 1:
+									case 7:
+									case 12:
+										ttrg.rotate(1);
+									break;
+									case 0:
+										ttrg.moveBottom(1);
+									break;
+									case 9:
+										if(!ttrg.ttr.gaming) ttrg.start();
+									break;
+									case 8:
+										ttrg.gameOver();
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+
+		}
+
 	})
 
 	</script>
@@ -131,7 +203,7 @@
 			<div class="gameBox">
 				<div id="ttrbg" class="ttrbg">
 					<div class="info-box">
-		
+
 						<div class="textInfo textLevel"></div>
 						<div class="textInfo textScore"></div>
 						<div class="textInfo textRemovedBlocks"></div>
@@ -143,7 +215,7 @@
 							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
 						</div>
 					</div>
-		
+
 					<div class="ttrbg-grid ready"></div>
 					<div class="ttrbg-grid end"></div>
 				</div>
@@ -158,13 +230,13 @@
 							<option value="2" >NUM : 🔄 = 8 , ⬅️ = 4 , ➡️ = 6 , ⬇️ = 5 , ⏬ = 2</option>
 						</select>
 					</div>
-					
+
 				</div>
 			</div>
 			<div class="gameBox">
 				<div id="ttrbg2" class="ttrbg">
 					<div class="info-box">
-		
+
 						<div class="textInfo textLevel"></div>
 						<div class="textInfo textScore"></div>
 						<div class="textInfo textRemovedBlocks"></div>
@@ -176,7 +248,7 @@
 							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
 						</div>
 					</div>
-		
+
 					<div class="ttrbg-grid ready"></div>
 					<div class="ttrbg-grid end"></div>
 				</div>
@@ -206,7 +278,7 @@
 		<div>
 			<a href="index.html">index</a> , <a href="tetrisTextGame.html">ver text</a> , 	<a href="tetrisBoxGame2P.html">2P</a>
 		</div>
-		
+
 	</div>
 
 	<div id="div_control" style="display:none">
