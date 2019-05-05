@@ -11,7 +11,7 @@
 	<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link rel="shortcut icon" href="http://www.mins01.com/favicon.ico">
 	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-28167507-1"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-28167507-1"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
@@ -19,14 +19,6 @@
 
 		gtag('config', 'UA-28167507-1');
 	</script>
-	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-	<script>
-	     (adsbygoogle = window.adsbygoogle || []).push({
-	          google_ad_client: "ca-pub-5804424351292113",
-	          enable_page_level_ads: true
-	     });
-	</script>
-	 -->
 	<!-- jquery 관련 -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
 
@@ -76,14 +68,12 @@
 
 	<script>
 
-	var ttrg = tetrisBoxGame;
+	var ttrg = tetrisBoxGame();
 	var ttrgs = [ttrg];
 	// var ttr = new Tetris();
 	$(function(){
-		// GamepadLayout.init();
-		// ttr.create(8,10);
-		// ttr.print();
-		ttrg.init();
+		ttrg.title="p1";
+		ttrg.init('ttrbg');
 		ttrg.create(8,10);
 		$(document).on('keydown',function(event){
 			ttrg.onkeyDown(event)
@@ -232,29 +222,31 @@
 				<button type="button" class="btn btn-info" onclick="ttrg.start();blur()">start</button>
 			</div>
 		</div>
-		<div id="ttrbg">
-			<div class="info-box">
+		<div  class="text-center">
+			<div  class="ttrbg-layout">
+				<div id="ttrbg" class="ttrbg">
+					<div class="info-box">
 
-				<div id="textLevel">
+						<div class="textInfo textLevel"></div>
+						<div class="textInfo textScore"></div>
+						<div class="textInfo textRemovedBlocks"></div>
+						<div class="textInfo textUsedTetriminoes"></div>
 
-				</div>
-				<div id="textScore">
+						<div class="ttrbg-grid next">
+							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+						</div>
+					</div>
 
-				</div>
-				<div class="ttrbg-grid next">
-					<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-					<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-					<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-					<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+
+
+					<div class="ttrbg-grid ready"></div>
+					<div class="ttrbg-grid end"></div>
 				</div>
 			</div>
-
-			<div class="ttrbg-grid ready"></div>
-			<div class="ttrbg-grid end"></div>
 		</div>
-
-
-
 		<!-- <hr />
 		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrg.moveX(-1);">left</button>
 		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrg.moveX(1);">right</button>
@@ -265,7 +257,7 @@
 
 
 		<div>
-			<a href="tetrisTextGame.html">ver text</a>
+			<a href="index.html">index</a> , <a href="tetrisTextGame.html">ver text</a> , 	<a href="tetrisBoxGame2P.html">2P</a>
 		</div>
 	</div>
 
