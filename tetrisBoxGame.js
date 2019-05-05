@@ -3,6 +3,7 @@ var tetrisBoxGame = (function(){
 	var ttr = new Tetris();
 
 	var tetrisGame = {
+		"gamepad":0,
 		"ttr":ttr,
 		"init":function(){
 			// this.ttr = new Tetris();
@@ -160,16 +161,22 @@ var tetrisBoxGame = (function(){
 	ttr.cbOnScore = function(newScore,gap){
 		if(gap>0) this.sleep();
 		console.log("scoreUP : +"+gap+ " = "+newScore)
-		switch(gap){
-			case 4:setTimeout(function(){ GamepadLayout.shortRumble(0) },600);
-			case 3:setTimeout(function(){ GamepadLayout.shortRumble(0) },400);
-			case 2:setTimeout(function(){ GamepadLayout.shortRumble(0) },200);
-			case 1:GamepadLayout.shortRumble(0);
-			break;
+		//진동
+		if(GamepadHandler){
+			switch(gap){
+				case 4:setTimeout(function(){ GamepadHandler.strongRumble(tetrisGame.gamepad,100) },600);
+				case 3:setTimeout(function(){ GamepadHandler.strongRumble(tetrisGame.gamepad,100) },400);
+				case 2:setTimeout(function(){ GamepadHandler.strongRumble(tetrisGame.gamepad,100) },200);
+				case 1:GamepadHandler.strongRumble(tetrisGame.gamepad,100);
+				break;
+			}
 		}
+
 	}
 	ttr.cbOnGameOver = function(newScore,gap){
-		GamepadLayout.longRumble(0);
+		if(GamepadHandler){
+			GamepadHandler.strongRumble(tetrisGame.gamepad,1000)
+		}
 		tetrisGame.draw();
 	}
 	// == end set ttr callback

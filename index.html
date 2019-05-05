@@ -71,13 +71,16 @@
 	<script src="Tetrimino.js"></script>
 	<script src="tetriminoMaps.js"></script>
 	<script src="tetrisBoxGame.js"></script>
-	<script src="GamepadLayout.js"></script>
+	<!-- <script src="GamepadLayout.js"></script> -->
+	<script src="GamepadHandler.js"></script>
 
 	<script>
+
 	var ttrg = tetrisBoxGame;
+	var ttrgs = [ttrg];
 	// var ttr = new Tetris();
 	$(function(){
-		GamepadLayout.init();
+		// GamepadLayout.init();
 		// ttr.create(8,10);
 		// ttr.print();
 		ttrg.init();
@@ -88,7 +91,116 @@
 		$(window).on('resize',function(event){
 			ttrg.onresize();
 		})
-		
+		//-- 게임패드 연동
+		GamepadHandler.setup(true)
+		GamepadHandler.onbuttonpress = function(gpis){
+
+			for(var i=0,m=gpis.length;i<m;i++){
+				var gp = gpis[i];
+				var ttrg = ttrgs[i];
+				if(ttrg==null || gp==null){continue;}
+				if(gp != null){
+					if(gp.axes){
+			      for(var i2=0,m2=gp.axes.length;i2<m2;i2++){
+
+							if(gp.axes[i2]!=0){
+								var v = gp.axes[i2];
+								v = (v>0)?1:-1
+								switch(i2){
+									case 0:;
+										ttrg.moveX(v);
+									break;
+									case 1:;
+										if(v==1) ttrg.moveY(v);
+									break;
+									case 2:;
+										ttrg.rotate(v);
+									break;
+								}
+							}
+
+			        // if(tm-this.axesHis[i2] > 200){
+			        //   this.axesHis[i2] = tm;
+			        //   var v = gp.axes[i2];
+			        //   // console.log(v)
+			        //   if(v>0.5){
+			        //     v = 1
+			        //   }else if(v<-0.5){
+			        //     v = -1
+			        //   }else{
+			        //     this.axesHis[i2] = 0;
+			        //     v = 0
+			        //   }
+							//
+			        //   if(this.axesHis[i2] != v){
+							//
+			        //     switch(i2){
+			        //       case 0:;
+			        //         ttrg.moveX(v);
+			        //       break;
+			        //       case 1:;
+			        //         if(v==1) ttrg.moveY(v);
+			        //       break;
+			        //       case 2:;
+			        //         ttrg.rotate(v);
+			        //       break;
+			        //     }
+			        //   }
+			        // }
+
+			      }
+			    }
+			    if(gp.buttons){
+			      for(var i2=0,m2=gp.buttons.length;i2<m2;i2++){
+							if(gp.buttons[i2]!=0){
+								switch(i2){
+									case 14:
+									case 4:
+										ttrg.moveX(-1);
+									break;
+									case 15:
+									case 5:
+										ttrg.moveX(1);
+									break;
+									case 13:
+										ttrg.moveY(1);
+									break;
+									case 2:
+									case 3:
+									case 6:
+										ttrg.rotate(-1);
+									break;
+									case 1:
+									case 7:
+									case 12:
+										ttrg.rotate(1);
+									break;
+									case 0:
+										ttrg.moveBottom(1);
+									break;
+									case 9:
+										if(!ttrg.ttr.gaming) ttrg.start();
+									break;
+									case 8:
+										ttrg.gameOver();
+									break;
+								}
+							}
+			        // if(gp.buttons[i2].pressed){
+			        //   if(tm-this.btnHis[i2] > 200){
+			        //     this.btnHis[i2] = tm;
+							//
+			        //   }
+			        // }else{
+			        //   this.btnHis[i2] = 0;
+			        // }
+			      }
+			    }
+				}
+			}
+
+		}
+
 	})
 
 	</script>
