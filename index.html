@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!doctype html>
 <html lang="ko" >
 <head>
@@ -20,6 +19,7 @@
 
 		gtag('config', 'UA-28167507-1');
 	</script>
+	
 	<!-- jquery 관련 -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
 
@@ -59,6 +59,12 @@
 	}
 	</style>
 	<link rel="stylesheet" href="tetrisBoxGame.css">
+	<!-- https://daneden.github.io/animate.css/ -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+	<script src="modules/ui_AppearBox/TimerChian.js"></script>
+	<script src="modules/ui_AppearBox/AppearBox.js"></script>
+	
 
 	<script src="Tetris.js"></script>
 	<script src="Tetrimino.js"></script>
@@ -67,7 +73,6 @@
 	<script src="GamepadHandler.js"></script>
 
 	<script>
-
 	var ttrg = tetrisBoxGame();
 	var ttrgs = [ttrg];
 	// var ttr = new Tetris();
@@ -84,7 +89,6 @@
 		//-- 게임패드 연동
 		GamepadHandler.setup(true)
 		GamepadHandler.onbuttonpress = function(gpis){
-
 			for(var i=0,m=gpis.length;i<m;i++){
 				var gp = gpis[i];
 				var ttrg = ttrgs[i];
@@ -92,7 +96,6 @@
 				if(gp != null){
 					if(gp.axes){
 			      for(var i2=0,m2=gp.axes.length;i2<m2;i2++){
-
 							if(gp.axes[i2]!=0){
 								var v = gp.axes[i2];
 								v = (v>0)?1:-1
@@ -150,11 +153,8 @@
 			    }
 				}
 			}
-
 		}
-
 	})
-
 	</script>
 
 </head>
@@ -184,28 +184,47 @@
 				<button type="button" class="btn btn-info" onclick="ttrg.start();blur()">start</button>
 			</div>
 		</div>
-		<div  class="text-center">
-			<div  class="ttrbg-layout">
-				<div id="ttrbg" class="ttrbg">
-					<div class="info-box">
-
-						<div class="textInfo textLevel"></div>
-						<div class="textInfo textScore"></div>
-						<div class="textInfo textRemovedBlocks"></div>
-						<div class="textInfo textUsedTetriminoes"></div>
-
-						<div class="ttrbg-grid next">
-							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+		<div class="gameBoxes">
+			<div class="gameBox  text-center">
+				<div  class="ttrbg-layout">
+					<div id="ttrbg" class="ttrbg">
+						<div class="info-box">
+			
+							<div class="textInfo textLevel"></div>
+							<div class="textInfo textScore"></div>
+							<div class="textInfo textRemovedBlocks"></div>
+							<div class="textInfo textUsedTetriminoes"></div>
+							
+							<div class="ttrbg-grid next">
+								<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+								<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+								<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+								<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+							</div>
 						</div>
+						<div class="ttrbg-grid ready"></div>
+						<div class="ttrbg-grid end"></div>
+						<div class="appear-box">
+							<div class="appear-box-fence appear-box-item-center">
+								<div class="appear-box-content">
+									TETRIS
+								</div>
+							</div>	
+						</div>
+					</div>	
+				</div>
+				<div class="text-center">
+					<div class="input-group my-1 mx-auto" style="width:300px">
+						<div class="input-group-prepend">
+							<span class="input-group-text" >Player1 key</span>
+						</div>
+						<select class="form-control" onchange="ttrg.keyboard=this.value">
+							<option value="0" selected>🔄 = ⬆️ , ⬅️ = ⬅️ , ➡️ = ➡️ , ⬇️ = ⬇️ , ⏬ = space</option>
+							<option value="1" >🔄 = w , ⬅️ = a , ➡️ = d , ⬇️ = s , ⏬ = x</option>
+							<option value="2" >NUM : 🔄 = 8 , ⬅️ = 4 , ➡️ = 6 , ⬇️ = 5 , ⏬ = 2</option>
+						</select>
 					</div>
-
-
-
-					<div class="ttrbg-grid ready"></div>
-					<div class="ttrbg-grid end"></div>
+		
 				</div>
 			</div>
 		</div>
@@ -248,192 +267,3 @@
 	</div>
 </body>
 </html>
-=======
-<!doctype html>
-<html lang="ko" >
-<head>
-	<title>tetris</title>
-	<meta charset="utf-8">
-	<meta http-equiv="Content-Script-Type" content="text/javascript">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-	<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<link rel="shortcut icon" href="http://www.mins01.com/favicon.ico">
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-28167507-1"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-
-		gtag('config', 'UA-28167507-1');
-	</script>
-	
-	<!-- jquery 관련 -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
-
-
-	<!-- 부트스트랩 4 : IE8지원안됨! -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
-	<!-- vue.js -->
-	<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
-
-
-	<!-- meta og -->
-
-	<meta property="og:title" content="tetris">
-	<meta property="og:description" content="tetris ver box">
-	<meta name="og:image" content="tetrisBoxGame.png">
-	<meta property="og:image:width" content="150">
-	<meta property="og:image:height" content="349" />
-	<meta property="og:site_name" content="tetris" />
-	<meta property="og:type" content="game">
-
-	<!-- //meta og -->
-
-	<style>
-	#div_control{opacity:0.3;position:fixed;; bottom:30%;width:100%; height:200px; display:none; z-index:100}
-	#div_control button{ border:2px solid #ccc; padding:2px; margin:2px; width:60px; height:60px; line-height:20px; font-size:12px;}
-	#select_scale{display:none;}
-	@media all and (max-width:800px) {
-		#div_control {display:block;}
-		#select_scale{display: inline;}
-	}
-	#output{
-		pointer-events: none;
-		font-family:'Droid Sans Mono',monospace,Monaco,'Lucida Console',Courier ;
-		line-height:1em; text-align:center;width:100%; font-size:16px;
-	}
-	</style>
-	<link rel="stylesheet" href="tetrisBoxGame.css">
-
-	<script src="modules/ui_AppearBox/TimerChian.js"></script>
-	<script src="modules/ui_AppearBox/AppearBox.js"></script>
-	
-
-	<script src="Tetris.js"></script>
-	<script src="Tetrimino.js"></script>
-	<script src="tetriminoMaps.js"></script>
-	<script src="tetrisBoxGame.js"></script>
-	<script src="GamepadLayout.js"></script>
-
-	<script>
-	var ttrg = tetrisBoxGame();
-
-	$(function(){
-		GamepadLayout.init();
-		ttrg.title="p1";
-		ttrg.init('ttrbg');
-		ttrg.create(8,10);
-
-		$(document).on('keydown',function(event){
-			ttrg.onkeyDown(event)
-		})
-		$(window).on('resize',function(event){
-			ttrg.onresize();
-		})
-		
-	})
-
-	</script>
-
-</head>
-<body>
-	<div class="container" id="container" style="max-width:1000px; padding:0 5px;">
-		<h1 class="sr-only">tetris</h1>
-		<div class="input-group my-1">
-			<div class="input-group-prepend">
-				<span class="input-group-text" >Tetris</span>
-			</div>
-			<select class="form-control" onchange="var x = this.value.split(',');ttrg.create(parseInt(x[0]),parseInt(x[1]));">
-				<option value="6,8">6x8</option>
-				<option value="8,10" selected>8x10</option>
-				<option value="10,20">10x20</option>
-				<option value="14,20">14x20</option>
-				<option value="20,20">20x20</option>
-				<option value="30,20">30x20</option>
-				<option value="40,20">40x20</option>
-				<option value="50,25">50x25</option>
-				<option value="60,30">60x30</option>
-				<option value="70,35">70x35</option>
-				<option value="80,40">80x40</option>
-				<option value="90,45">90x45</option>
-				<option value="100,50">100x50</option>
-			</select>
-			<div class="input-group-append">
-				<button type="button" class="btn btn-info" onclick="ttrg.start();blur()">start</button>
-			</div>
-		</div>
-		<div  class="text-center">
-			<div  class="ttrbg-layout">
-				<div id="ttrbg" class="ttrbg">
-					<div class="info-box">
-		
-						<div class="textInfo textLevel"></div>
-						<div class="textInfo textScore"></div>
-						<div class="textInfo textRemovedBlocks"></div>
-						<div class="textInfo textUsedTetriminoes"></div>
-						
-						<div class="ttrbg-grid next">
-							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-							<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-						</div>
-					</div>
-					<div class="ttrbg-grid ready"></div>
-					<div class="ttrbg-grid end"></div>
-					<div class="appear-box">
-						<div class="appear-box-fence appear-box-item-center">
-							<div class="appear-box-content">
-								TETRIS
-							</div>
-						</div>	
-					</div>
-				</div>	
-			</div>
-		</div>
-		<!-- <hr />
-		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrg.moveX(-1);">left</button>
-		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrg.moveX(1);">right</button>
-		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrg.moveY(1);">down</button>
-		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrg.moveBottom();">moveBottom</button>
-		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrg.rotate(-1);">rotate left</button>
-		<button type="button" class="btn btn-info m-1 btn-sm" onclick="ttrg.rotate(1);">rotate right</button> -->
-
-
-		<div>
-			<a href="index.html">index</a> , <a href="tetrisTextGame.html">ver text</a> , 	<a href="tetrisBoxGame2P.html">2P</a>
-		</div>
-	</div>
-
-	<div id="div_control" style="">
-		<div style="position:absolute; top:0; left:0;">
-			<button type="button" onclick="ttrg.rotate(-1);"  style="margin:0 auto;display:block;">CHANGE</button>
-			<button type="button" onclick="ttrg.moveX(-1);"  style="display:block;">LEFT</button>
-			<button type="button" onclick="ttrg.moveBottom();"  style="display:block;">DROP</button>
-		</div>
-		<div style="position:absolute; top:0; right:0;">
-			<button type="button" onclick="ttrg.rotate(1);"  style="margin:0 auto; display:block;">CHANGE</button>
-			<button type="button" onclick="ttrg.moveX(1);"  style="display:block;">RIGHT</button>
-			<button type="button" onclick="ttrg.moveY(1);"  style="display:block;">DOWN</button>
-		</div>
-	</div>
-	<div class="text-center">
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		<!-- 320x50_sliding_puzzle -->
-		<ins class="adsbygoogle"
-				 style="display:inline-block;width:320px;height:50px"
-				 data-ad-client="ca-pub-5804424351292113"
-				 data-ad-slot="8449820293"></ins>
-		<script>
-		(adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
-	</div>
-</body>
-</html>
->>>>>>> dev_mins01

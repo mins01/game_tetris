@@ -61,6 +61,9 @@
 	<link rel="stylesheet" href="tetrisBoxGame.css">
 	<link rel="stylesheet" href="tetrisBoxGame2P.css">
 
+	<!-- https://daneden.github.io/animate.css/ -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+	
 	<script src="modules/ui_AppearBox/TimerChian.js"></script>
 	<script src="modules/ui_AppearBox/AppearBox.js"></script>
 
@@ -189,8 +192,8 @@
 			ttrg2.stop();
 			ttrg_cbOnGameOver()
 			ttrg2_cbOnGameOver()
-			ttrg.ab.contentText("YOU LOSE",1000);
-			ttrg2.ab.contentHtml("<big>YOU WIN</big>",1000);
+			ttrg.ab.contentHtml("",1000).contentHtml("YOU LOSE",0).show(0,'lightSpeedIn');
+			ttrg2.ab.contentHtml("",1000).contentHtml("<big style='font-size:2em'>YOU WIN</big>",0).show(0,'lightSpeedIn');
 		}
 		
 		ttrg2.ttr.cbOnGameOver = function(newScore,gap){
@@ -198,8 +201,8 @@
 			ttrg2.stop();
 			ttrg_cbOnGameOver()
 			ttrg2_cbOnGameOver()
-			ttrg2.ab.contentText("YOU LOSE",1000);
-			ttrg.ab.contentHtml("<big>YOU WIN</big>",1000);
+			ttrg2.ab.contentHtml("",1000).contentHtml("YOU LOSE",0).show(0,'lightSpeedIn');
+			ttrg.ab.contentHtml("",1000).contentHtml("<big style='font-size:2em'>YOU WIN</big>",0).show(0,'lightSpeedIn');
 		}
 
 	})
@@ -214,7 +217,13 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text" >Tetris</span>
 			</div>
-			<select class="form-control" onchange="var x = this.value.split(',');ttrg.create(parseInt(x[0]),parseInt(x[1]));ttrg2.create(parseInt(x[0]),parseInt(x[1]));">
+			<select class="form-control" onchange="var x = this.value.split(',');ttrg.create(parseInt(x[0]),parseInt(x[1]));">
+				<option value="6,8">6x8</option>
+				<option value="8,10" >8x10</option>
+				<option value="10,20" selected>10x20</option>
+				<option value="14,20">14x20</option>
+			</select>
+			<select class="form-control" onchange="var x = this.value.split(',');ttrg2.create(parseInt(x[0]),parseInt(x[1]));">
 				<option value="6,8">6x8</option>
 				<option value="8,10" >8x10</option>
 				<option value="10,20" selected>10x20</option>

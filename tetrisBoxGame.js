@@ -17,11 +17,16 @@ var tetrisBoxGame = function(){
 			this.$textRemovedBlocks = $("#"+ttrbg_id+" .textRemovedBlocks");
 			this.$textUsedTetriminoes = $("#"+ttrbg_id+" .textUsedTetriminoes");
 			this.ab = new AppearBox($("#"+ttrbg_id+" .appear-box").get(0));
+			this.ab.showAnmation = 'bounceInDown';
+			this.ab.hideAnmation = 'bounceOutUp';
 			this.ab.contentText("Tetris").show(0);
+			
 		},
 		"onresize":function(){
 			var rs = document.body.getBoundingClientRect()
-			var rs2 = document.querySelector("#container").getBoundingClientRect()
+			// var rs = this.$ttrbg.parents(".gameBox").get(0).getBoundingClientRect()
+			// var rs2 = document.querySelector("#container").getBoundingClientRect()
+			var rs2 = this.$ttrbg.parents(".gameBox").get(0).getBoundingClientRect()
 			var ft = Math.max(4,Math.min(Math.floor((rs2.width-10)/ttr.board.w),Math.floor((rs.height-20)/(ttr.board.h+4))))
 			this.$ttrbg.css("fontSize",ft+'px');
 			// this.$ttrbg.css("width",(ttr.board.w*ft)+'px').css("height",((ttr.board.h+4)*ft)+'px');
@@ -39,6 +44,7 @@ var tetrisBoxGame = function(){
 		"$ttrbg":null,
 		// == ttr wrapper
 		"create":function(w,h){
+			this.ab.stop().clear().show(-1,'none').contentText('Tetris',-1);
 			this.stop();
 			var $ttrbgReady = this.$ttrbg.find(".ready");
 			var $ttrbgEnd = this.$ttrbg.find(".end");
@@ -65,20 +71,21 @@ var tetrisBoxGame = function(){
 			ttr.create(w,h);
 			this.onresize()
 
+			this.ab.show(10,'rubberBand').contentText('Tetris Ready\n'+w+'x'+h,10).show(10,'rubberBand');
 
 		},
 		"start":function(){
 			ttr.stop()
-			this.ab.contentText('Ready',0).show(0)
-			.contentText('3',1500)
+			this.ab.stop().clear().contentText('Ready',0).show(0,'none')
+			.contentText('3',500)
 			.contentText('2',1000)
 			.contentText('1',1000)
 			.contentText('Go!',1000)
-			.hide(100)
-			.contentText('',0)
+			.hide(0)
 			.add(function(){
 				ttr.start()
-			},0)
+			},100)
+			.contentText('',0)
 			
 		},
 		"stop":function(){
@@ -215,7 +222,7 @@ var tetrisBoxGame = function(){
 		}
 		tetrisGame.draw();
 		ttr.stop()
-		tetrisGame.ab.contentHtml('<big>GAMEOVER</big>',0).show(0)
+		tetrisGame.ab.stop().clear().contentHtml('<big>GAMEOVER</big>',-1).show(0)
 		.contentText('GAMEOVER\nLevel : '+ttr.level.level,500)
 		.contentText('GAMEOVER\nLevel : '+ttr.level.level+'\nScore : '+ttr.info.score,500)
 	}
