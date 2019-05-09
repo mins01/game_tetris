@@ -76,6 +76,7 @@ var tetrisBoxGame = function(){
 		},
 		"start":function(){
 			ttr.stop()
+			ttr.reset()
 			this.ab.stop().clear().contentText('Ready',0).show(0,'none')
 			.contentText('3',500)
 			.contentText('2',1000)

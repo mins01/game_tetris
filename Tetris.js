@@ -42,7 +42,8 @@ var Tetris = (function(){
 			this.reset();
 		},
 		"reset":function(){
-			this.createTetrimino();
+			this.ttmn.reset();
+			this.ttmn.hide();
 			this.score = 0;
 			this.info.score = 0;
 			this.info.removedBlocks = 0;
@@ -256,6 +257,7 @@ var Tetris = (function(){
 		"onGameOver":function(){
 			this.gaming=false;
 			this.timer.stop();
+			this.ttmn.hide();
 			this.cbOnGameOver();
 		},
 		"checkGameOver":function(){
@@ -279,10 +281,10 @@ var Tetris = (function(){
 		},
 		"start":function(){
 			this.reset();
+			this.createTetrimino();
 			this.gaming = true;
 			this.moveYable = true;
 			this.resume()
-
 		},
 		"fnMoveY":function(){
 			var thisC = this;
@@ -495,6 +497,15 @@ var Tetris = (function(){
 		"x":0,"y":0,
 		"current":null,"board":null,"next":null,
 		"nextType":0,
+		"reset":function(){
+			this.nextType = -1;
+		},
+		"hide":function(){
+			this.current.create(0,0);
+			this.next.create(0,0);
+			this.x = Math.floor((this.board.w-this.current.w)/2);
+			this.y = 0;
+		},
 		"create":function(){
 			if(this.nextType==-1){
 				this.nextType = Math.floor(Math.random()*tetriminoMaps.count+1);
