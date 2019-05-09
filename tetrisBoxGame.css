@@ -174,3 +174,31 @@ div.box[data-color="80"]{
 }
 
 
+
+
+.appear-box{
+  pointer-events:none;
+  position: absolute;
+  top:0;left:0;right:0;bottom:0;
+  overflow: hidden;
+  display: none;
+}
+.appear-box.on{
+  display:inherit ;
+}
+.appear-box-fence{
+  position: absolute;
+  top:0;left:0;right:0;bottom:0;
+  background-color: rgba(0,0,0,0.6);
+}
+.appear-box-item-center{
+  display: flex ;
+  justify-content: center;
+  align-items: center;
+}
+.appear-box-content{
+  white-space: pre;
+  color:#fff;
+  font-weight: bold;
+}
+

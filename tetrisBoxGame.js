@@ -7,6 +7,7 @@ var tetrisBoxGame = function(){
 		"player":1,
 		"keyboard":0, //0:화살표, 1:wadsx , 2:NUMPAD 84652
 		"ttr":ttr,
+		"ab":null,
 		"init":function(ttrbg_id){
 			// this.ttr = new Tetris();
 			this.$ttrbg = $("#"+ttrbg_id+".ttrbg");
@@ -14,6 +15,8 @@ var tetrisBoxGame = function(){
 			this.$textScore = $("#"+ttrbg_id+" .textScore");
 			this.$textRemovedBlocks = $("#"+ttrbg_id+" .textRemovedBlocks");
 			this.$textUsedTetriminoes = $("#"+ttrbg_id+" .textUsedTetriminoes");
+			this.ab = new AppearBox($("#"+ttrbg_id+" .appear-box").get(0));
+			this.ab.contentText("Tetris").show(0);
 		},
 		"onresize":function(){
 			var rs = document.body.getBoundingClientRect()
@@ -64,7 +67,18 @@ var tetrisBoxGame = function(){
 
 		},
 		"start":function(){
-			ttr.start()
+			ttr.stop()
+			this.ab.contentText('Ready',0).show(0)
+			.contentText('3',1500)
+			.contentText('2',1000)
+			.contentText('1',1000)
+			.contentText('Go!',1000)
+			.hide(100)
+			.contentText('',0)
+			.add(function(){
+				ttr.start()
+			},0)
+			
 		},
 		"stop":function(){
 			ttr.stop();
@@ -193,6 +207,10 @@ var tetrisBoxGame = function(){
 	ttr.cbOnGameOver = function(newScore,gap){
 		GamepadLayout.longRumble(0);
 		tetrisGame.draw();
+		ttr.stop()
+		tetrisGame.ab.contentHtml('<big>GAMEOVER</big>',0).show(0)
+		.contentText('GAMEOVER\nLevel : '+ttr.level.level,500)
+		.contentText('GAMEOVER\nLevel : '+ttr.level.level+'\nScore : '+ttr.info.score,500)
 	}
 	
 	ttr.cbOnRemoveRows = function(ys,w,map){
