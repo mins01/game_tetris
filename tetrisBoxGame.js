@@ -113,10 +113,11 @@ var tetrisBoxGame = function(){
 			var mapD = map.slice(ttr.board.w*4);
 			var ttmnNextMap = ttr.getTtmnNextMap();
 			for(var i=0,m=map.length;i<m;i++){
-				// this.divs[i].innerText = map[i];
-				var n = map[i]%100;
-				$(this.divs[i]).attr('data-moving',Math.floor((map[i]-n)/100));
-				$(this.divs[i]).attr('data-color',n);
+				if(this.divs[i]._v!=map[i]){
+					var n = map[i]%100;
+					$(this.divs[i]).attr('data-moving',Math.floor((map[i]-n)/100)).attr('data-color',n).prop('_v',map[i]);					
+				}
+
 			}
 			this.$ttrbg.attr("data-gaming",ttr.gaming?1:0);
 
@@ -128,7 +129,13 @@ var tetrisBoxGame = function(){
 
 			for(var i=0,m=mapNext.length;i<m;i++){
 				// this.divs[i].innerText = map[i];
-				$(this.nextDivs[i]).attr('data-color',mapNext[i]%100);
+				// $(this.nextDivs[i]).attr('data-color',mapNext[i]%100);
+				// 
+				if(this.nextDivs[i]._v!=mapNext[i]){
+					// var n = map[i]%100;
+					$(this.nextDivs[i]).attr('data-color',mapNext[i]%100).prop('_v',mapNext[i]);					
+				}
+				
 			}
 
 
