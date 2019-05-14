@@ -516,6 +516,7 @@ var Tetris = (function(){
 		"x":0,"y":0,
 		"current":null,"board":null,"next":null,
 		"nextType":0,
+		"nextTypes":[], //다음에 나올 테트리미노 배열(미리 지정하면 지정된 순서대로 나옴. 다 사용하면 랜덤으로 만들어서 나옴)
 		"reset":function(){
 			this.nextType = -1;
 		},
@@ -526,11 +527,17 @@ var Tetris = (function(){
 			this.y = 0;
 		},
 		"create":function(){
+			if(this.nextTypes.length==0){
+				this.nextTypes.push(Math.floor(Math.random()*tetriminoMaps.count+1))
+			}
 			if(this.nextType==-1){
-				this.nextType = Math.floor(Math.random()*tetriminoMaps.count+1);
+				this.nextType = this.nextTypes.splice(0,1);
+				if(this.nextTypes.length==0){
+					this.nextTypes.push(Math.floor(Math.random()*tetriminoMaps.count+1))
+				}
 			}
 			this.current.create(this.nextType,0);
-			this.nextType = Math.floor(Math.random()*tetriminoMaps.count+1);
+			this.nextType = this.nextTypes.splice(0,1);
 			this.next.create(this.nextType,0);
 
 			this.x = Math.floor((this.board.w-this.current.w)/2);
