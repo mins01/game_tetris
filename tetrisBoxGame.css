@@ -118,7 +118,19 @@ div.box[data-color="7"]{
 div.box[data-color="80"]{
   background-color:  #ccc;
 }
-
+div.box[data-color="90"]{
+  background-color:  #000;
+}
+div.box[data-color="90"]::after{
+  position: absolute;
+  top:0;bottom: 0;right:0;left:0;
+  font-size: 0.5em;
+  content: "🏆";
+  overflow:hidden;
+  display: flex ;
+  justify-content: center;  /* 가로 중앙 */
+  align-items: center; /* 세로 중앙 */
+}
 
 
 .info-box{

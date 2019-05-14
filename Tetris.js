@@ -23,6 +23,7 @@ var Tetris = (function(){
 			}
 			this.gaming = false;
 			this.moveYable = false;
+			this.goalRemove90 = 0; //90번 블록 없애는 것이 목표
 			this.level.cbOnLevelUp = function(){
 				thisC.resume();
 			}
@@ -116,6 +117,8 @@ var Tetris = (function(){
 			}else{
 				if(this.checkGameOver()){
 
+				}else if(this.checkGoal()){
+
 				}else{
 					this.createTetrimino();
 					this.cbOnBottom();
@@ -160,6 +163,8 @@ var Tetris = (function(){
 				thisC.onRemoveRows(ys,w,mapC);
 				
 				if(thisC.checkGameOver()){
+
+				}else if(thisC.checkGoal()){
 
 				}else{
 					thisC.createTetrimino();
@@ -251,6 +256,29 @@ var Tetris = (function(){
 		"getTtmnNextMap":function(){
 			return this.ttmn.next.map
 		},
+		"isGoal":function(){
+			if(this.goalRemove90==1){
+				if(this.board.map.indexOf(90) == -1){
+					return true;
+				}
+			}
+		},
+		"checkGoal":function(){
+			if(this.gaming && this.isGoal()){
+				this.onGoal();
+				return true;
+			}
+			return false;
+		},
+		"onGoal":function(){
+			this.gaming=false;
+			this.timer.stop();
+			this.ttmn.hide();
+			this.cbOnGoal();
+		},
+		"cbOnGoal":function(){
+			console.log("Goal!")
+		},
 		"cbOnGameOver":function(){
 			console.log("GAMEOVER");
 		},
@@ -260,8 +288,20 @@ var Tetris = (function(){
 			this.ttmn.hide();
 			this.cbOnGameOver();
 		},
+		"isGameOver":function(){
+			var arr = null;
+			for(var i=0,m=this.board.w*4;i<m;i+=this.board.w){
+				arr = this.board.map.slice(i,i+this.board.w);
+				for(var i2=0,m2=arr.length;i2<m2;i2++){
+					if(arr[i2]!=0){
+						return true
+					}
+				}
+			}
+			return false;
+		},
 		"checkGameOver":function(){
-			if(this.gaming && this.board.isGameOver()){
+			if(this.gaming && this.isGameOver()){
 				this.onGameOver();
 				return true;
 			}
@@ -281,9 +321,12 @@ var Tetris = (function(){
 		},
 		"test2":function(){
 			var rows = [];
+			rows.push(this.board.createRandomRow(this.board.w,1,90)); //색 80
 			rows.push(this.board.createRandomRow(this.board.w,1,-1)); //랜덤
 			rows.push(this.board.createRandomRow(this.board.w,0,1)); //빈칸없음 색 1
 			rows.push(this.board.createRandomRow(this.board.w,1,80)); //색 80
+		
+			
 			this.insertRowsToBottom(rows);
 			this.draw();
 			
@@ -494,18 +537,6 @@ var Tetris = (function(){
 				map[i] = 200 + (map[i]%100);
 			}
 			return map;
-		},
-		"isGameOver":function(){
-			var arr = null;
-			for(var i=0,m=this.w*4;i<m;i+=this.w){
-				arr = this.map.slice(i,i+this.w);
-				for(var i2=0,m2=arr.length;i2<m2;i2++){
-					if(arr[i2]!=0){
-						return true
-					}
-				}
-			}
-			return false;
 		},
 	}
 	
