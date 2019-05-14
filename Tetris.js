@@ -332,8 +332,11 @@ var Tetris = (function(){
 			
 			
 		},
+		"clear":function(){
+			this.board.clear();
+		},
 		"start":function(){
-			this.reset();
+			// this.reset();
 			this.createTetrimino();
 			this.gaming = true;
 			this.moveYable = true;

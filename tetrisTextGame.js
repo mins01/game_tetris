@@ -14,6 +14,7 @@ var tetrisTextGame = (function(){
 			$("#output").attr("rows",h+13)
 		},
 		"start":function(){
+			ttr.reset()
 			ttr.start()
 		},
 		"stop":function(){
