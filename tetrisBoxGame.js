@@ -78,14 +78,11 @@ var tetrisBoxGame = function(){
 			ttr.stop()
 			ttr.reset()
 			this.ab.stop().clear().contentText('Ready',0).show(0,'none')
-			.contentText('3',500)
-			.contentText('2',1000)
-			.contentText('1',1000)
 			.contentText('Go!',1000)
 			.hide(0)
 			.add(function(){
 				ttr.start()
-			},100)
+			},0)
 			.contentText('',0)
 			
 		},
