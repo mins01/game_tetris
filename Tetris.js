@@ -128,7 +128,7 @@ var Tetris = (function(){
 		},
 		"beAttacked":function(cnt){
 			var rows = [];
-			var row = this.board.createRandomRow(this.board.w,cnt);
+			var row = this.board.createRandomRow(this.board.w,cnt,80);
 			for(var i=0,m=cnt;i<m;i++){
 				rows.push(row);
 			}
@@ -279,6 +279,16 @@ var Tetris = (function(){
 				this.board.map[this.board.w*(this.board.h-3) +i]=2;
 			}
 		},
+		"test2":function(){
+			var rows = [];
+			rows.push(this.board.createRandomRow(this.board.w,1,-1)); //랜덤
+			rows.push(this.board.createRandomRow(this.board.w,0,1)); //빈칸없음 색 1
+			rows.push(this.board.createRandomRow(this.board.w,1,80)); //색 80
+			this.insertRowsToBottom(rows);
+			this.draw();
+			
+			
+		},
 		"start":function(){
 			this.reset();
 			this.createTetrimino();
@@ -361,6 +371,7 @@ var Tetris = (function(){
 				for(var ix=0,mx=arr.length;ix<mx;ix++){
 					var mapX = x+ix;
 					if(arr[ix]==0){continue;}
+					if(map[mapY*w + mapX]!=0){continue;}
 					map[mapY*w + mapX] = arr[ix];
 				}
 			}
@@ -454,13 +465,21 @@ var Tetris = (function(){
 			map = map.concat(row);
 			return map;
 		},
-		"createRandomRow":function(w,emptyCount){
+		"createRandomRow":function(w,emptyCount,color){
+			// if(color==null) color = 80;
 			var row = new Array(w)
-			row.fill(80);
+			row.fill(color);
 			var n = Math.floor(Math.random()*w);
 			for(var i=0,m=emptyCount;i<m;i++){
 				row[n]=0;
 				n = (n+w+Math.floor(Math.random()*2)+1)%w;
+			}
+			if(color==-1){
+				row.forEach(function(v,k){
+					if(v==-1){
+						row[k] = Math.floor(Math.random()*7)+1;
+					}
+				})
 			}
 			return row;
 		},
@@ -472,7 +491,7 @@ var Tetris = (function(){
 		},
 		"markRemoveRow":function(y,w,map){
 			for(var i=w*y,m=w*y+w;i<m;i++){
-				map[i]+=200;
+				map[i] = 200 + (map[i]%100);
 			}
 			return map;
 		},

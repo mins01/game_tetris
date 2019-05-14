@@ -78,7 +78,7 @@ body{
 /* 삭제될 요소 */
 .ttrbg-grid div.box[data-moving="2"]{
   transition: filter  0.2s ease-out;
-  filter: brightness(0.5);
+  filter: brightness(2);
 }
 .ttrbg-grid div.box[data-moving="1"]:not([data-color="0"]){
   filter: brightness(1.2);
