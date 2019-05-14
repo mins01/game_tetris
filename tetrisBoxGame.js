@@ -234,6 +234,16 @@ var tetrisBoxGame = function(){
 		.contentText('GAMEOVER\nLevel : '+ttr.level.level,500)
 		.contentText('GAMEOVER\nLevel : '+ttr.level.level+'\nScore : '+ttr.info.score,500)
 	}
+	ttr.cbOnGoal = function(){
+		if(GamepadHandler){
+			GamepadHandler.strongRumble(tetrisGame.gamepad,1000)
+		}
+		tetrisGame.draw();
+		ttr.stop()
+		tetrisGame.ab.stop().clear().contentHtml('<big>🏆Goal🏆</big>',-1).show(0)
+		.contentText('🏆Goal🏆\nLevel : '+ttr.level.level,500)
+		.contentText('🏆Goal🏆\nLevel : '+ttr.level.level+'\nScore : '+ttr.info.score,500)
+	}
 
 	ttr.cbOnRemoveRows = function(ys,w,map){
 		tetrisGame.cbOnRemoveRows(ys,w,map);

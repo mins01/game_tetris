@@ -59,9 +59,9 @@ var tetrisTextGame = (function(){
 			str += ttr.board.format(mapNext).replace(/0/g,'◆').replace(/,/g,'').replace(/\d/g,'□').replace(/\|/g,"┃").replace(/X/g,"│");
 			str +="\n";
 			str += "┣"+(new Array(ttr.board.w)).fill("━").join("")+"┫"+"\n";
-			str += ttr.board.format(mapU).replace(/0/g,'▩').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│");
+			str += ttr.board.format(mapU).replace(/90/g,'●').replace(/80/g,'■').replace(/0/g,'▩').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│");
 			str +="\n";
-			str += ttr.board.format(mapD).replace(/0/g,'□').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│");;
+			str += ttr.board.format(mapD).replace(/90/g,'●').replace(/80/g,'■').replace(/0/g,'□').replace(/,/g,'').replace(/\d/g,'■').replace(/\|/g,"┃").replace(/X/g,"│");;
 			str +="\n";
 			str += "┗"+(new Array(ttr.board.w)).fill("━").join("")+"┛";
 
