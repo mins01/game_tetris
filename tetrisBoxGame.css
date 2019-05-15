@@ -113,10 +113,12 @@ div.box[data-color="6"]{
 div.box[data-color="7"]{
   background-color:  #A6A800;
 }
-
+div.box[data-color="8"]{
+  background-color:  #aaa;
+}
 
 div.box[data-color="80"]{
-  background-color:  #ccc;
+  background-color:  #999;
 }
 div.box[data-color="90"]{
   background-color:  #000;

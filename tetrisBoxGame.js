@@ -94,8 +94,8 @@ var tetrisBoxGame = function(){
 			.contentText('',0)
 		},
 		"stage":0,
-		"startStage":function(){
-			this.stage = 1;
+		"startStage":function(stage){
+			this.stage = stage==null?1:stage;
 			ttr.stop()
 			// ttr.clear()
 			ttr.reset()

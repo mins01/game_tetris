@@ -56,6 +56,7 @@ var Tetris = (function(){
 			this.goalRemove90 = si.goalRemove90;
 			this.create(si.w,si.h);
 			this.board.setMap(si.map);
+			this.ttmn.nextTypes = si.nextTypes?si.nextTypes.slice(0):[];
 			return true;
 		},
 		"reset":function(){
