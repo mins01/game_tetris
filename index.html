@@ -65,7 +65,7 @@
 	<script src="modules/ui_AppearBox/TimerChian.js"></script>
 	<script src="modules/ui_AppearBox/AppearBox.js"></script>
 	
-
+	<script src="tetrisStags.js"></script>
 	<script src="Tetris.js"></script>
 	<script src="Tetrimino.js"></script>
 	<script src="tetriminoMaps.js"></script>
@@ -166,6 +166,7 @@
 				<span class="input-group-text" >Tetris</span>
 			</div>
 			<select class="form-control" onchange="var x = this.value.split(',');ttrg.create(parseInt(x[0]),parseInt(x[1]));">
+				<option value="8,10" disabled>size</option>
 				<option value="6,8">6x8</option>
 				<option value="8,10" selected>8x10</option>
 				<option value="10,20">10x20</option>
@@ -182,6 +183,7 @@
 			</select>
 			<div class="input-group-append">
 				<button type="button" class="btn btn-info" onclick="ttrg.start();blur()">start</button>
+				<button type="button" class="btn btn-warning" onclick="ttrg.startStage();blur()">stage</button>
 			</div>
 		</div>
 		<div class="gameBoxes">

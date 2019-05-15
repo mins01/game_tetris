@@ -25,6 +25,7 @@ var Tetris = (function(){
 			this.gaming = false;
 			this.moveYable = false;
 			this.goalRemove90 = 0; //90번 블록 없애는 것이 목표
+			this.level.timer = this.timer;
 			this.level.cbOnLevelUp = function(){
 				thisC.resume();
 			}
@@ -46,6 +47,17 @@ var Tetris = (function(){
 			this.onCreate(w,h);
 			this.reset();
 		},
+		"makeStage":function(stage){
+			var si = tetrisStages[stage];
+			if(!si){
+				this.gameOver();
+				return false;
+			}
+			this.goalRemove90 = si.goalRemove90;
+			this.create(si.w,si.h);
+			this.board.setMap(si.map);
+			return true;
+		},
 		"reset":function(){
 			this.ttmn.reset();
 			this.ttmn.hide();
@@ -55,11 +67,10 @@ var Tetris = (function(){
 			this.info.removedBlocks = 0;
 			this.info.usedTetriminoes = 0;
 			this.onScore(0,0);
-			this.board.clear();
 
 			this.timer.stop();
 			this.level.level = 1;
-			this.level.timer = this.timer;
+			
 			
 			this.draw();
 		},
@@ -339,13 +350,14 @@ var Tetris = (function(){
 		},
 		"clear":function(){
 			this.board.clear();
+			console.log("clear");
 		},
 		"start":function(){
 			// this.reset();
 			this.createTetrimino();
 			this.gaming = true;
 			this.moveYable = true;
-			this.info.stage = 1;
+			// this.info.stage = 1;
 			this.resume()
 		},
 		"fnMoveY":function(){
