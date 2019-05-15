@@ -81,7 +81,7 @@ var tetrisBoxGame = function(){
 		},
 		"start":function(){
 			ttr.stop()
-			// ttr.clear()
+			ttr.clear()
 			ttr.reset()
 			// this.makeStage();
 			this.ab.stop().clear().contentText('Ready',0).show(0,'none')
