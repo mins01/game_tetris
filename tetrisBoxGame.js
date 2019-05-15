@@ -42,8 +42,14 @@ var tetrisBoxGame = function(){
 		"divs":[],
 		"nextDivs":[],
 		"$ttrbg":null,
+		"isMapReady":false,
 		// == ttr wrapper
 		"create":function(w,h){
+			this.isMapReady = false;
+			ttr.create(w,h);
+		},
+		"cbOnCreate":function(w,h){
+			this.isMapReady = true;
 			this.ab.stop().clear().show(-1,'none').contentText('Tetris',-1);
 			this.stop();
 			var $ttrbgReady = this.$ttrbg.find(".ready");
@@ -68,15 +74,14 @@ var tetrisBoxGame = function(){
 			.css('gridTemplateRows','repeat('+h+',1fr)')
 			// this.$ttrbg.css('width',w+'em')
 			// var ft = Math.max(8,Math.min(Math.floor(300/w),Math.floor(480/(h+4))))
-			ttr.create(w,h);
+			// ttr.create(w,h);
 			this.onresize()
-
 			this.ab.show(10,'rubberBand').contentText('Tetris Ready\n'+w+'x'+h,10).show(10,'rubberBand');
-
 		},
 		"start":function(){
 			ttr.stop()
 			ttr.reset()
+			// this.makeStage();
 			this.ab.stop().clear().contentText('Ready',0).show(0,'none')
 			.contentText('Go!',1000)
 			.hide(0)
@@ -84,6 +89,39 @@ var tetrisBoxGame = function(){
 				ttr.start()
 			},0)
 			.contentText('',0)
+		},
+		"makeStage":function(stage){
+			// var si = this.stages[stage];
+			var si = {
+				"w":10,"h":20,
+				"goalRemove90":1,
+				"map":[
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,90,0,
+					1,1,1,1,1,1,0,90,1,1,
+				]
+			}
+			ttr.goalRemove90 = si.goalRemove90;
+			this.create(si.w,si.h);
+			ttr.board.setMap(si.map);
+			
 			
 		},
 		"stop":function(){
@@ -106,10 +144,14 @@ var tetrisBoxGame = function(){
 		},
 		// == end ttr wrapper
 		"draw":function(){
+			if(!this.isMapReady){return;}
 			var map = ttr.getBoardMap();
 			var mapU = map.slice(0,(ttr.board.w*4));
 			var mapD = map.slice(ttr.board.w*4);
 			var ttmnNextMap = ttr.getTtmnNextMap();
+			
+			
+			
 			for(var i=0,m=map.length;i<m;i++){
 				if(this.divs[i]._v!=map[i]){
 					var n = map[i]%100;
@@ -189,6 +231,9 @@ var tetrisBoxGame = function(){
 	};
 
 	// == set ttr callback
+	ttr.cbOnCreate = function(w,h){
+		tetrisGame.cbOnCreate(w,h);
+	}
 	ttr.cbOnDraw = function(){
 		tetrisGame.draw();
 	}

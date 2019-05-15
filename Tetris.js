@@ -18,6 +18,7 @@ var Tetris = (function(){
 			this.score = 0;
 			this.info = {
 				"score":0,
+				"stage":0,
 				"removedBlocks":0,
 				"usedTetriminoes":0,
 			}
@@ -29,16 +30,19 @@ var Tetris = (function(){
 			}
 			
 		},
-		"onCreate":function(w,h){
+		"cbOnCreate":function(w,h){
 
+		},
+		"onCreate":function(w,h){
+			this.cbOnCreate(w,h)
 		},
 		"create":function(w,h){
 			if(w==null) w = 10;
 			if(h==null) h = 20;
 			if(h<4){h = 4;}
-			h+=4;//4는 테트리미노 여유 부분
-			console.log("create",w,h);
-			this.board.create(w,h);
+			var h2 = h+4;//4는 테트리미노 여유 부분
+			console.log("create",w,h2);
+			this.board.create(w,h2);
 			this.onCreate(w,h);
 			this.reset();
 		},
@@ -47,6 +51,7 @@ var Tetris = (function(){
 			this.ttmn.hide();
 			this.score = 0;
 			this.info.score = 0;
+			this.info.stage = 0;
 			this.info.removedBlocks = 0;
 			this.info.usedTetriminoes = 0;
 			this.onScore(0,0);
@@ -340,6 +345,7 @@ var Tetris = (function(){
 			this.createTetrimino();
 			this.gaming = true;
 			this.moveYable = true;
+			this.info.stage = 1;
 			this.resume()
 		},
 		"fnMoveY":function(){
@@ -385,6 +391,10 @@ var Tetris = (function(){
 			this.w=w,this.h=h;
 			this.map = new Array(w*h);
 			this.map.fill(0);
+		},
+		"setMap":function(map){
+			var r = (new Array(this.w*4)).fill(0);
+			this.map = r.concat(map).slice(0);
 		},
 		"clear":function(){
 			this.map.fill(0);
