@@ -1,3 +1,6 @@
 [submodule "modules/ui_AppearBox"]
 	path = modules/ui_AppearBox
 	url = https://github.com/mins01/ui_AppearBox.git
+[submodule "modules/js_TimerChain"]
+	path = modules/js_TimerChain
+	url = https://github.com/mins01/js_TimerChain.git
