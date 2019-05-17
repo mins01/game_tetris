@@ -395,10 +395,9 @@ var Tetris = (function(){
 		"sleep":function(){
 			var thisC = this;
 			if(this.gaming){
+				this.tr.stop();
 				setTimeout(
-					function(){
-						thisC.tr.start()	
-					}
+					this.fnSleep()
 					
 				,this.level.intervalSleep/this.level.level)
 				// this.tr.start(this.fnSleep(),this.level.intervalSleep/this.level.level);
