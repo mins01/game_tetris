@@ -86,9 +86,9 @@ var tetrisBoxGame = function(){
 			ttr.ttmn.nextTypes = [];
 			ttr.reset()
 			// this.makeStage();
-			this.ab.stop().clear().contentText('Ready',0).show(0,'none')
+			this.ab.stop().clear().contentText('Ready',10).show(10,'none')
 			.contentText('Go!',1000)
-			.hide(0)
+			.hide(1000)
 			.add(function(){
 				ttr.start()
 			},0)

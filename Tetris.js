@@ -11,7 +11,10 @@ var Tetris = (function(){
 			this.block=null;
 			this.ttmn = new Tetris.Ttmn();
 			this.level = new Tetris.Level();
-			this.timer = new Tetris.Timer();
+			// this.timer = new Tetris.Timer();
+			this.tr = new TimerRepeat();
+
+			
 			this.ttmn.current = new Tetrimino();
 			this.ttmn.next = new Tetrimino();
 			this.ttmn.board = this.board;
@@ -25,10 +28,16 @@ var Tetris = (function(){
 			this.gaming = false;
 			this.moveYable = false;
 			this.goalRemove90 = 0; //90번 블록 없애는 것이 목표
-			this.level.timer = this.timer;
+			this.level.tr = this.tr;
 			this.level.cbOnLevelUp = function(){
+				thisC.tr.changeInterval(thisC.level.intervalMoveY/thisC.level.level).start();
+				console.log("speed UP",thisC.level.intervalMoveY/thisC.level.level)
+
 				thisC.resume();
 			}
+			this.tr.changeCallback(this.fnMoveY());
+			this.tr.changeInterval(this.level.intervalMoveY/this.level.level);
+
 			
 		},
 		"cbOnCreate":function(w,h){
@@ -69,7 +78,7 @@ var Tetris = (function(){
 			this.info.usedTetriminoes = 0;
 			this.onScore(0,0);
 
-			this.timer.stop();
+			this.tr.stop();
 			this.level.level = 1;
 			
 			
@@ -199,9 +208,12 @@ var Tetris = (function(){
 			this.draw();
 
 			if(this.gaming){
-				this.timer.start(this.fnRemoveRows(ys,this.board.w,this.board.map),500);
+				// this.tr.start(this.fnRemoveRows(ys,this.board.w,this.board.map),500);
+				
+				setTimeout(this.fnRemoveRows(ys,this.board.w,this.board.map),500)
+				
 			}else{
-				this.timer.stop();
+				this.tr.stop();
 			}
 
 		},
@@ -289,7 +301,7 @@ var Tetris = (function(){
 		},
 		"onGoal":function(){
 			this.gaming=false;
-			this.timer.stop();
+			this.tr.stop();
 			this.ttmn.hide();
 			this.cbOnGoal();
 		},
@@ -301,7 +313,7 @@ var Tetris = (function(){
 		},
 		"onGameOver":function(){
 			this.gaming=false;
-			this.timer.stop();
+			this.tr.stop();
 			this.ttmn.hide();
 			this.cbOnGameOver();
 		},
@@ -369,7 +381,7 @@ var Tetris = (function(){
 			}
 		},
 		"resume":function(){
-			this.timer.start(this.fnMoveY(),this.level.intervalMoveY/this.level.level);
+			this.tr.start();
 			this.draw()
 		},
 		"fnSleep":function(){
@@ -381,14 +393,21 @@ var Tetris = (function(){
 
 		},
 		"sleep":function(){
+			var thisC = this;
 			if(this.gaming){
-				this.timer.start(this.fnSleep(),this.level.intervalSleep/this.level.level);
+				setTimeout(
+					function(){
+						thisC.tr.start()	
+					}
+					
+				,this.level.intervalSleep/this.level.level)
+				// this.tr.start(this.fnSleep(),this.level.intervalSleep/this.level.level);
 			}else{
-				this.timer.stop();
+				this.tr.stop();
 			}
 		},
 		"stop":function(){
-			this.timer.stop();
+			this.tr.stop();
 		},
 
 	}
@@ -613,13 +632,13 @@ var Tetris = (function(){
 	}
 	Tetris.Level = function(){
 		this.level=0;
-		this.timer=null;
+		this.tr=null;
 		this.intervalMoveY=2000;
 		this.intervalSleep=2000;
 	}
 	Tetris.Level.prototype = {
 		"level":0,
-		"timer":null,
+		"tr":null,
 		"intervalMoveY":2000,
 		"intervalSleep":2000,
 		"cbOnLevelUp":function(l){
@@ -642,24 +661,24 @@ var Tetris = (function(){
 		}
 	}
 
-	Tetris.Timer = function(){
-		this.tm = null;
-	}
-	Tetris.Timer.prototype = {
-		"tm":null,
-		"start":function(fn,interval){
-			// console.log("timer.start")
-			this.stop();
-			this.tm = setInterval(function(){fn()}, interval);
-		},
-		"stop":function(){
-			// console.log("timer.stop")
-			if(this.tm != null) {
-				clearInterval(this.tm);
-				this.tm = null;
-			}
-		}
-	}
+	// Tetris.Timer = function(){
+	// 	this.tm = null;
+	// }
+	// Tetris.Timer.prototype = {
+	// 	"tm":null,
+	// 	"start":function(fn,interval){
+	// 		// console.log("timer.start")
+	// 		this.stop();
+	// 		this.tm = setInterval(function(){fn()}, interval);
+	// 	},
+	// 	"stop":function(){
+	// 		// console.log("timer.stop")
+	// 		if(this.tm != null) {
+	// 			clearInterval(this.tm);
+	// 			this.tm = null;
+	// 		}
+	// 	}
+	// }
 	
 	return Tetris;
 })()
