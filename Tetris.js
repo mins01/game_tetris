@@ -21,6 +21,7 @@ var Tetris = (function(){
 				"stage":0,
 				"removedBlocks":0,
 				"usedTetriminoes":0,
+				"attacked":0,
 			}
 			this.gaming = false;
 			this.moveYable = false;
@@ -138,7 +139,9 @@ var Tetris = (function(){
 				// console.log("삭제될 ROW",ys);
 				// this.board.map = this.markRemoveRows(ys,this.board.w,this.board.map);
 				this.removeRows(ys,this.board.w,this.board.map);
+				this.draw();
 			}else{
+				this._attackNow();
 				if(this.checkGameOver()){
 
 				}else if(this.checkGoal()){
@@ -147,6 +150,7 @@ var Tetris = (function(){
 					this.createTetrimino();
 					this.cbOnBottom();
 				}
+				
 				this.sleep();
 				this.draw();
 			}
@@ -154,13 +158,22 @@ var Tetris = (function(){
 
 		},
 		"beAttacked":function(cnt){
+			this.info.attacked += cnt;
+		},
+		"_attackNow":function(){
+			var m = Math.min(4,this.info.attacked);
+			this.attacked(m);
+			this.info.attacked -= m;
+			this.info.attacked = Math.max(0,this.info.attacked);
+		},
+		"attacked":function(cnt){
 			var rows = [];
 			var row = this.board.createRandomRow(this.board.w,cnt,80);
 			for(var i=0,m=cnt;i<m;i++){
 				rows.push(row);
 			}
 			this.insertRowsToBottom(rows);
-			this.draw();
+			// this.draw();
 		},
 		"insertRowsToBottom":function(rows){
 			this.board.map = this.board.insertRowsToBottom(rows,this.board.map);
@@ -185,7 +198,7 @@ var Tetris = (function(){
 				thisC.board.map = thisC.board.removeRows(ys,w,map)
 				thisC.moveYable = true;
 				thisC.onRemoveRows(ys,w,mapC);
-				
+				thisC._attackNow();
 				if(thisC.checkGameOver()){
 
 				}else if(thisC.checkGoal()){
@@ -194,6 +207,7 @@ var Tetris = (function(){
 					thisC.createTetrimino();
 					thisC.sleep();
 				}
+				
 				thisC.draw();
 			}
 		},
@@ -203,8 +217,6 @@ var Tetris = (function(){
 
 
 			this.board.map = this.board.markRemoveRows(ys,this.board.w,this.board.map)
-			this.draw();
-
 			if(this.gaming){
 				this.timer.start(this.fnRemoveRows(ys,this.board.w,this.board.map),500);
 			}else{
