@@ -163,6 +163,7 @@ var Tetris = (function(){
 			this.info.attacked += cnt;
 		},
 		"_attackNow":function(){
+			if(this.info.attacked<=0){return;}
 			var m = Math.min(4,this.info.attacked);
 			this.attacked(m);
 			this.info.attacked -= m;
