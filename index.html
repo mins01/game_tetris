@@ -73,7 +73,7 @@
 	// var ttr = new Tetris();
 	$(function(){
 		ttrg.title="p1";
-		ttrg.init('ttrbg');
+		ttrg.init(document.querySelector('.ttrbg-layout'));
 		ttrg.create(10,20);
 		$(document).on('keydown',function(event){
 			ttrg.onkeyDown(event)
@@ -181,34 +181,37 @@
 				<button type="button" class="btn btn-warning" onclick="ttrg.startStage();blur()">Puzzle</button>
 			</div>
 		</div>
-		<div class="gameBoxes">
-			<div class="gameBox  text-center">
-				<div  class="ttrbg-layout">
-					<div id="ttrbg" class="ttrbg">
-						<div class="info-box">
-			
-							<div class="textInfo textLevel"></div>
-							<div class="textInfo textScore"></div>
-							<div class="textInfo textRemovedBlocks"></div>
-							<div class="textInfo textUsedTetriminoes"></div>
-							
-							<div class="ttrbg-grid next">
-								<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-								<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-								<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-								<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-							</div>
-						</div>
-						<div class="ttrbg-grid ready"></div>
-						<div class="ttrbg-grid end"></div>
-						<div class="appear-box">
-							<div class="appear-box-fence appear-box-item-center">
-								<div class="appear-box-content">
-									TETRIS
-								</div>
-							</div>	
+		<template id="tetrisHtml">
+			<div class="ttrbg">
+				<div class="info-box">
+	
+					<div class="textInfo textLevel"></div>
+					<div class="textInfo textScore"></div>
+					<div class="textInfo textRemovedBlocks"></div>
+					<div class="textInfo textUsedTetriminoes"></div>
+					
+					<div class="ttrbg-grid next">
+						<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+						<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+						<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+						<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+					</div>
+				</div>
+				<div class="ttrbg-grid ready"></div>
+				<div class="ttrbg-grid end"></div>
+				<div class="appear-box">
+					<div class="appear-box-fence appear-box-item-center">
+						<div class="appear-box-content">
+							TETRIS
 						</div>
 					</div>	
+				</div>
+			</div>	
+		</template>
+		<div class="gameBoxes">
+			<div class="gameBox  text-center">
+				<div  class="ttrbg-layout" id="ttrglyaout">
+
 				</div>
 				<div class="text-center">
 					<div class="input-group my-1 mx-auto" style="width:300px">

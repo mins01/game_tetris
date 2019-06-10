@@ -9,14 +9,17 @@ var tetrisBoxGame = function(){
 		"gamepad":0, //게임페드
 		"ttr":ttr,
 		"ab":null,
-		"init":function(ttrbg_id){
+		"init":function(ttrglyaout){
 			// this.ttr = new Tetris();
-			this.$ttrbg = $("#"+ttrbg_id+".ttrbg");
-			this.$textLevel = $("#"+ttrbg_id+" .textLevel");
-			this.$textScore = $("#"+ttrbg_id+" .textScore");
-			this.$textRemovedBlocks = $("#"+ttrbg_id+" .textRemovedBlocks");
-			this.$textUsedTetriminoes = $("#"+ttrbg_id+" .textUsedTetriminoes");
-			this.ab = new AppearBox($("#"+ttrbg_id+" .appear-box").get(0));
+			this.ttrglyaout = ttrglyaout;
+			this.ttrglyaout.innerHTML = '';
+			this.ttrglyaout.append(document.querySelector("#tetrisHtml").content.cloneNode(true));
+			this.$ttrbg = $(ttrglyaout).find('.ttrbg');
+			this.$textLevel = this.$ttrbg.find(".textLevel");
+			this.$textScore = this.$ttrbg.find(".textScore");
+			this.$textRemovedBlocks = this.$ttrbg.find(".textRemovedBlocks");
+			this.$textUsedTetriminoes = this.$ttrbg.find(".textUsedTetriminoes");
+			this.ab = new AppearBox(this.$ttrbg.find(".appear-box").get(0));
 			this.ab.showAnmation = 'bounceInDown';
 			this.ab.hideAnmation = 'bounceOutUp';
 			this.ab.contentText("Tetris").show(0);

@@ -80,15 +80,15 @@
 	ttrgs = [ttrg,ttrg2]
 	// var ttr = new Tetris();
 	$(function(){
-
+		var ttrglyaouts = document.querySelectorAll('.ttrbg-layout');
 		ttrg.title="p1";
-		ttrg.init('ttrbg');
+		ttrg.init(ttrglyaouts[0]);
 		ttrg.create(10,20);
 		ttrg.keyboard = 1;
 		ttrg.gamepad = ttrgs.indexOf(ttrg);
 
 		ttrg2.title="p2";
-		ttrg2.init('ttrbg2');
+		ttrg2.init(ttrglyaouts[1]);
 		ttrg2.create(10,20);
 		ttrg2.keyboard = 2;
 		ttrg2.gamepad = ttrgs.indexOf(ttrg2);
@@ -233,34 +233,36 @@
 				<button type="button" class="btn btn-info" onclick="ttrg.start();ttrg2.start();blur()">start</button>
 			</div>
 		</div>
+		<template id="tetrisHtml">
+			<div class="ttrbg">
+				<div class="info-box">
+	
+					<div class="textInfo textLevel"></div>
+					<div class="textInfo textScore"></div>
+					<div class="textInfo textRemovedBlocks"></div>
+					<div class="textInfo textUsedTetriminoes"></div>
+					
+					<div class="ttrbg-grid next">
+						<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+						<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+						<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+						<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
+					</div>
+				</div>
+				<div class="ttrbg-grid ready"></div>
+				<div class="ttrbg-grid end"></div>
+				<div class="appear-box">
+					<div class="appear-box-fence appear-box-item-center">
+						<div class="appear-box-content">
+							TETRIS
+						</div>
+					</div>	
+				</div>
+			</div>	
+		</template>
 		<div class="gameBoxes">
 			<div class="gameBox  text-center">
 				<div  class="ttrbg-layout">
-					<div id="ttrbg" class="ttrbg">
-						<div class="info-box">
-			
-							<div class="textInfo textLevel"></div>
-							<div class="textInfo textScore"></div>
-							<div class="textInfo textRemovedBlocks"></div>
-							<div class="textInfo textUsedTetriminoes"></div>
-							
-							<div class="ttrbg-grid next">
-								<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-								<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-								<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-								<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-							</div>
-						</div>
-						<div class="ttrbg-grid ready"></div>
-						<div class="ttrbg-grid end"></div>
-						<div class="appear-box">
-							<div class="appear-box-fence appear-box-item-center">
-								<div class="appear-box-content">
-									TETRIS
-								</div>
-							</div>	
-						</div>
-					</div>	
 				</div>
 				<div class="text-center">
 					<div class="input-group my-1 mx-auto" style="width:300px">
@@ -278,31 +280,6 @@
 			</div>
 			<div class="gameBox text-center">
 				<div  class="ttrbg-layout">
-					<div id="ttrbg2" class="ttrbg">
-						<div class="info-box">
-			
-							<div class="textInfo textLevel"></div>
-							<div class="textInfo textScore"></div>
-							<div class="textInfo textRemovedBlocks"></div>
-							<div class="textInfo textUsedTetriminoes"></div>
-							
-							<div class="ttrbg-grid next">
-								<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-								<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-								<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-								<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
-							</div>
-						</div>
-						<div class="ttrbg-grid ready"></div>
-						<div class="ttrbg-grid end"></div>
-						<div class="appear-box">
-							<div class="appear-box-fence appear-box-item-center">
-								<div class="appear-box-content">
-									TETRIS
-								</div>
-							</div>	
-						</div>
-					</div>	
 				</div>
 				<div class="text-center">
 					<div class="input-group my-1 mx-auto" style="width:300px">
