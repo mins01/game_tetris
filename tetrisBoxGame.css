@@ -136,7 +136,7 @@ div.box[data-color="90"]::after{
 
 
 .info-box{
-  
+
   display: block;
   position: relative;
   height: 2em;
@@ -155,37 +155,52 @@ div.box[data-color="90"]::after{
   font-size:0.5em;
   text-transform: uppercase;
 }
-
-.textLevel{
+.textPlayer{
   top: 0em;
+  left:0;
+}
+.textPlayer::before{
+  content: "Player : ";
+}
+.textLevel{
+  top: 1em;
   left:0;
 }
 .textLevel::before{
   content: "LEVEL : ";
 }
 .textScore{
-  top: 1em;
+  top: 2em;
   left:0;
 }
 .textScore::before{
   content: "SCORE : ";
 
 }
-.textRemovedBlocks{
+
+.textAttacked{
+  top: 0em;
+  right: 0em;
+}
+.textAttacked::before{
+  content: "Attecked : ";
+}
+.textUsedTetriminoes{
   top: 1em;
+  right: 0em;
+}
+.textUsedTetriminoes::before{
+  content: "Used Tetriminoes : ";
+}
+.textRemovedBlocks{
+  top: 2em;
   right: 0em;
 }
 .textRemovedBlocks::before{
   content: "Removed Blocks : ";
 }
 
-.textUsedTetriminoes{
-  top: 0em;
-  right: 0em;
-}
-.textUsedTetriminoes::before{
-  content: "Used Tetriminoes : ";
-}
+
 
 
 
@@ -215,4 +230,3 @@ div.box[data-color="90"]::after{
   color:#fff;
   font-weight: bold;
 }
-

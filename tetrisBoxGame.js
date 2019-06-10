@@ -15,15 +15,17 @@ var tetrisBoxGame = function(){
 			this.ttrglyaout.innerHTML = '';
 			this.ttrglyaout.append(document.querySelector("#tetrisHtml").content.cloneNode(true));
 			this.$ttrbg = $(ttrglyaout).find('.ttrbg');
+			this.$textPlayer = this.$ttrbg.find(".textPlayer");
 			this.$textLevel = this.$ttrbg.find(".textLevel");
 			this.$textScore = this.$ttrbg.find(".textScore");
+			this.$textAttacked = this.$ttrbg.find(".textAttacked");
 			this.$textRemovedBlocks = this.$ttrbg.find(".textRemovedBlocks");
 			this.$textUsedTetriminoes = this.$ttrbg.find(".textUsedTetriminoes");
 			this.ab = new AppearBox(this.$ttrbg.find(".appear-box").get(0));
 			this.ab.showAnmation = 'bounceInDown';
 			this.ab.hideAnmation = 'bounceOutUp';
 			this.ab.contentText("Tetris").show(0);
-			
+
 		},
 		"onresize":function(){
 			var rs = document.body.getBoundingClientRect()
@@ -55,7 +57,7 @@ var tetrisBoxGame = function(){
 		},
 		"cbOnCreate":function(w,h){
 			this.isMapReady = true;
-			
+
 			this.stop();
 			var $ttrbgReady = this.$ttrbg.find(".ready");
 			var $ttrbgEnd = this.$ttrbg.find(".end");
@@ -113,14 +115,14 @@ var tetrisBoxGame = function(){
 			.contentText('',0)
 		},
 		"startClient":function(){
-			this.ab.hide();
+			this.ab.stop().clear().hide(0);
 		},
 		"nextStage":function(){
 			if(!ttr.makeStage(this.stage+1)){
 				ttr.gameOver();
 				return;
 			}else{
-				
+
 			}
 			this.ab.stop().clear().show(0,'none').contentText('Next Stage '+(this.stage+1),0)
 			.contentText('Go!',1000)
@@ -158,17 +160,19 @@ var tetrisBoxGame = function(){
 			for(var i=0,m=map.length;i<m;i++){
 				if(this.divs[i]._v!=map[i]){
 					var n = map[i]%100;
-					$(this.divs[i]).attr('data-moving',Math.floor((map[i]-n)/100)).attr('data-color',n).prop('_v',map[i]);					
+					$(this.divs[i]).attr('data-moving',Math.floor((map[i]-n)/100)).attr('data-color',n).prop('_v',map[i]);
 				}
 
 			}
 			this.$ttrbg.attr("data-gaming",info.gaming?1:0);
 			for(var i=0,m=mapNext.length;i<m;i++){
 				if(this.nextDivs[i]._v!=mapNext[i]){
-					$(this.nextDivs[i]).attr('data-color',mapNext[i]%100).prop('_v',mapNext[i]);					
+					$(this.nextDivs[i]).attr('data-color',mapNext[i]%100).prop('_v',mapNext[i]);
 				}
-				
+
 			}
+			this.$textPlayer.text(info.player)
+			this.$textAttacked.text(info.attacked)
 			this.$textLevel.text(info.level)
 			this.$textScore.text(info.score)
 			this.$textRemovedBlocks.text(info.removedBlocks)

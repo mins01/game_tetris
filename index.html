@@ -10,11 +10,11 @@
 
 	<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<!-- <link rel="shortcut icon" href="/favicon.ico"> -->
-	
+
 	<script src="/js/ForGoogle.js"></script>
 	<!-- google analytics -->
 	<script>ForGoogle.analytics()</script>
-	
+
 	<!-- jquery 관련 -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
 
@@ -59,7 +59,7 @@
 
 	<script src="modules/js_TimerChain/TimerChain.js"></script>
 	<script src="modules/ui_AppearBox/AppearBox.js"></script>
-	
+
 	<script src="tetrisStags.js"></script>
 	<script src="Tetris.js"></script>
 	<script src="Tetrimino.js"></script>
@@ -72,7 +72,7 @@
 	var ttrgs = [ttrg];
 	// var ttr = new Tetris();
 	$(function(){
-		ttrg.title="p1";
+		ttrg.ttr.player="p1";
 		ttrg.init(document.querySelector('.ttrbg-layout'));
 		ttrg.create(10,20);
 		$(document).on('keydown',function(event){
@@ -184,12 +184,13 @@
 		<template id="tetrisHtml">
 			<div class="ttrbg">
 				<div class="info-box">
-	
+					<div class="textInfo textPlayer"></div>
 					<div class="textInfo textLevel"></div>
 					<div class="textInfo textScore"></div>
+					<div class="textInfo textAttacked"></div>
 					<div class="textInfo textRemovedBlocks"></div>
 					<div class="textInfo textUsedTetriminoes"></div>
-					
+
 					<div class="ttrbg-grid next">
 						<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
 						<div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div><div class="box box-next"></div>
@@ -204,9 +205,9 @@
 						<div class="appear-box-content">
 							TETRIS
 						</div>
-					</div>	
+					</div>
 				</div>
-			</div>	
+			</div>
 		</template>
 		<div class="gameBoxes">
 			<div class="gameBox  text-center">
@@ -224,7 +225,7 @@
 							<option value="2" >NUM : 🔄 = 8 , ⬅️ = 4 , ➡️ = 6 , ⬇️ = 5 , ⏬ = 2</option>
 						</select>
 					</div>
-		
+
 				</div>
 			</div>
 		</div>

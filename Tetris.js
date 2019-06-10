@@ -7,6 +7,7 @@ var Tetris = (function(){
 	Tetris.prototype ={
 		"init":function(){
 			var thisC = this
+			this.player = "p1"
 			this.board = new Tetris.Board();
 			this.block=null;
 			this.ttmn = new Tetris.Ttmn();
@@ -30,7 +31,7 @@ var Tetris = (function(){
 			this.level.cbOnLevelUp = function(){
 				thisC.resume();
 			}
-			
+
 		},
 		"cbOnCreate":function(w,h){
 
@@ -72,11 +73,13 @@ var Tetris = (function(){
 
 			this.timer.stop();
 			this.level.level = 1;
-			
-			
+
+
 			this.draw();
 		},
-		
+		"getInfo":function(){
+			return Object.assign({"player":this.player,"gaming":this.gaming,"level":this.level.level},this.info);
+		},
 		"cbOnDraw":function(map,w,h,mapNext,info){
 			// var map = board.mapWithTetrimino(ttmn);
 			console.log(board.format(map));
@@ -86,13 +89,12 @@ var Tetris = (function(){
 		},
 		"draw":function(){
 			var map = this.getBoardMap();
-			
+
 			var mapNext = (new Array(4*4)).fill(0);
 			var x = Math.floor((4-this.ttmn.next.w)/2);
 			var y = (this.ttmn.next.w==2)?1:(this.ttmn.next.w==3)?1:0;
 			mapNext = this.board.mergeWithTetrimino(mapNext,this.ttmn.next,x,y,4,4);
-			var info = Object.assign({"gaming":this.gaming,"level":this.level.level},this.info); 
-			this.onDraw(map,this.board.w,this.board.h,mapNext,info);
+			this.onDraw(map,this.board.w,this.board.h,mapNext,this.getInfo());
 		},
 		"cbOnMoveX":function(n){
 
@@ -150,7 +152,7 @@ var Tetris = (function(){
 					this.createTetrimino();
 					this.cbOnBottom();
 				}
-				
+
 				this.sleep();
 				this.draw();
 			}
@@ -207,7 +209,7 @@ var Tetris = (function(){
 					thisC.createTetrimino();
 					thisC.sleep();
 				}
-				
+
 				thisC.draw();
 			}
 		},
@@ -362,12 +364,12 @@ var Tetris = (function(){
 			rows.push(this.board.createRandomRow(this.board.w,1,-1)); //랜덤
 			rows.push(this.board.createRandomRow(this.board.w,0,1)); //빈칸없음 색 1
 			rows.push(this.board.createRandomRow(this.board.w,1,80)); //색 80
-		
-			
+
+
 			this.insertRowsToBottom(rows);
 			this.draw();
-			
-			
+
+
 		},
 		"clear":function(){
 			this.board.clear();
@@ -412,10 +414,10 @@ var Tetris = (function(){
 		},
 
 	}
-	
-	
+
+
 	Tetris.Board = function(){
-		
+
 	}
 	Tetris.Board.prototype = {
 		"w":-1,"h":-1,
@@ -437,12 +439,12 @@ var Tetris = (function(){
 			var msg = [];
 			//-- k-p 배열에서 p-k 배열로 만들어서 출력
 			for(var i=0,m=map.length;i<m;i+=this.w){
-				
+
 				var tMap = map.slice(i,i+this.w);
 				for(var i2=0,m2=tMap.length;i2<m2;i2++){
 					tMap[i2]= tMap[i2] % 100;
 				}
-				
+
 				msg.push('|'+tMap.join(',')+'|');
 			}
 			// console.log(msg.join("\n"));
@@ -585,9 +587,9 @@ var Tetris = (function(){
 			return map;
 		},
 	}
-	
+
 	Tetris.Ttmn = function(){
-		
+
 	}
 	Tetris.Ttmn.prototype = {
 		"x":0,"y":0,
@@ -680,6 +682,6 @@ var Tetris = (function(){
 			}
 		}
 	}
-	
+
 	return Tetris;
 })()
