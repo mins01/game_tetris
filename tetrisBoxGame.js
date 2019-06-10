@@ -109,6 +109,9 @@ var tetrisBoxGame = function(){
 			},0)
 			.contentText('',0)
 		},
+		"startClient":function(){
+			this.ab.hide();
+		},
 		"nextStage":function(){
 			if(!ttr.makeStage(this.stage+1)){
 				ttr.gameOver();
@@ -139,20 +142,16 @@ var tetrisBoxGame = function(){
 		},
 		"moveBottom":function() {
 			ttr.moveBottom();
-		}		,
+		},
 		"rotate":function(r) {
 			ttr.rotate(r);
 		},
 		// == end ttr wrapper
-		"draw":function(){
+		"draw":function(map,w,h,mapNext,info){
 			if(!this.isMapReady){return;}
-			var map = ttr.getBoardMap();
-			var mapU = map.slice(0,(ttr.board.w*4));
-			var mapD = map.slice(ttr.board.w*4);
-			var ttmnNextMap = ttr.getTtmnNextMap();
-			
-			
-			
+			var mapU = map.slice(0,(w*4));
+			var mapD = map.slice(w*4);
+
 			for(var i=0,m=map.length;i<m;i++){
 				if(this.divs[i]._v!=map[i]){
 					var n = map[i]%100;
@@ -160,31 +159,17 @@ var tetrisBoxGame = function(){
 				}
 
 			}
-			this.$ttrbg.attr("data-gaming",ttr.gaming?1:0);
-
-
-			var mapNext = (new Array(4*4)).fill(0);
-			var x = Math.floor((4-ttr.ttmn.next.w)/2);
-			var y = (ttr.ttmn.next.w==2)?1:(ttr.ttmn.next.w==3)?1:0;
-			mapNext = ttr.board.mergeWithTetrimino(mapNext,ttr.ttmn.next,x,y,4,4);
-
+			this.$ttrbg.attr("data-gaming",info.gaming?1:0);
 			for(var i=0,m=mapNext.length;i<m;i++){
-				// this.divs[i].innerText = map[i];
-				// $(this.nextDivs[i]).attr('data-color',mapNext[i]%100);
-				// 
 				if(this.nextDivs[i]._v!=mapNext[i]){
-					// var n = map[i]%100;
 					$(this.nextDivs[i]).attr('data-color',mapNext[i]%100).prop('_v',mapNext[i]);					
 				}
 				
 			}
-
-
-			this.$textLevel.text(ttr.level.level)
-			this.$textScore.text(ttr.info.score)
-			this.$textRemovedBlocks.text(ttr.info.removedBlocks)
-			this.$textUsedTetriminoes.text(ttr.info.usedTetriminoes)
-
+			this.$textLevel.text(info.level)
+			this.$textScore.text(info.score)
+			this.$textRemovedBlocks.text(info.removedBlocks)
+			this.$textUsedTetriminoes.text(info.usedTetriminoes)
 		},
 		"onkeyDown":function(evt){
 			// console.log(evt.key,evt.keyCode)
@@ -235,8 +220,8 @@ var tetrisBoxGame = function(){
 	ttr.cbOnCreate = function(w,h){
 		tetrisGame.cbOnCreate(w,h);
 	}
-	ttr.cbOnDraw = function(){
-		tetrisGame.draw();
+	ttr.cbOnDraw = function(map,w,h,mapNext,info){
+		tetrisGame.draw(map,w,h,mapNext,info);
 	}
 	ttr.cbOnBottom = function(){
 		// tetrisGame.sleep();
@@ -271,16 +256,12 @@ var tetrisBoxGame = function(){
 		if(GamepadHandler){
 			GamepadHandler.strongRumble(tetrisGame.gamepad,1000)
 		}
-		tetrisGame.draw();
-		ttr.stop()
 		tetrisGame.ab.stop().clear().contentHtml('<big>GAMEOVER</big>',-1).show(0)
 	}
 	ttr.cbOnGoal = function(){
 		if(GamepadHandler){
 			GamepadHandler.strongRumble(tetrisGame.gamepad,1000)
 		}
-		tetrisGame.draw();
-		ttr.stop()
 		tetrisGame.ab.stop().clear().contentHtml('<big>🏆Clear!!🏆</big>',-1).show(0)
 		.add(function(){
 			tetrisGame.nextStage();

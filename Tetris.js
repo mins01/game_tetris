@@ -76,15 +76,22 @@ var Tetris = (function(){
 			this.draw();
 		},
 		
-		"cbOnDraw":function(board,ttmn){
-			var map = board.mapWithTetrimino(ttmn);
+		"cbOnDraw":function(map,w,h,mapNext,info){
+			// var map = board.mapWithTetrimino(ttmn);
 			console.log(board.format(map));
 		},
-		"onDraw":function(board,ttmn){
-			this.cbOnDraw(board,ttmn);
+		"onDraw":function(map,w,h,mapNext,info){
+			this.cbOnDraw(map,w,h,mapNext,info);
 		},
 		"draw":function(){
-			this.onDraw(this.board,this.ttmn);
+			var map = this.getBoardMap();
+			
+			var mapNext = (new Array(4*4)).fill(0);
+			var x = Math.floor((4-this.ttmn.next.w)/2);
+			var y = (this.ttmn.next.w==2)?1:(this.ttmn.next.w==3)?1:0;
+			mapNext = this.board.mergeWithTetrimino(mapNext,this.ttmn.next,x,y,4,4);
+			var info = Object.assign({"gaming":this.gaming,"level":this.level.level},this.info); 
+			this.onDraw(map,this.board.w,this.board.h,mapNext,info);
 		},
 		"cbOnMoveX":function(n){
 
@@ -300,8 +307,9 @@ var Tetris = (function(){
 			console.log("GAMEOVER");
 		},
 		"onGameOver":function(){
+			this.draw();
 			this.gaming=false;
-			this.timer.stop();
+			this.stop();
 			this.ttmn.hide();
 			this.cbOnGameOver();
 		},
