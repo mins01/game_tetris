@@ -155,25 +155,24 @@ div.box[data-color="90"]::after{
 }
 .textPlayer{
   font-weight: bold;
-  font-size: 0.7em;
-  bottom: 0.2em;
+  /* font-size: 0.7em; */
+  top: 0;
   left:0;
   right:0;
-  left:0;
   text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, -2px 0 0 #fff, 2px 0 0 #fff;
 }
 .textPlayer::before{
   /* content: "Player : "; */
 }
 .textLevel{
-  top: 0em;
+  top: 1em;
   left:0;
 }
 .textLevel::before{
   content: "LEVEL: ";
 }
 .textScore{
-  top: 1em;
+  top: 2em;
   left:0;
 }
 .textScore::before{
@@ -182,21 +181,21 @@ div.box[data-color="90"]::after{
 }
 
 .textAttacked{
-  top: 0em;
+  top: 1em;
   right: 0em;
 }
 .textAttacked::before{
   content: "Be attacked: ";
 }
 .textUsedTetriminoes{
-  top: 1em;
+  top: 2em;
   right: 0em;
 }
 .textUsedTetriminoes::before{
   content: "Tetriminoes: ";
 }
 .textRemovedBlocks{
-  top: 2em;
+  top: 3em;
   right: 0em;
 }
 .textRemovedBlocks::before{
