@@ -69,6 +69,8 @@ var Tetris = (function(){
 			this.info.stage = 0;
 			this.info.removedBlocks = 0;
 			this.info.usedTetriminoes = 0;
+			this.info.attacked = 0;
+			
 			this.onScore(0,0);
 
 			this.timer.stop();
