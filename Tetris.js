@@ -7,7 +7,7 @@ var Tetris = (function(){
 	Tetris.prototype ={
 		"init":function(){
 			var thisC = this
-			this.player = "p1"
+			this.player = "Tetris"
 			this.board = new Tetris.Board();
 			this.block=null;
 			this.ttmn = new Tetris.Ttmn();
@@ -496,7 +496,7 @@ var Tetris = (function(){
 				var mapY = y+iy;
 				if(mapY<0){ continue;}
 				if(mapY>this.h){
-					console.warn('checkOverTetrimino range-out Y',mapY);
+					// console.warn('checkOverTetrimino range-out Y',mapY);
 					return false;
 				}
 				var arr = ttmn.current.map.slice(iy*ttmn.current.w,iy*ttmn.current.w+ttmn.current.w);
@@ -507,16 +507,16 @@ var Tetris = (function(){
 						continue;
 					}
 					if(mapX < 0 || mapX >= this.w){
-						console.warn('checkOverTetrimino range-out X',mapX,mapY);
+						// console.warn('checkOverTetrimino range-out X',mapX,mapY);
 						return false;
 					}
 
 					// console.log(mapX,mapY);
 					if(mapY*this.w + mapX >= map.length){
-						console.warn('checkOverTetrimino range-out Y 2',mapY);
+						// console.warn('checkOverTetrimino range-out Y 2',mapY);
 						return false;
 					}else if(map[mapY*this.w + mapX]!= 0){
-						console.warn('checkOverTetrimino',mapX,mapY);
+						// console.warn('checkOverTetrimino',mapX,mapY);
 						return false;
 					}
 				}

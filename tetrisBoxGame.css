@@ -136,13 +136,11 @@ div.box[data-color="90"]::after{
 
 
 .info-box{
-
+  pointer-events: none;
   display: block;
-  position: relative;
-  height: 2em;
-  margin-bottom: 10px;
-  z-index: 10px;
-  margin-bottom: -2em;
+  position: absolute;
+  top:0;right:0.1em;bottom: 0;left: 0.1em;
+  z-index: 10;
 }
 .textInfo{
   font-size:0.5em;
@@ -152,29 +150,33 @@ div.box[data-color="90"]::after{
   z-index: 10;
 }
 .textInfo::before{
-  font-size:0.5em;
+  font-size:0.7em;
   text-transform: uppercase;
 }
 .textPlayer{
-  top: 0em;
+  font-weight: bold;
+  font-size: 0.7em;
+  bottom: 0.5em;
+  left:0;
+  right:0;
   left:0;
 }
 .textPlayer::before{
-  content: "Player : ";
+  /* content: "Player : "; */
 }
 .textLevel{
-  top: 1em;
+  top: 0em;
   left:0;
 }
 .textLevel::before{
-  content: "LEVEL : ";
+  content: "LEVEL: ";
 }
 .textScore{
-  top: 2em;
+  top: 1em;
   left:0;
 }
 .textScore::before{
-  content: "SCORE : ";
+  content: "SCORE: ";
 
 }
 
@@ -183,21 +185,21 @@ div.box[data-color="90"]::after{
   right: 0em;
 }
 .textAttacked::before{
-  content: "Attecked : ";
+  content: "Be attacked: ";
 }
 .textUsedTetriminoes{
   top: 1em;
   right: 0em;
 }
 .textUsedTetriminoes::before{
-  content: "Used Tetriminoes : ";
+  content: "Tetriminoes: ";
 }
 .textRemovedBlocks{
   top: 2em;
   right: 0em;
 }
 .textRemovedBlocks::before{
-  content: "Removed Blocks : ";
+  content: "Blocks: ";
 }
 
 
