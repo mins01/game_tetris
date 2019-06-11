@@ -156,10 +156,11 @@ div.box[data-color="90"]::after{
 .textPlayer{
   font-weight: bold;
   font-size: 0.7em;
-  bottom: 0.5em;
+  bottom: 0.2em;
   left:0;
   right:0;
   left:0;
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, -2px 0 0 #fff, 2px 0 0 #fff;
 }
 .textPlayer::before{
   /* content: "Player : "; */
@@ -209,6 +210,7 @@ div.box[data-color="90"]::after{
 
 .appear-box{
   pointer-events:none;
+  z-index: 20;
   position: absolute;
   top:0;left:0;right:0;bottom:0;
   overflow: hidden;
