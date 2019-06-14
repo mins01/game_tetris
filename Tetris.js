@@ -320,7 +320,7 @@ var Tetris = (function(){
 		"cbOnGoal":function(){
 			console.log("Goal!")
 		},
-		"cbOnGameOver":function(){
+		"cbOnGameOver":function(info){
 			console.log("GAMEOVER");
 		},
 		"onGameOver":function(){
@@ -328,7 +328,7 @@ var Tetris = (function(){
 			this.gaming=false;
 			this.stop();
 			this.ttmn.hide();
-			this.cbOnGameOver();
+			this.cbOnGameOver(this.getInfo());
 		},
 		"isGameOver":function(){
 			var arr = null;
