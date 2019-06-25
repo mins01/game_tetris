@@ -324,8 +324,8 @@ var Tetris = (function(){
 			console.log("GAMEOVER");
 		},
 		"onGameOver":function(){
-			this.draw();
 			this.gaming=false;
+			this.draw();
 			this.stop();
 			this.ttmn.hide();
 			this.cbOnGameOver(this.getInfo());
