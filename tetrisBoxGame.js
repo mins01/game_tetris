@@ -50,10 +50,9 @@ var tetrisBoxGame = function(){
 		"isMapReady":false,
 		// == ttr wrapper
 		"create":function(w,h){
-			this.ab.stop().clear().show(-1,'none').contentText('Tetris',-1);
+			this.ab.stop().clear().show(0,'none').contentText('Tetris',-1);
 			this.isMapReady = false;
 			ttr.create(w,h);
-			this.ab.show(10,'rubberBand').contentText('Tetris Ready\n'+w+'x'+h,10).show(10,'rubberBand');
 		},
 		"cbOnCreate":function(w,h){
 			this.isMapReady = true;
@@ -82,7 +81,8 @@ var tetrisBoxGame = function(){
 			// this.$ttrbg.css('width',w+'em')
 			// var ft = Math.max(8,Math.min(Math.floor(300/w),Math.floor(480/(h+4))))
 			// ttr.create(w,h);
-			this.onresize()
+			this.onresize();
+			this.ab.contentText('Tetris Ready\n'+w+'x'+h,0).show(-1,'none');
 		},
 		"start":function(){
 			ttr.stop()
@@ -92,7 +92,7 @@ var tetrisBoxGame = function(){
 			ttr.reset()
 			// this.makeStage();
 			this.ab.stop().clear().contentText('Ready',0).show(0,'none')
-			.contentText('Go!',1000)
+			.contentText('Go!',100)
 			.hide(0)
 			.add(function(){
 				ttr.start()
@@ -107,7 +107,7 @@ var tetrisBoxGame = function(){
 			ttr.reset()
 			ttr.makeStage(this.stage);
 			this.ab.stop().clear().contentText('Stage '+(this.stage),0).show(0,'none')
-			.contentText('Go!',1000)
+			.contentText('Go!',100)
 			.hide(0)
 			.add(function(){
 				ttr.start()

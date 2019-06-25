@@ -185,7 +185,7 @@ div.box[data-color="90"]::after{
   right: 0em;
 }
 .textAttacked::before{
-  content: "Be attacked: ";
+  content: "💣: ";
 }
 .textUsedTetriminoes{
   top: 2em;

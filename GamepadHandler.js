@@ -143,13 +143,13 @@ let GamepadHandler = (function(){
       var gps = navigator.getGamepads();;
 
       if(!gps[idx]){
-        console.error('fail : rumble ','GamepadHandler.rumble('+Array.prototype.slice.call(arguments).join(',')+')')
+        // console.error('fail : rumble ','GamepadHandler.rumble('+Array.prototype.slice.call(arguments).join(',')+')')
         return false;
       }
       var gp = gps[idx];
       if(!gp.vibrationActuator){
-        console.error('fail : gp.vibrationActuator ','GamepadHandler.rumble('+Array.prototype.slice.call(arguments).join(',')+')');
-        alert('fail : gp.vibrationActuator '+idx)
+        // console.error('fail : gp.vibrationActuator ','GamepadHandler.rumble('+Array.prototype.slice.call(arguments).join(',')+')');
+        // alert('fail : gp.vibrationActuator '+idx)
         return false;
       }
       gp.vibrationActuator.playEffect(gp.vibrationActuator.type, {
